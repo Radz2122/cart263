@@ -3,9 +3,7 @@
 /*****************
 
 Where's Sausage Dog?
-Pippin Barr
-
-Where's Waldo, except with a Sausage Dog!
+Radhika Patel
 
 Displays a large number of random animal images as well as
 a single sausage dog image. The player needs to click on the

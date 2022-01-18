@@ -10,6 +10,7 @@ class Animal {
     this.y = y;
     this.image = image;
     this.angle = 0;
+    this.randomAngle= random(0,360);
   }
 
   // update()
@@ -24,7 +25,7 @@ class Animal {
     push();
     imageMode(CENTER);
     translate(this.x, this.y);
-    rotate(this.angle);
+    rotate(this.angle+this.randomAngle);
     image(this.image, 0, 0);
     pop();
   }
