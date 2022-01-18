@@ -10,7 +10,8 @@ a single sausage dog image. The player needs to click on the
 dog to win the game.
 
 ******************/
-
+//starts off the game with the title
+let state = `title`;
 // Constants for image loading
 const NUM_ANIMAL_IMAGES = 10;
 const ANIMAL_IMAGE_PREFIX = `assets/images/animal`;
@@ -43,12 +44,10 @@ function preload() {
   sausageDogImage = loadImage(`${SAUSAGE_DOG_IMAGE}`);
 }
 
-
 // setup()
 // Creates all the animal objects and a sausage dog object
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
   createAnimals();
   createSausageDog();
 }
@@ -85,14 +84,23 @@ function createSausageDog() {
 }
 
 // draw()
-// Draws the background then updates all animals and the sausage dog
+// Draws the background and calls the state functions
 function draw() {
   background(255);
+  if (state === `title`) {
+    title();
+  } else if (state === `simulation`) {
+    simulation();
+  } else if (state === `end`) {
+    end();
+  }
+}
 
+// updates all animals and the sausage dog
+function simulation() {
   updateAnimals();
   updateSausageDog();
 }
-
 // updateAnimals()
 // Calls the update() method for all animals
 function updateAnimals() {
@@ -113,6 +121,44 @@ function updateSausageDog() {
 // Automatically called by p5 when the mouse is pressed.
 // Call the sausage dog's mousePressed() method so it knows
 // the mouse was clicked.
+//change the state if the dog was found
+//change the state if the player is on the title screen
 function mousePressed() {
   sausageDog.mousePressed();
+  if (sausageDog.found) {
+    setTimeout(displayEnd, 3000);
+  }
+  //checks if the player clicked during the title screen to start
+  if (state === `title`) {
+    state = `simulation`;
+  }
+}
+
+//changes the game state to the end
+function displayEnd() {
+  state = `end`;
+}
+
+//displays start screen text
+function title() {
+  push();
+  textSize(84);
+  textStyle(BOLD);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text(`Where's the sausage dog?`, width / 2, height / 2);
+  textSize(54);
+  text(`Left click to start`, width / 2, height / 1.5);
+  pop();
+}
+
+//displays end text
+function end() {
+  push();
+  textSize(85);
+  textStyle(BOLD);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text(`Found him!`, width / 2, height / 2);
+  pop();
 }
