@@ -10,8 +10,7 @@ a single sausage dog image. The player needs to click on the
 dog to win the game.
 
 ******************/
-//starts off the game with the title
-let state = `title`;
+
 // Constants for image loading
 const NUM_ANIMAL_IMAGES = 10;
 const ANIMAL_IMAGE_PREFIX = `assets/images/animal`;
@@ -20,6 +19,8 @@ const SAUSAGE_DOG_IMAGE = `assets/images/sausage-dog.png`;
 // Number of images to display
 const NUM_ANIMALS = 100;
 
+//starts off the game with the title screen
+let state = `title`;
 // Array of the loaded animal images
 let animalImages = [];
 // Array of animal objects
@@ -48,8 +49,7 @@ function preload() {
 // Creates all the animal objects and a sausage dog object
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  createAnimals();
-  createSausageDog();
+  reset();
 }
 
 // createAnimals()
@@ -86,13 +86,15 @@ function createSausageDog() {
 // draw()
 // Draws the background and calls the state functions
 function draw() {
-  background(255);
+  // console.log(sausageDog.found);
+   background(255);
   if (state === `title`) {
     title();
   } else if (state === `simulation`) {
     simulation();
   } else if (state === `end`) {
     end();
+
   }
 }
 
@@ -131,14 +133,20 @@ function mousePressed() {
   //checks if the player clicked during the title screen to start
   if (state === `title`) {
     state = `simulation`;
+  }else if (state === `end`) {
+    state = `title`;
   }
+
 }
 
+//displayEnd()
 //changes the game state to the end
 function displayEnd() {
   state = `end`;
+  reset();
 }
 
+//title()
 //displays start screen text
 function title() {
   push();
@@ -152,6 +160,7 @@ function title() {
   pop();
 }
 
+//end()
 //displays end text
 function end() {
   push();
@@ -161,4 +170,16 @@ function end() {
   textAlign(CENTER, CENTER);
   text(`Found him!`, width / 2, height / 2);
   pop();
+}
+
+//reset()
+//resets games
+//empties the animal array
+//create elements
+//sets 'found' to false
+function reset(){
+  animals = [];
+  createAnimals();
+  createSausageDog();
+  sausageDog.found=false;
 }

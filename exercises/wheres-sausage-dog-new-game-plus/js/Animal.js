@@ -10,9 +10,10 @@ class Animal {
     this.y = y;
     this.image = image;
     this.angle = 0;
-    
+
     //rotate the dog and animals at a random angle
     this.randomAngle= random(0,360);
+
   }
 
   // update()
