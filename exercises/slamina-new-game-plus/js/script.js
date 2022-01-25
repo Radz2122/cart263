@@ -157,6 +157,10 @@ const QUESTION_DELAY = 2000; // in milliseconds
 let currentAnswer = `Click to begin.`;
 // The current animal name the user is trying to guess
 let currentAnimal = ``;
+//counts the amount of points the player got
+let points=0;
+//checks if the player got the current answer when they click to go to the next
+let gotAnswer=false;
 
 
 /**
@@ -211,11 +215,16 @@ Display the current answer in red if incorrect and green if correct
 function displayAnswer() {
   if (currentAnswer === currentAnimal) {
     fill(0, 255, 0);
+    console.log(points);
+    gotAnswer=true;
+
   }
   else {
     fill(255, 0, 0);
   }
   text(currentAnswer, width / 2, height / 2);
+  fill(100);
+  text(points,width / 2, height /4);
 }
 
 /**
@@ -254,9 +263,20 @@ function guessAnimal(animal) {
 Reset the answer text, get a new random animal, say its name
 */
 function nextQuestion() {
-  currentAnswer = ``;
-  currentAnimal = random(animals);
-  sayAnimalBackwards(currentAnimal);
+  if(state!==`end`){
+    //add a point if the player guessed the answer
+    if(gotAnswer){
+      points++;
+    }
+    currentAnswer = ``;
+    currentAnimal = random(animals);
+    sayAnimalBackwards(currentAnimal);
+
+    //reset gotAsnwer to false for the next question
+    gotAnswer=false;
+
+  }
+
 }
 
 /**
@@ -267,9 +287,12 @@ function mousePressed() {
   if (state === `title`) {
     state = `simulation`;
   }
-  else if(state===`simulation`){
+  else if(state===`simulation` && points<2){
       nextQuestion();
   }
+  else if(state===`simulation`&& points>=2){
+      state=`end`;
+    }
 }
 //title()
 //displays start screen text
@@ -291,8 +314,8 @@ function end() {
   push();
   textSize(85);
   textStyle(BOLD);
-  fill(0);
+  fill(100);
   textAlign(CENTER, CENTER);
-  text(`END`, width / 2, height / 2);
+  text(`Congrats! You guessed all of them`, width / 2, height / 2);
   pop();
 }
