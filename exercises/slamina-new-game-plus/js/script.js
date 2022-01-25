@@ -205,13 +205,15 @@ function draw() {
   }
 }
 
+//calls functions needed in the simulation
 function simulation(){
     displayAnswer();
 }
 
 /**
-Display the current answer in red if incorrect and green if correct
+-Display the current answer in red if incorrect and green if correct
 (Displays nothing if no guess entered yet)
+-Display the amount of points gotten
 */
 function displayAnswer() {
   if (currentAnswer === currentAnimal) {
@@ -273,7 +275,6 @@ function nextQuestion() {
     currentAnswer = ``;
     currentAnimal = random(animals);
     sayAnimalBackwards(currentAnimal);
-
     //reset gotAsnwer to false for the next question
     gotAnswer=false;
 
@@ -282,10 +283,9 @@ function nextQuestion() {
 }
 
 /**
-When the user clicks, go to the next question
+When the user clicks, go to the next state or change questions
 */
 function mousePressed() {
-
   if (state === `title`) {
     state = `simulation`;
   }
@@ -318,6 +318,6 @@ function end() {
   textStyle(BOLD);
   fill(100);
   textAlign(CENTER, CENTER);
-  text(`Congrats! You guessed all of them`, width / 2, height / 2);
+  text(`Congrats! You guessed a lot of them`, width / 2, height / 2);
   pop();
 }
