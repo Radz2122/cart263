@@ -2,8 +2,8 @@
 
 /*****************
 
-Slamina
-Pippin Barr
+Slamina New Game+
+Radhika Patel
 
 A guessing game in which the page pronounces the name of an animal
 backwards and the user has to figure out what it was and say the
@@ -149,7 +149,8 @@ const animals = [
   "yak",
   "zebra"
 ];
-
+//starts off the game with the title screen
+let state = `title`;
 const QUESTION_DELAY = 2000; // in milliseconds
 
 // The current answer to display (we use it initially to display the click instruction)
@@ -189,8 +190,18 @@ Display the current answer.
  */
 function draw() {
   background(0);
+  if (state === `title`) {
+    title();
+  } else if (state === `simulation`) {
+    simulation();
+  } else if (state === `end`) {
+    end();
 
-  displayAnswer();
+  }
+}
+
+function simulation(){
+    displayAnswer();
 }
 
 /**
@@ -252,5 +263,36 @@ function nextQuestion() {
 When the user clicks, go to the next question
 */
 function mousePressed() {
-  nextQuestion();
+
+  if (state === `title`) {
+    state = `simulation`;
+  }
+  else if(state===`simulation`){
+      nextQuestion();
+  }
+}
+//title()
+//displays start screen text
+function title() {
+  push();
+  textSize(84);
+  textStyle(BOLD);
+  fill(100);
+  textAlign(CENTER, CENTER);
+  text(`Guess the animal`, width / 2, height / 2);
+  textSize(54);
+  text(`Left click to start`, width / 2, height / 1.5);
+  pop();
+}
+
+//end()
+//displays end text
+function end() {
+  push();
+  textSize(85);
+  textStyle(BOLD);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text(`END`, width / 2, height / 2);
+  pop();
 }
