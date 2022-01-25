@@ -161,7 +161,8 @@ let currentAnimal = ``;
 let points=0;
 //checks if the player got the current answer when they click to go to the next
 let gotAnswer=false;
-
+//the amount of guesses the player needs to win
+let amountToWin=20;
 
 /**
 Create a canvas
@@ -215,7 +216,6 @@ Display the current answer in red if incorrect and green if correct
 function displayAnswer() {
   if (currentAnswer === currentAnimal) {
     fill(0, 255, 0);
-    console.log(points);
     gotAnswer=true;
 
   }
@@ -232,6 +232,8 @@ Reverse the animal name and say it with ResponsiveVoice
 */
 function sayAnimalBackwards(animal) {
   let reverseAnimal = reverseString(animal);
+  //make the voice talk slower to make it more difficult
+  responsiveVoice.setDefaultRate(0.15);
   responsiveVoice.speak(reverseAnimal);
 }
 
@@ -287,10 +289,10 @@ function mousePressed() {
   if (state === `title`) {
     state = `simulation`;
   }
-  else if(state===`simulation` && points<2){
+  else if(state===`simulation` && points<amountToWin){
       nextQuestion();
   }
-  else if(state===`simulation`&& points>=2){
+  else if(state===`simulation`&& points>=amountToWin){
       state=`end`;
     }
 }
