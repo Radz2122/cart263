@@ -100,22 +100,35 @@ function generateSpyProfile() {
 Displays the current spy profile.
 */
 function draw() {
-  background(255);
+  background(244,226,198);
 
   // Generate the profile as a string using the data
-  let spyText = `** TOP SECRET SPY PROFILE **
+  let spyText = `** SPY PROFILE **
 
 Name: ${spyProfile.name}
 Alias: ${spyProfile.alias}
 Secret Weapon: ${spyProfile.secretWeapon}
 Password: ${spyProfile.password}`;
 
+let secretText=`TOP SECRET`;
+
   // Display the profile
   push();
   textSize(32);
   textAlign(LEFT, TOP);
   textFont(`Courier, monospace`);
+  stroke(color(250, 0, 0));
+  strokeWeight(3);
+  fill(244,226,198);
+  rect(windowWidth/2, windowHeight/4, 290, 50);
+  strokeWeight(0);
+  stroke(color(0));
   fill(0);
-  text(spyText, 0, 0);
+  text(spyText, windowWidth/3, windowHeight/3);
+  fill(250,0,0);
+  textStyle(BOLD);
+  textSize(48);
+  text(secretText, windowWidth/2, windowHeight/4);
+
   pop();
 }
