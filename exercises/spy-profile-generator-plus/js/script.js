@@ -42,6 +42,7 @@ function preload() {
   tarotData = loadJSON(TAROT_DATA_URL);
   objectsData = loadJSON(OBJECT_DATA_URL);
   instrumentsData = loadJSON(INSTRUMENT_DATA_URL);
+
 }
 
 /**
@@ -49,6 +50,7 @@ Creates a canvas then handles loading profile data, checking password,
 and generating a profile as necessary.
 */
 function setup() {
+
   // Create the canvas
   createCanvas(windowWidth, windowHeight);
   // Try to load the data
@@ -85,15 +87,16 @@ Generates a spy profile from JSON data
 function generateSpyProfile() {
   // Ask for the user's name and store it
   spyProfile.name = prompt(`What's ya name?`);
-  // Generate an alias from a random instrument
-  spyProfile.alias = `The ${random(instrumentsData.instruments)}`;
   // Generate a secret weapon from a random object
   spyProfile.secretWeapon = random(objectsData.objects);
   // Generate a password from a random keyword for a random tarot card
   let card = random(tarotData.tarot_interpretations);
   spyProfile.password = random(card.keywords);
+  // Generate an alias from a random instrument and add and ending from the tarot data collection (suit)
+  spyProfile.alias = `The ${random(instrumentsData.instruments)} ${card.suit}`;
   // Save the resulting profile to local storage
   localStorage.setItem(PROFILE_DATA_KEY, JSON.stringify(spyProfile));
+  console.log(spyProfile);
 }
 
 /**
