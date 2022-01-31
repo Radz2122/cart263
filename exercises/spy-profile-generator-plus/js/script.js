@@ -125,10 +125,14 @@ let secretText=`TOP SECRET`;
   stroke(color(0));
   fill(0);
   text(spyText, windowWidth/3, windowHeight/3);
+  //signature
+  textSize(48);
+  textFont(`Kunstler Script`);
+  text("SomeSignature", windowWidth/3, windowHeight/1.5);
+//top secret
+  textFont(`Courier, monospace`);
   fill(250,0,0);
   textStyle(BOLD);
-  textSize(48);
   text(secretText, windowWidth/2, windowHeight/4);
-
   pop();
 }
