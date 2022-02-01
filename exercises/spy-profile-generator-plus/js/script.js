@@ -128,6 +128,9 @@ let secretText=`TOP SECRET`;
   stroke(color(0));
   fill(0);
   text(spyText, windowWidth/3, windowHeight/3);
+  //display keypress text
+  textSize(25);
+  text("* Press any key to recreate a profile *", windowWidth/3, windowHeight/1.2);
   //signature
   textSize(48);
   textFont(`Kunstler Script`);
