@@ -8,6 +8,7 @@ Radhika Patel
 Asks the user for their name and generates a spy profile for them! Uses
 JSON data to create the profile. Generates a password and requires that
 password to view the profile when the program is loaded again.
+When the user presses on any key, a new profile is generated.
 
 Uses:
 
@@ -135,7 +136,7 @@ let secretText=`TOP SECRET`;
   textSize(48);
   textFont(`Kunstler Script`);
   text("SomeSignature", windowWidth/3, windowHeight/1.5);
-//top secret
+  //top secret
   textFont(`Courier, monospace`);
   fill(250,0,0);
   textStyle(BOLD);
@@ -146,5 +147,5 @@ let secretText=`TOP SECRET`;
 //deletes the current profioe and generates a new one
 function keyPressed() {
   localStorage.removeItem(`spy-profile-data`);
-generateSpyProfile();
+  generateSpyProfile();
 }
