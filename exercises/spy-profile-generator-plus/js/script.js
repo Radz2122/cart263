@@ -139,3 +139,9 @@ let secretText=`TOP SECRET`;
   text(secretText, windowWidth/2, windowHeight/4);
   pop();
 }
+
+//deletes the current profioe and generates a new one
+function keyPressed() {
+  localStorage.removeItem(`spy-profile-data`);
+generateSpyProfile();
+}
