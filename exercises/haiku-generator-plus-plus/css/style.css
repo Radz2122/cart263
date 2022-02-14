@@ -62,11 +62,11 @@ section{
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #253065;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #253065;
 }
 
 input:checked + .slider:before {
@@ -80,4 +80,12 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+.night{
+  color:#253065;
+  background: rgb(109,131,236);
+  background: radial-gradient(circle, rgba(109,131,236,1) 0%, rgba(37,48,101,1) 52%, rgba(2,8,42,1) 100%);
+}
+.nightBorder{
+  border:double #253065;
 }

@@ -130,3 +130,18 @@ A helper function that returns a random element from the provided array
 function random(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
+
+function changeMode(){
+  let checkBox = document.getElementById("myCheck");
+  let body= document.getElementById("myBody");
+  let section= document.getElementById("haiku")
+ if (checkBox.checked == true){
+   console.log("checked");
+   body.classList.add("night");
+   section.classList.add("nightBorder");
+ } else {
+    console.log("notchecked");
+    body.classList.remove("night");
+    section.classList.remove("nightBorder");
+ }
+}
