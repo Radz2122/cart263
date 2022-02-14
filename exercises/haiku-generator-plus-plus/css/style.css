@@ -2,6 +2,7 @@
 
 Some basic styling to make haiku display a
 little more prettily.
+Added a class to give the user a night theme
 
 **********************************************/
 
@@ -18,11 +19,14 @@ body {
   background: rgb(255,255,255);
   background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(178,178,255,1) 86%, rgba(150,144,255,1) 100%);
 }
+
 section{
   border:double #9690ff;
-
 }
+
 /* INSPIRED BY: https://www.w3schools.com/howto/howto_css_switch.asp */
+/* part of it was modified to fit my design */
+
 /* The switch - the box around the slider */
 .switch {
   position: relative;
@@ -81,6 +85,9 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+/* END OF W3S */
+
+/* classes for the night theme */
 .night{
   color:#253065;
   background: rgb(109,131,236);

@@ -1,10 +1,10 @@
 /**
-Haiku Generator
+Haiku Generator Plus Plus
 Radhika Patel
 
-A program that generates a random haiku based on pre-existing arrays
+A program that generates a random haiku and a title for it based on pre-existing arrays
 of lines of the correct syllable length. Also swaps out lines if the user
-clicks on them with a fade in and out effect.
+clicks on them with a fade in and out effect. The user also gets to chose between a light or dark theme.
 */
 
 "use strict";
@@ -27,15 +27,30 @@ let haikuLines = {
   ]
 };
 
+//pre-made titles
+let titles = ['The Best Haiku Ever', 'The Average Haiku','The CouldBeBetter Haiku','The Ultimate Haiku','The Weird Haiku'];
+
 // Our three elements on the page that contain each line of the poem
 let line1 = document.getElementById(`line-1`);
 let line2 = document.getElementById(`line-2`);
 let line3 = document.getElementById(`line-3`);
 
+//the h2 containing the title
+let title=document.getElementById(`myTitle`);
+
 // Set up the starting lines
 setupLines();
+// Set up the title
+setupTitle();
 // Listen for clicks on each element and respond by changing them
 addListeners();
+
+/**
+Puts a randomly chosen title line in the H2 in HTML
+*/
+function setupTitle(){
+  title.innerText=random(titles);
+}
 
 /**
 Puts a randomly chosen haiku line in each line of the poem in HTML
@@ -131,16 +146,17 @@ function random(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
+/**
+Toggles the body and sections classlists to change the page color theme
+*/
 function changeMode(){
   let checkBox = document.getElementById("myCheck");
   let body= document.getElementById("myBody");
   let section= document.getElementById("haiku")
- if (checkBox.checked == true){
-   console.log("checked");
+  if (checkBox.checked == true){
    body.classList.add("night");
    section.classList.add("nightBorder");
  } else {
-    console.log("notchecked");
     body.classList.remove("night");
     section.classList.remove("nightBorder");
  }
