@@ -1,6 +1,6 @@
 /**
 Haiku Generator
-Pippin Barr
+Radhika Patel
 
 A program that generates a random haiku based on pre-existing arrays
 of lines of the correct syllable length. Also swaps out lines if the user

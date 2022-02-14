@@ -7,11 +7,18 @@ little more prettily.
 
 body {
   font-family: Helvetica, sans-serif;
+  text-align: center;
   font-size: 2rem;
+  color:#9690ff;
   font-weight: bold;
-  width: 50vw;
+  width: 35vw;
   margin: auto;
   padding-top: 2rem;
   user-select: none;
-  background-color: #ffff66;
+  background: rgb(255,255,255);
+  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(178,178,255,1) 86%, rgba(150,144,255,1) 100%);
+}
+section{
+  border:double #9690ff;
+
 }
