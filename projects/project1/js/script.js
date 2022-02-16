@@ -23,6 +23,7 @@ let mylesImg = {
   sizeY: 167,
 };
 
+//SOUND
 let backMusic;
 
 
@@ -32,7 +33,8 @@ Description of preload
 function preload() {
    bckgImg = loadImage(BCKGRD_IMG);
    mylesImg.image= loadImage(MYLES_IMG);
-   backMusic = loadSound(`assets/sounds/bark.wav`);
+   //SOUND
+   backMusic = loadSound(`assets/sounds/wayUp.mp3`);
 
 }
 
@@ -45,12 +47,14 @@ function setup() {
   mylesImg.x=windowWidth/2.1;
   mylesImg.y=windowHeight/1.8;
   mylesImg.vy = mylesImg.speed;
+
+  //SOUND
   //call a funciton when the music is done playing
   backMusic.onended(sayDone);
 
 }
 
-
+//SOUND
 function sayDone(elt){
     console.log("donew");
 }
@@ -60,9 +64,6 @@ Description of draw()
 function draw() {
 image(bckgImg, 0, 0, windowWidth, windowHeight);
 image(mylesImg.image, mylesImg.x, mylesImg.y, mylesImg.sizeX, mylesImg.sizeY);
-
-
-
 
 //FLOAT ATTEMPT
 // mylesImg.y += mylesImg.vy;
@@ -79,14 +80,21 @@ image(mylesImg.image, mylesImg.x, mylesImg.y, mylesImg.sizeX, mylesImg.sizeY);
 // console.log(mylesImg.y);
 //ATTEMP END
 }
+
+//SOUND
 //Plays or pauses the music
 function playPause(){
+  let playPauseButton=document.getElementById('playPauseButton');
   if(!backMusic.isPlaying()){
     backMusic.play();
-    backMusic.playMode('sustain');
+    playPauseButton.classList.add('pause');
+    playPauseButton.classList.remove('play');
   }
   else{
       backMusic.pause();
+      // playPauseButton.classList.remove('play');
+      playPauseButton.classList.add('play');
+          playPauseButton.classList.remove('pause');
   }
 
   backMusic.setVolume(0.4);

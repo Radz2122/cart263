@@ -18,6 +18,31 @@ body {
   height: 100vh; /* Body is the height of the viewport */
   overflow: hidden; /* Hide anything that goes off the window size */
 }
-body input{
+
+/* Default play button */
+.play{
   position: absolute;
+  margin:85vh 0 0 50vw;
+  /* PLAY styling */
+  width: 0;
+ height: 0;
+ background-color: transparent;
+ border-top: 10px solid transparent;
+ border-bottom: 10px solid transparent;
+ border-left: 20px solid red;
+ border-right: none;
+
+}
+
+/* pause button */
+.pause{
+
+   /* PAUSE styling */
+   position: absolute;
+   margin:85vh 0 0 50vw;
+   background: transparent;
+   border-style: double;
+   border-width: 0px 50px 0px 50px;
+   border-width: 0px 0px 0px 20px;
+    border-color: red;
 }
