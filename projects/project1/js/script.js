@@ -117,30 +117,45 @@ function draw() {
   translate(windowWidth/2,windowHeight/2);
   let wave=fft.waveform();
   let spectrum= fft.analyze();
-  stroke(0,223,222);
+  // stroke(0,223,222);
+  strokeWeight(5);
   // beginShape();
   for (var i = 0; i < spectrum.length; i++) {
     // let index= floor(map(i,0,180,0,wave.length-1));
     let angle=map(i,0,spectrum.length,0,360);
-    let r= map(spectrum[i],-1,1,10,40);
+    let r= map(spectrum[i],0,200,10,250);
     let x=r*sin(angle);
     let y= r*cos(angle);
+    stroke(i,100,255);
+    line(0,0,x,y);
+  }
+  for (var i = 0; i < spectrum.length; i++) {
+    // let index= floor(map(i,0,180,0,wave.length-1));
+    let angle=map(i,0,spectrum.length,0,360);
+    let r= map(spectrum[i],0,200,10,250);
+    let x=r*-sin(angle);
+    let y= r*-cos(angle);
     stroke(i,255,255);
     line(0,0,x,y);
   }
+
   // endShape();
   push();
   noFill();
-  beginShape();
-  for (var i = 0; i < 180; i++) {
-    let index= floor(map(i,0,180,0,wave.length-1));
+  strokeWeight(1);
+  for (let t = -1;t<=1; t+=2) {
+    beginShape();
+    for (var i = 0; i < 180; i++) {
+      let index= floor(map(i,0,180,0,wave.length-1));
 
-    let r= map(wave[index],-1,1,150,350);
-    let x=r*-sin(i);
-    let y= r*cos(i);
-    vertex(x,y);
+      let r= map(wave[index],-1,1,150,350);
+      let x=r*-sin(i)*t;
+      let y= r*cos(i);
+      vertex(x,y);
+    }
+    endShape();
   }
-  endShape();
+
   pop();
   //FLOAT ATTEMPT
   // milesImg.y += milesImg.vy;
