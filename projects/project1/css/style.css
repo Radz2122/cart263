@@ -18,12 +18,20 @@ body {
   height: 100vh; /* Body is the height of the viewport */
   overflow: hidden; /* Hide anything that goes off the window size */
 }
+.buttonsHUD{
+    position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+  justify-self: center;
+  margin-top: 80vh;
+
+}
 
 /* REF for butotn styling: https://css-tricks.com/making-pure-css-playpause-button/ */
 /* Default play button */
 .play{
-  position: absolute;
-  margin:85vh 0 0 50vw;
+  margin:0;
   /* PLAY styling */
   width: 0;
  height: 0;
@@ -38,10 +46,8 @@ body {
 
 /* pause button */
 .pause{
-
    /* PAUSE styling */
-   position: absolute;
-   margin:85vh 0 0 50vw;
+   margin:0;
    background: transparent;
    border-style: double;
    border-width: 0px 50px 0px 50px;
@@ -49,7 +55,7 @@ body {
     border-color: red;
     cursor: pointer;
 }
-/* Slider-thumb css */
+/* Slider-thumb css  CHANGE AT END*/
 body > input[type=range]:nth-child(4)::-webkit-slider-thumb{
   appearance:none;
   width: 15px;
@@ -57,4 +63,17 @@ body > input[type=range]:nth-child(4)::-webkit-slider-thumb{
   background: red;
   cursor: pointer;
   border-radius: 50%;
+}
+
+/* PREVIOUS BUTTON */
+.previous, .next{
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+.previous{
+  margin-right: 10%;
+}
+.next{
+  margin-left: 5%;
 }

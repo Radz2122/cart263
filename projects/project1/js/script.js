@@ -55,8 +55,8 @@ function setup() {
   slider=createSlider(0,1,0.5,0.01);
 
   //general slider styling
- slider.style('appearance', 'none');
- slider.style('border-radius', '5px');
+  slider.style('appearance', 'none');
+  slider.style('border-radius', '5px');
   slider.style('background', 'rgba(0,0,0,0.5)');
 }
 
@@ -101,7 +101,6 @@ function playPause(){
   }
   else{
       backMusic.pause();
-      // playPauseButton.classList.remove('play');
       playPauseButton.classList.add('play');
       playPauseButton.classList.remove('pause');
   }
