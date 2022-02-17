@@ -126,17 +126,20 @@ function draw() {
     let r= map(spectrum[i],9,200,10,250);
     let x=r*sin(angle);
     let y= r*cos(angle);
-    stroke(i,100,255);
+    stroke(i,255,255);
     line(0,0,x,y);
   }
   for (var i = 0; i < spectrum.length; i++) {
+
     // let index= floor(map(i,0,180,0,wave.length-1));
     let angle=map(i,0,spectrum.length,0,360);
     let r= map(spectrum[i],9,200,10,250);
     let x=r*-sin(angle);
     let y= r*-cos(angle);
-    stroke(i,255,255);
-    line(0,0,x,y);
+
+    // stroke(200,255,255);
+    rect(0,0,x,y);
+    // line(0,0,x,y);
   }
 
   // endShape();
@@ -147,7 +150,6 @@ function draw() {
     beginShape();
     for (var i = 0; i < 180; i++) {
       let index= floor(map(i,0,180,0,wave.length-1));
-
       let r= map(wave[index],-1,1,150,350);
       let x=r*-sin(i)*t;
       let y= r*cos(i);
