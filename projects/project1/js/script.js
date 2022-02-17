@@ -24,14 +24,23 @@ let milesImg = {
 };
 
 //SOUND
+
+//array containing all the songs
 let songs = [];
+
+//vars containing each individual song
 let backMusic1;
 let backMusic2;
+let backMusic3;
+let backMusic4;
+let backMusic5;
+
+//contains the slider for the volume
 let slider;
+//contains the current song being played
 let currentSong;
-//start the song at 0
+//to start from the first song
 let songIndex = 0;
-// var currentSong = new Audio("music/" + songs[songIndex] + ".mp3")
 
 /**
 Description of preload
@@ -39,14 +48,23 @@ Description of preload
 function preload() {
   bckgImg = loadImage(BCKGRD_IMG);
   milesImg.image = loadImage(MILES_IMG);
+
   //SOUND
+  //load every song
   backMusic1 = loadSound(`assets/sounds/wayUp.mp3`);
   backMusic2 = loadSound(`assets/sounds/whatsUpDanger.mp3`);
+  backMusic3 = loadSound(`assets/sounds/elevate.mp3`);
+  backMusic4 = loadSound(`assets/sounds/familia.mp3`);
+  backMusic5 = loadSound(`assets/sounds/sunflower.mp3`);
+
+  //push all the songs un their array
   songs.push(backMusic1);
   songs.push(backMusic2);
+  songs.push(backMusic3);
+  songs.push(backMusic4);
+  songs.push(backMusic5);
+  //give the current song its index in the array
   currentSong = songs[songIndex];
-  console.log(songs);
-  console.log(songIndex);
 }
 
 /**
