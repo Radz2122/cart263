@@ -33,8 +33,10 @@ let backMusic1;
 let backMusic2;
 let backMusic3;
 let backMusic4;
-let backMusic5;
+let backMusic0;
+const ANIMAL_IMAGE_PREFIX= 'backMusic';
 
+let nbSongs=5;
 //contains the slider for the volume
 let slider;
 //contains the current song being played
@@ -51,19 +53,20 @@ function preload() {
 
   //SOUND
   //load every song
-  backMusic1 = loadSound(`assets/sounds/wayUp.mp3`);
-  backMusic2 = loadSound(`assets/sounds/whatsUpDanger.mp3`);
-  backMusic3 = loadSound(`assets/sounds/elevate.mp3`);
-  backMusic4 = loadSound(`assets/sounds/familia.mp3`);
-  backMusic5 = loadSound(`assets/sounds/sunflower.mp3`);
+  backMusic0 = loadSound(`assets/sounds/wayUp.mp3`);
+  backMusic1 = loadSound(`assets/sounds/whatsUpDanger.mp3`);
+  backMusic2 = loadSound(`assets/sounds/elevate.mp3`);
+  backMusic3= loadSound(`assets/sounds/familia.mp3`);
+  backMusic4 = loadSound(`assets/sounds/sunflower.mp3`);
 
-  //push all the songs un their array
+  //push all the songs in their array
   songs.push(backMusic1);
   songs.push(backMusic2);
   songs.push(backMusic3);
   songs.push(backMusic4);
-  songs.push(backMusic5);
+  songs.push(backMusic0);
   //give the current song its index in the array
+  console.log(songs);
   currentSong = songs[songIndex];
 }
 
@@ -89,7 +92,7 @@ function setup() {
 
 //SOUND
 function sayDone(elt) {
-  console.log("donew");
+  console.log("done");
 }
 /**
 Description of draw()
