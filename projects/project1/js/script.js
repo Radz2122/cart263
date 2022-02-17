@@ -25,6 +25,7 @@ let mylesImg = {
 
 //SOUND
 let backMusic;
+let slider;
 
 
 /**
@@ -51,6 +52,7 @@ function setup() {
   //SOUND
   //call a funciton when the music is done playing
   backMusic.onended(sayDone);
+  slider=createSlider(0,1,0.5,0.01);
 
 }
 
@@ -64,7 +66,8 @@ Description of draw()
 function draw() {
 image(bckgImg, 0, 0, windowWidth, windowHeight);
 image(mylesImg.image, mylesImg.x, mylesImg.y, mylesImg.sizeX, mylesImg.sizeY);
-
+backMusic.setVolume(slider.value());
+slider.position(windowWidth/2, windowHeight/2);
 //FLOAT ATTEMPT
 // mylesImg.y += mylesImg.vy;
 // if(mylesImg.y <= windowHeight/1.8) {
@@ -94,8 +97,7 @@ function playPause(){
       backMusic.pause();
       // playPauseButton.classList.remove('play');
       playPauseButton.classList.add('play');
-          playPauseButton.classList.remove('pause');
+      playPauseButton.classList.remove('pause');
   }
 
-  backMusic.setVolume(0.4);
 }

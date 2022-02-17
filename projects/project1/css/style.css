@@ -19,6 +19,7 @@ body {
   overflow: hidden; /* Hide anything that goes off the window size */
 }
 
+/* REF for butotn styling: https://css-tricks.com/making-pure-css-playpause-button/ */
 /* Default play button */
 .play{
   position: absolute;
