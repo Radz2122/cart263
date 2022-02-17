@@ -44,6 +44,8 @@ let currentSong;
 //to start from the first song
 let songIndex = 0;
 
+let fft;
+
 /**
 Description of preload
 */
@@ -88,6 +90,9 @@ function setup() {
   slider.style("appearance", "none");
   slider.style("border-radius", "5px");
   slider.style("background", "rgba(0,0,0,0.5)");
+
+  fft= new p5.FFT();
+
 }
 
 //SOUND
@@ -100,9 +105,17 @@ Description of draw()
 function draw() {
   image(bckgImg, 0, 0, windowWidth, windowHeight);
   image(milesImg.image, milesImg.x, milesImg.y, milesImg.sizeX, milesImg.sizeY);
+  
   //SOUND
   currentSong.setVolume(slider.value());
   slider.position(windowWidth / 2.1, windowHeight / 1.1);
+  let wave=fft.waveform();
+  for (var i = 0; i < windowWidth; i++) {
+    let index= floor(map(i,0,width,0,wave.length));
+    let x=i;
+    let y= wave[index]*300+height/2;
+    point(x,y);
+  }
   //FLOAT ATTEMPT
   // milesImg.y += milesImg.vy;
   // if(milesImg.y <= windowHeight/1.8) {
