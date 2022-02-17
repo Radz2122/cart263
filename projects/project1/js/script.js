@@ -92,7 +92,7 @@ function setup() {
   slider.style("background", "rgba(0,0,0,0.5)");
 
   angleMode(DEGREES);
-  fft= new p5.FFT();
+  fft= new p5.FFT(0.9,64);
 
 }
 
@@ -112,20 +112,36 @@ function draw() {
   slider.position(windowWidth / 2.1, windowHeight / 1.1);
 
   //audiovisualizer
-  stroke(255);
-  noFill();
+
+  // noFill();
   translate(windowWidth/2,windowHeight/2);
   let wave=fft.waveform();
+  let spectrum= fft.analyze();
+  stroke(0,223,222);
+  // beginShape();
+  for (var i = 0; i < spectrum.length; i++) {
+    // let index= floor(map(i,0,180,0,wave.length-1));
+    let angle=map(i,0,spectrum.length,0,360);
+    let r= map(spectrum[i],-1,1,10,40);
+    let x=r*sin(angle);
+    let y= r*cos(angle);
+    stroke(i,255,255);
+    line(0,0,x,y);
+  }
+  // endShape();
+  push();
+  noFill();
   beginShape();
   for (var i = 0; i < 180; i++) {
     let index= floor(map(i,0,180,0,wave.length-1));
 
     let r= map(wave[index],-1,1,150,350);
-    let x=r*sin(i);
+    let x=r*-sin(i);
     let y= r*cos(i);
     vertex(x,y);
   }
   endShape();
+  pop();
   //FLOAT ATTEMPT
   // milesImg.y += milesImg.vy;
   // if(milesImg.y <= windowHeight/1.8) {
