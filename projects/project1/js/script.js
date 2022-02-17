@@ -118,12 +118,12 @@ function draw() {
   let wave=fft.waveform();
   let spectrum= fft.analyze();
   // stroke(0,223,222);
-  strokeWeight(5);
+  strokeWeight(3);
   // beginShape();
   for (var i = 0; i < spectrum.length; i++) {
     // let index= floor(map(i,0,180,0,wave.length-1));
     let angle=map(i,0,spectrum.length,0,360);
-    let r= map(spectrum[i],0,200,10,250);
+    let r= map(spectrum[i],9,200,10,250);
     let x=r*sin(angle);
     let y= r*cos(angle);
     stroke(i,100,255);
@@ -132,7 +132,7 @@ function draw() {
   for (var i = 0; i < spectrum.length; i++) {
     // let index= floor(map(i,0,180,0,wave.length-1));
     let angle=map(i,0,spectrum.length,0,360);
-    let r= map(spectrum[i],0,200,10,250);
+    let r= map(spectrum[i],9,200,10,250);
     let x=r*-sin(angle);
     let y= r*-cos(angle);
     stroke(i,255,255);
