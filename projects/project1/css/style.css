@@ -32,6 +32,7 @@ body {
  border-bottom: 10px solid transparent;
  border-left: 20px solid red;
  border-right: none;
+ cursor: pointer;
 
 }
 
@@ -46,4 +47,14 @@ body {
    border-width: 0px 50px 0px 50px;
    border-width: 0px 0px 0px 20px;
     border-color: red;
+    cursor: pointer;
+}
+/* Slider-thumb css */
+body > input[type=range]:nth-child(4)::-webkit-slider-thumb{
+  appearance:none;
+  width: 15px;
+  height: 15px;
+  background: red;
+  cursor: pointer;
+  border-radius: 50%;
 }

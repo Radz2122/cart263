@@ -54,6 +54,10 @@ function setup() {
   backMusic.onended(sayDone);
   slider=createSlider(0,1,0.5,0.01);
 
+  //general slider styling
+ slider.style('appearance', 'none');
+ slider.style('border-radius', '5px');
+  slider.style('background', 'rgba(0,0,0,0.5)');
 }
 
 //SOUND
@@ -66,8 +70,10 @@ Description of draw()
 function draw() {
 image(bckgImg, 0, 0, windowWidth, windowHeight);
 image(mylesImg.image, mylesImg.x, mylesImg.y, mylesImg.sizeX, mylesImg.sizeY);
+
+//SOUND
 backMusic.setVolume(slider.value());
-slider.position(windowWidth/2, windowHeight/2);
+slider.position(windowWidth/2.1, windowHeight/1.1);
 //FLOAT ATTEMPT
 // mylesImg.y += mylesImg.vy;
 // if(mylesImg.y <= windowHeight/1.8) {
