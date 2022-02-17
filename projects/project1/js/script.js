@@ -10,9 +10,9 @@ author, and this description to match your project!
 // Constants for image loading
 const BCKGRD_IMG = `assets/images/backgroundImg.png`;
 let bckgImg;
-const MYLES_IMG = `assets/images/myles.png`;
-//object that represents Myles
-let mylesImg = {
+const MILES_IMG = `assets/images/miles.png`;
+//object that represents miles
+let milesImg = {
   image: undefined,
   x: 0,
   y: 0,
@@ -24,85 +24,115 @@ let mylesImg = {
 };
 
 //SOUND
-let backMusic;
+let songs = [];
+let backMusic1;
+let backMusic2;
 let slider;
-
+let currentSong;
+//start the song at 0
+let songIndex = 0;
+// var currentSong = new Audio("music/" + songs[songIndex] + ".mp3")
 
 /**
 Description of preload
 */
 function preload() {
-   bckgImg = loadImage(BCKGRD_IMG);
-   mylesImg.image= loadImage(MYLES_IMG);
-   //SOUND
-   backMusic = loadSound(`assets/sounds/wayUp.mp3`);
-
+  bckgImg = loadImage(BCKGRD_IMG);
+  milesImg.image = loadImage(MILES_IMG);
+  //SOUND
+  backMusic1 = loadSound(`assets/sounds/wayUp.mp3`);
+  backMusic2 = loadSound(`assets/sounds/whatsUpDanger.mp3`);
+  songs.push(backMusic1);
+  songs.push(backMusic2);
+  currentSong = songs[songIndex];
+  console.log(songs);
+  console.log(songIndex);
 }
-
 
 /**
 Description of setup
 */
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  mylesImg.x=windowWidth/2.1;
-  mylesImg.y=windowHeight/1.8;
-  mylesImg.vy = mylesImg.speed;
+  milesImg.x = windowWidth / 2.1;
+  milesImg.y = windowHeight / 1.8;
+  milesImg.vy = milesImg.speed;
 
   //SOUND
   //call a funciton when the music is done playing
-  backMusic.onended(sayDone);
-  slider=createSlider(0,1,0.5,0.01);
+  currentSong.onended(sayDone);
+  slider = createSlider(0, 1, 0.5, 0.01);
 
   //general slider styling
-  slider.style('appearance', 'none');
-  slider.style('border-radius', '5px');
-  slider.style('background', 'rgba(0,0,0,0.5)');
+  slider.style("appearance", "none");
+  slider.style("border-radius", "5px");
+  slider.style("background", "rgba(0,0,0,0.5)");
 }
 
 //SOUND
-function sayDone(elt){
-    console.log("donew");
+function sayDone(elt) {
+  console.log("donew");
 }
 /**
 Description of draw()
 */
 function draw() {
-image(bckgImg, 0, 0, windowWidth, windowHeight);
-image(mylesImg.image, mylesImg.x, mylesImg.y, mylesImg.sizeX, mylesImg.sizeY);
-
-//SOUND
-backMusic.setVolume(slider.value());
-slider.position(windowWidth/2.1, windowHeight/1.1);
-//FLOAT ATTEMPT
-// mylesImg.y += mylesImg.vy;
-// if(mylesImg.y <= windowHeight/1.8) {
-//   mylesImg.y -= mylesImg.vy;
-//   if(mylesImg.y>windowHeight/2){
-//     mylesImg.y += mylesImg.vy;
-//     console.log("b;ab;a");
-//   }
-// }
-// else if(mylesImg.y >=windowHeight/1.7){
-//   mylesImg.y -= mylesImg.vy;
-// }
-// console.log(mylesImg.y);
-//ATTEMP END
+  image(bckgImg, 0, 0, windowWidth, windowHeight);
+  image(milesImg.image, milesImg.x, milesImg.y, milesImg.sizeX, milesImg.sizeY);
+  //SOUND
+  currentSong.setVolume(slider.value());
+  slider.position(windowWidth / 2.1, windowHeight / 1.1);
+  //FLOAT ATTEMPT
+  // milesImg.y += milesImg.vy;
+  // if(milesImg.y <= windowHeight/1.8) {
+  //   milesImg.y -= milesImg.vy;
+  //   if(milesImg.y>windowHeight/2){
+  //     milesImg.y += milesImg.vy;
+  //     console.log("b;ab;a");
+  //   }
+  // }
+  // else if(milesImg.y >=windowHeight/1.7){
+  //   milesImg.y -= milesImg.vy;
+  // }
+  // console.log(milesImg.y);
+  //ATTEMP END
 }
 
 //SOUND
 //Plays or pauses the music
-function playPause(){
-  let playPauseButton=document.getElementById('playPauseButton');
-  if(!backMusic.isPlaying()){
-    backMusic.play();
-    playPauseButton.classList.add('pause');
-    playPauseButton.classList.remove('play');
+function playPause() {
+  let playPauseButton = document.getElementById("playPauseButton");
+  if (!currentSong.isPlaying()) {
+    currentSong.play();
+    playPauseButton.classList.add("pause");
+    playPauseButton.classList.remove("play");
+  } else {
+    currentSong.pause();
+    playPauseButton.classList.add("play");
+    playPauseButton.classList.remove("pause");
   }
-  else{
-      backMusic.pause();
-      playPauseButton.classList.add('play');
-      playPauseButton.classList.remove('pause');
-  }
+}
 
+//Puts on the previous songs
+function previous() {
+  currentSong.stop();
+  if (songIndex === 0) {
+    songIndex = songs.length - 1;
+  } else {
+    songIndex -= 1;
+  }
+  currentSong = songs[songIndex];
+  currentSong.play();
+}
+
+//Puts on the next songs
+function next() {
+  currentSong.stop();
+  if (songIndex === songs.length - 1) {
+    songIndex = 0;
+  } else {
+    songIndex += 1;
+  }
+  currentSong = songs[songIndex];
+  currentSong.play();
 }
