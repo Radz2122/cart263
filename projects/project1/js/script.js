@@ -141,7 +141,7 @@ function draw() {
     // rectMode(CENTER);
     noStroke();
     rotate(angle);
-    fill(colorPicker.color());
+    fill(colorPicker.color(0,0));
     // fill('rgba(0,255,0, 0.25)');
     rect(0,i,5,y);
   }
@@ -149,6 +149,7 @@ function draw() {
   // endShape();
   push();
   noFill();
+  stroke(255);
   strokeWeight(1);
   for (let t = -1;t<=1; t+=2) {
     beginShape();
@@ -164,17 +165,13 @@ function draw() {
 
   pop();
   //FLOAT ATTEMPT
-  // milesImg.y += milesImg.vy;
-  // if(milesImg.y <= windowHeight/1.8) {
-  //   milesImg.y -= milesImg.vy;
-  //   if(milesImg.y>windowHeight/2){
-  //     milesImg.y += milesImg.vy;
-  //     console.log("b;ab;a");
-  //   }
-  // }
-  // else if(milesImg.y >=windowHeight/1.7){
-  //   milesImg.y -= milesImg.vy;
-  // }
+  //doown=increase in Y axis and divide gets smaller
+  let currentPlace=milesImg.y;
+  milesImg.y += milesImg.vy;
+  if(currentPlace>=windowHeight/1.7){
+    milesImg.y -= milesImg.vy;
+    // console.log("hehe");
+  }
   // console.log(milesImg.y);
   //ATTEMP END
 }
