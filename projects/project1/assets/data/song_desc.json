@@ -1,10 +1,27 @@
-{
-  "smtg":{
-    "artist":"blablabalbalname",
-    "link":"https"
-  },
-  "smtg2":{
-    "artist":"blablabalbalname2",
-    "link":"https2"
-  }
-}
+[
+    {
+      "songName":"assets/sounds/wayUp.mp3",
+      "artist":"blablabalbalname",
+      "link":"https"
+    },
+    {
+      "songName":"assets/sounds/whatsUpDanger.mp3",
+      "artist":"blablabalbalname",
+      "link":"https"
+    },
+    {
+      "songName":"assets/sounds/elevate.mp3",
+      "artist":"elevate",
+      "link":"https"
+    },
+    {
+      "songName":"assets/sounds/familia.mp3",
+      "artist":"elevate",
+      "link":"https"
+    },
+    {
+      "songName":"assets/sounds/sunflower.mp3",
+      "artist":"elevate",
+      "link":"https"
+    }
+  ]

@@ -44,6 +44,7 @@ function preload() {
   bckgImg = loadImage(BCKGRD_IMG);
    songDesc = loadJSON("assets/data/song_desc.json");
 
+
   //SOUND
   //load every song
   backMusic0 = loadSound(`assets/sounds/wayUp.mp3`);
@@ -59,7 +60,7 @@ function preload() {
   songs.push(backMusic4);
   songs.push(backMusic0);
   //give the current song its index in the array
-  console.log(songs);
+
   currentSong = songs[songIndex];
 }
 
@@ -67,7 +68,21 @@ function preload() {
 Description of setup
 */
 function setup() {
+  // console.log(songDesc);
+  // songDesc.forEach((element) => {
+  //   console.log({ element });
+  // });
+
+
+  // for (var i = 0; i < songDesc.length; i++) {
+  //   let songUrl=songDesc[i].songName;
+  //   console.log(songUrl);
+  //   let loadSong=loadSound(songUrl);
+  //   song.push(loadSong);
+  // }
+
   createCanvas(windowWidth, windowHeight);
+  // console.log(songDesc);
   //SOUND
   //call a funciton when the music is done playing
   currentSong.onended(sayDone);
@@ -95,6 +110,9 @@ function sayDone(elt) {
 Description of draw()
 */
 function draw() {
+  // console.log(currentSong===songDesc[0].songName);
+  // console.log(currentSong.url);
+  // console.log(currentSong.url===songDesc[0].songName);
   image(bckgImg, 0, 0, windowWidth, windowHeight);
 
   //SOUND
