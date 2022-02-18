@@ -202,6 +202,8 @@ function previous() {
   }
   currentSong = songs[songIndex];
   currentSong.play();
+  playPauseButton.classList.add("pause");
+  playPauseButton.classList.remove("play");
 }
 
 //Puts on the next songs
@@ -214,4 +216,6 @@ function next() {
   }
   currentSong = songs[songIndex];
   currentSong.play();
+  playPauseButton.classList.add("pause");
+  playPauseButton.classList.remove("play");
 }
