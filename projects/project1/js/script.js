@@ -47,45 +47,44 @@ function preload() {
 
   //SOUND
   //load every song
-  backMusic0 = loadSound(`assets/sounds/wayUp.mp3`);
-  backMusic1 = loadSound(`assets/sounds/whatsUpDanger.mp3`);
-  backMusic2 = loadSound(`assets/sounds/elevate.mp3`);
-  backMusic3= loadSound(`assets/sounds/familia.mp3`);
-  backMusic4 = loadSound(`assets/sounds/sunflower.mp3`);
-
-  //push all the songs in their array
-  songs.push(backMusic1);
-  songs.push(backMusic2);
-  songs.push(backMusic3);
-  songs.push(backMusic4);
-  songs.push(backMusic0);
+  // backMusic0 = loadSound(`assets/sounds/wayUp.mp3`);
+  // backMusic1 = loadSound(`assets/sounds/whatsUpDanger.mp3`);
+  // backMusic2 = loadSound(`assets/sounds/elevate.mp3`);
+  // backMusic3= loadSound(`assets/sounds/familia.mp3`);
+  // backMusic4 = loadSound(`assets/sounds/sunflower.mp3`);
+  //
+  // //push all the songs in their array
+  // songs.push(backMusic1);
+  // songs.push(backMusic2);
+  // songs.push(backMusic3);
+  // songs.push(backMusic4);
+  // songs.push(backMusic0);
   //give the current song its index in the array
 
-  currentSong = songs[songIndex];
+
+
 }
 
 /**
 Description of setup
 */
 function setup() {
-  // console.log(songDesc);
-  // songDesc.forEach((element) => {
-  //   console.log({ element });
-  // });
-
-
-  // for (var i = 0; i < songDesc.length; i++) {
-  //   let songUrl=songDesc[i].songName;
-  //   console.log(songUrl);
-  //   let loadSong=loadSound(songUrl);
-  //   song.push(loadSong);
-  // }
 
   createCanvas(windowWidth, windowHeight);
+
+let songArrayLength=objLength(songDesc);
+  for (var i = 0; i < songArrayLength; i++) {
+    let songUrl=songDesc[i].songName;
+    console.log(songUrl);
+    let loadSong=loadSound(songUrl);
+    console.log(loadSong);
+    songs.push(loadSong);
+  }
+    currentSong = songs[songIndex];
   // console.log(songDesc);
   //SOUND
   //call a funciton when the music is done playing
-  currentSong.onended(sayDone);
+  // currentSong.onended(sayDone);
   slider = createSlider(0, 1, 0.5, 0.01);
 
   //general slider styling
@@ -101,6 +100,16 @@ function setup() {
   colorPicker.position(windowWidth/1.2, windowHeight/10);
 
 }
+//returns lenght of an object
+  function objLength(obj){
+    var i=0;
+    for (var x in obj){
+      if(obj.hasOwnProperty(x)){
+        i++;
+      }
+    }
+    return i;
+  }
 
 //SOUND
 function sayDone(elt) {
