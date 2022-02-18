@@ -138,7 +138,9 @@ function draw() {
     let y= r*-cos(angle);
 
     // stroke(200,255,255);
-    rect(0,0,x,y);
+    rectMode(CENTER);
+    rotate(angle);
+    rect(0,y,5,i);
     // line(0,0,x,y);
   }
 
