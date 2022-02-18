@@ -74,14 +74,14 @@ function setup() {
 
 let songArrayLength=objLength(songDesc);
   for (var i = 0; i < songArrayLength; i++) {
-    let songUrl=songDesc[i].songName;
+    let songUrl=songDesc[i].songLink;
     console.log(songUrl);
     let loadSong=loadSound(songUrl);
-    console.log(loadSong);
     songs.push(loadSong);
   }
     currentSong = songs[songIndex];
-  // console.log(songDesc);
+
+
   //SOUND
   //call a funciton when the music is done playing
   // currentSong.onended(sayDone);
@@ -119,9 +119,9 @@ function sayDone(elt) {
 Description of draw()
 */
 function draw() {
-  // console.log(currentSong===songDesc[0].songName);
+
   // console.log(currentSong.url);
-  // console.log(currentSong.url===songDesc[0].songName);
+  // console.log(currentSong.url===songDesc[0].songLink);
   image(bckgImg, 0, 0, windowWidth, windowHeight);
 
   //SOUND

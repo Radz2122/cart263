@@ -1,27 +1,32 @@
 [
     {
-      "songName":"assets/sounds/wayUp.mp3",
-      "artist":"blablabalbalname",
-      "link":"https"
+      "songLink":"assets/sounds/wayUp.mp3",
+      "songName":"Way Up",
+      "artist":"Jaden Smith",
+      "link":"https://www.youtube.com/watch?v=x2QFRU7_mwc"
     },
     {
-      "songName":"assets/sounds/whatsUpDanger.mp3",
-      "artist":"blablabalbalname",
-      "link":"https"
+      "songLink":"assets/sounds/whatsUpDanger.mp3",
+      "songName":"What's Up Danger",
+      "artist":"Blackway & Black Caviar",
+      "link":"https://www.youtube.com/watch?v=Y88LVU7MAe4&list=PLOWDZJe5wh3j2HkdsxNe7yDeZrow5XRsD"
     },
     {
-      "songName":"assets/sounds/elevate.mp3",
-      "artist":"elevate",
-      "link":"https"
+      "songLink":"assets/sounds/elevate.mp3",
+      "songName":"Elevate",
+      "artist":"DJ Khalil",
+      "link":"https://www.youtube.com/watch?v=fBKPgUvDVqE"
     },
     {
-      "songName":"assets/sounds/familia.mp3",
-      "artist":"elevate",
-      "link":"https"
+      "songLink":"assets/sounds/familia.mp3",
+      "songName":"Familia",
+      "artist":"Nicki Minaj & Anuel AA (Feat. Bantu)",
+      "link":"https://www.youtube.com/watch?v=mEX9ht4bexQ"
     },
     {
-      "songName":"assets/sounds/sunflower.mp3",
-      "artist":"elevate",
-      "link":"https"
+      "songLink":"assets/sounds/sunflower.mp3",
+      "songName":"Sunflower",
+      "artist":"Post Malone & Swae Lee ",
+      "link":"https://www.youtube.com/watch?v=ApXoWvfEYVU"
     }
   ]
