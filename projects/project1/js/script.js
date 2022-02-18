@@ -10,19 +10,6 @@ author, and this description to match your project!
 // Constants for image loading
 const BCKGRD_IMG = `assets/images/backgroundImg.png`;
 let bckgImg;
-// const MILES_IMG = `assets/images/miles.png`;
-//object that represents miles
-// let milesImg = {
-//   image: undefined,
-//   x: 0,
-//   y: 0,
-//   vx: 0,
-//   vy: 0,
-//   speed: 3,
-//   sizeX: 77,
-//   sizeY: 167,
-// };
-
 //SOUND
 
 //array containing all the songs
@@ -48,12 +35,14 @@ let fft;
 //stores the audiovizualizers color
 let colorPicker;
 
+let songDesc;
+
 /**
 Description of preload
 */
 function preload() {
   bckgImg = loadImage(BCKGRD_IMG);
-  // milesImg.image = loadImage(MILES_IMG);
+   songDesc = loadJSON("assets/data/song_desc.json");
 
   //SOUND
   //load every song
@@ -79,10 +68,6 @@ Description of setup
 */
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  // milesImg.x = windowWidth / 2.1;
-  // milesImg.y = windowHeight / 1.8;
-  // milesImg.vy = milesImg.speed;
-
   //SOUND
   //call a funciton when the music is done playing
   currentSong.onended(sayDone);
@@ -111,7 +96,6 @@ Description of draw()
 */
 function draw() {
   image(bckgImg, 0, 0, windowWidth, windowHeight);
-  // image(milesImg.image, milesImg.x, milesImg.y, milesImg.sizeX, milesImg.sizeY);
 
   //SOUND
   currentSong.setVolume(slider.value());
@@ -164,20 +148,7 @@ function draw() {
   }
 
   pop();
-  //FLOAT ATTEMPT
-  //doown=increase in Y axis and divide gets smaller
-  // let currentPlace=milesImg.y;
-  //
-  // if(currentPlace>=windowHeight/1.8){
-  //   milesImg.y += milesImg.vy;
-  // }
-  //  if(currentPlace>=height/1.7){
-  //   milesImg.y= windowHeight/1.8;
-  //
-  //   // console.log("hehe");
-  // }
-  // console.log(milesImg.y);
-  //ATTEMP END
+
 }
 
 
