@@ -10,18 +10,18 @@ author, and this description to match your project!
 // Constants for image loading
 const BCKGRD_IMG = `assets/images/backgroundImg.png`;
 let bckgImg;
-const MILES_IMG = `assets/images/miles.png`;
+// const MILES_IMG = `assets/images/miles.png`;
 //object that represents miles
-let milesImg = {
-  image: undefined,
-  x: 0,
-  y: 0,
-  vx: 0,
-  vy: 0,
-  speed: 3,
-  sizeX: 77,
-  sizeY: 167,
-};
+// let milesImg = {
+//   image: undefined,
+//   x: 0,
+//   y: 0,
+//   vx: 0,
+//   vy: 0,
+//   speed: 3,
+//   sizeX: 77,
+//   sizeY: 167,
+// };
 
 //SOUND
 
