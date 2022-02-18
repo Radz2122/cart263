@@ -53,7 +53,7 @@ Description of preload
 */
 function preload() {
   bckgImg = loadImage(BCKGRD_IMG);
-  milesImg.image = loadImage(MILES_IMG);
+  // milesImg.image = loadImage(MILES_IMG);
 
   //SOUND
   //load every song
@@ -79,9 +79,9 @@ Description of setup
 */
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  milesImg.x = windowWidth / 2.1;
-  milesImg.y = windowHeight / 1.8;
-  milesImg.vy = milesImg.speed;
+  // milesImg.x = windowWidth / 2.1;
+  // milesImg.y = windowHeight / 1.8;
+  // milesImg.vy = milesImg.speed;
 
   //SOUND
   //call a funciton when the music is done playing
@@ -111,7 +111,7 @@ Description of draw()
 */
 function draw() {
   image(bckgImg, 0, 0, windowWidth, windowHeight);
-  image(milesImg.image, milesImg.x, milesImg.y, milesImg.sizeX, milesImg.sizeY);
+  // image(milesImg.image, milesImg.x, milesImg.y, milesImg.sizeX, milesImg.sizeY);
 
   //SOUND
   currentSong.setVolume(slider.value());
@@ -166,15 +166,21 @@ function draw() {
   pop();
   //FLOAT ATTEMPT
   //doown=increase in Y axis and divide gets smaller
-  let currentPlace=milesImg.y;
-  milesImg.y += milesImg.vy;
-  if(currentPlace>=windowHeight/1.7){
-    milesImg.y -= milesImg.vy;
-    // console.log("hehe");
-  }
+  // let currentPlace=milesImg.y;
+  //
+  // if(currentPlace>=windowHeight/1.8){
+  //   milesImg.y += milesImg.vy;
+  // }
+  //  if(currentPlace>=height/1.7){
+  //   milesImg.y= windowHeight/1.8;
+  //
+  //   // console.log("hehe");
+  // }
   // console.log(milesImg.y);
   //ATTEMP END
 }
+
+
 
 //SOUND
 //Plays or pauses the music

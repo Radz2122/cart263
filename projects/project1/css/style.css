@@ -77,3 +77,25 @@ body > input[type=range]:nth-child(4)::-webkit-slider-thumb{
 .next{
   margin-left: 5%;
 }
+
+/* miles animation and style */
+.miles{
+  position: absolute;
+  display: flex;
+  align-self: center;
+  justify-self:center;
+  margin-bottom:-30px;
+  margin-left: -35px;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+	0% {
+		transform: translatey(0px);
+	}
+	50% {
+		transform: translatey(20px);
+	}
+	100% {
+		transform: translatey(0px);
+	}
+}
