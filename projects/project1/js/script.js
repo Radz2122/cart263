@@ -45,6 +45,8 @@ let currentSong;
 let songIndex = 0;
 
 let fft;
+//stores the audiovizualizers color
+let colorPicker;
 
 /**
 Description of preload
@@ -94,6 +96,10 @@ function setup() {
   angleMode(DEGREES);
   fft= new p5.FFT(0.9,64);
 
+  //colorpicker for audiovisualizer
+  colorPicker = createColorPicker('#ed225d');
+  colorPicker.position(windowWidth/1.2, windowHeight/10);
+
 }
 
 //SOUND
@@ -112,36 +118,32 @@ function draw() {
   slider.position(windowWidth / 2.1, windowHeight / 1.1);
 
   //audiovisualizer
-
-  // noFill();
   translate(windowWidth/2,windowHeight/2);
   let wave=fft.waveform();
   let spectrum= fft.analyze();
-  // stroke(0,223,222);
+
   strokeWeight(3);
   // beginShape();
   for (var i = 0; i < spectrum.length; i++) {
     // let index= floor(map(i,0,180,0,wave.length-1));
     let angle=map(i,0,spectrum.length,0,360);
-    let r= map(spectrum[i],9,200,10,250);
+    let r= map(spectrum[i],9,50,30,150);
     let x=r*sin(angle);
     let y= r*cos(angle);
     stroke(i,255,255);
     line(0,0,x,y);
   }
   for (var i = 0; i < spectrum.length; i++) {
-
-    // let index= floor(map(i,0,180,0,wave.length-1));
     let angle=map(i,0,spectrum.length,0,360);
     let r= map(spectrum[i],9,200,10,250);
     let x=r*-sin(angle);
     let y= r*-cos(angle);
-
-    // stroke(200,255,255);
     // rectMode(CENTER);
+    noStroke();
     rotate(angle);
-    rect(0,i,3,y);
-    // line(0,0,x,y);
+    fill(colorPicker.color());
+    // fill('rgba(0,255,0, 0.25)');
+    rect(0,i,5,y);
   }
 
   // endShape();
