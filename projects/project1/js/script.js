@@ -10,32 +10,23 @@ author, and this description to match your project!
 // Constants for image loading
 const BCKGRD_IMG = `assets/images/backgroundImg.png`;
 let bckgImg;
-//SOUND
 
+//SOUND
 //array containing all the songs
 let songs = [];
-
-//vars containing each individual song
-let backMusic1;
-let backMusic2;
-let backMusic3;
-let backMusic4;
-let backMusic0;
-const ANIMAL_IMAGE_PREFIX = "backMusic";
-
-let nbSongs = 5;
 //contains the slider for the volume
 let slider;
 //contains the current song being played
 let currentSong;
 //to start from the first song
 let songIndex = 0;
+let songDesc;
 
+// AUDIOVISUALIZER
 let fft;
+let fft2;
 //stores the audiovizualizers color
 let colorPicker;
-
-let songDesc;
 let w;
 
 /**
@@ -74,7 +65,8 @@ function setup() {
 
   angleMode(DEGREES);
   fft = new p5.FFT(0.9, 64);
-  w=windowWidth/64;
+  fft2 = new p5.FFT(0.9, 256);
+  w=windowWidth/256;
 
   //colorpicker for audiovisualizer
   colorPicker = createColorPicker("#ed225d");
@@ -110,6 +102,7 @@ function draw() {
   translate(windowWidth / 2, windowHeight / 2);
   let wave = fft.waveform();
   let spectrum = fft.analyze();
+  let spectrum2 = fft2.analyze();
 
   strokeWeight(3);
   // beginShape();
@@ -123,13 +116,13 @@ function draw() {
     line(0, 0, x, y);
   }
   //lines on top
-  for (let u = 0; u < spectrum.length; u++) {
-    let amp= spectrum[u];
+  for (let u = 0; u < spectrum2.length; u++) {
+    let amp= spectrum2[u];
     let y= map(amp,0,256,windowHeight,0);
     line(u*w,-height,u*w,-y);
   }
-  for (let u = 0; u < spectrum.length; u++) {
-    let amp= spectrum[u];
+  for (let u = 0; u < spectrum2.length; u++) {
+    let amp= spectrum2[u];
     let y= map(amp,0,256,windowHeight,0);
     line(-u*w,-height,-u*w,-y);
   }
