@@ -119,7 +119,7 @@ function sayDone(elt) {
 Description of draw()
 */
 function draw() {
-
+  displaySongName(currentSong);
   // console.log(currentSong.url);
   // console.log(currentSong.url===songDesc[0].songLink);
   image(bckgImg, 0, 0, windowWidth, windowHeight);
@@ -178,7 +178,22 @@ function draw() {
 
 }
 
-
+function displaySongName(x){
+  let songArrayLength=objLength(songDesc);
+    for (var i = 0; i < songArrayLength; i++) {
+      let songName=songDesc[i].songName;
+      // console.log(songName);
+      if(currentSong.url===songDesc[i].songLink){
+        let songDesc= document.getElementById('songDesc');
+        songDesc.innerHTML=songName;
+      }
+    }
+  // if(currentSong.url===songDesc[0].songLink){
+  //   let songDesc= document.getElementsByTagName('songDesc');
+  //   songDesc.innerHTML=songDesc[0].songName;
+  // }
+  // console.log(x.url);
+}
 
 //SOUND
 //Plays or pauses the music
