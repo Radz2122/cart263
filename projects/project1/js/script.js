@@ -59,9 +59,7 @@ function setup() {
   slider = createSlider(0, 1, 0.5, 0.01);
 
   //general slider styling
-  slider.style("appearance", "none");
   slider.style("border-radius", "5px");
-  slider.style("background", "rgba(0,0,0,0.5)");
 
   angleMode(DEGREES);
   fft = new p5.FFT(0.9, 64);
@@ -69,9 +67,8 @@ function setup() {
   w=windowWidth/256;
 
   //colorpicker for audiovisualizer
-  colorPicker = createColorPicker("#ed225d");
-  colorPicker.position(windowWidth / 1.2, windowHeight / 10);
-
+  colorPicker = createColorPicker("#16398D");
+  colorPicker.position(windowWidth / 1.05, windowHeight /20);
   //ANNYANG
   // Is annyang available?
   if (annyang) {
@@ -110,7 +107,7 @@ function draw() {
   //SOUND
   displaySongName(currentSong);
   currentSong.setVolume(slider.value());
-  slider.position(windowWidth / 2.1, windowHeight / 1.1);
+  slider.position(windowWidth /2.15, windowHeight /1.15);
 
   //audiovisualizer
   translate(windowWidth / 2, windowHeight / 2);

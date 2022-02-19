@@ -19,6 +19,9 @@ body {
   height: 100vh; /* Body is the height of the viewport */
   overflow: hidden; /* Hide anything that goes off the window size */
 }
+button:active,button:visited,button:focus{
+  text-decoration: none;
+}
 .buttonsHUD{
     position: absolute;
   display: flex;
@@ -33,13 +36,12 @@ body {
 /* Default play button */
 .play{
   margin:0;
-  /* PLAY styling */
   width: 0;
  height: 0;
  background-color: transparent;
  border-top: 10px solid transparent;
  border-bottom: 10px solid transparent;
- border-left: 20px solid red;
+ border-left: 20px solid #16398D;
  border-right: none;
  cursor: pointer;
 
@@ -47,36 +49,56 @@ body {
 
 /* pause button */
 .pause{
-   /* PAUSE styling */
    margin:0;
    background: transparent;
    border-style: double;
    border-width: 0px 50px 0px 50px;
    border-width: 0px 0px 0px 20px;
-    border-color: red;
+    border-color: #16398D;
     cursor: pointer;
 }
-/* Slider-thumb css  CHANGE AT END*/
-body > input[type=range]:nth-child(4)::-webkit-slider-thumb{
+
+/* Slider-thumb css*/
+body > input[type=range]:nth-child(6){
   appearance:none;
-  width: 15px;
+  width: 140px;
   height: 15px;
-  background: red;
+  background: #16398D;
   cursor: pointer;
   border-radius: 50%;
 }
 
 /* PREVIOUS BUTTON */
-.previous, .next{
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
+.previous, .previous2{
+  margin-right: 10%;
+  width: 0;
+ height: 0;
+ background-color: transparent;
+ border-top: 8px solid transparent;
+ border-bottom: 8px solid transparent;
+ border-right: 12px solid #16398D;
+ border-left: none;
+ cursor: pointer;
 }
 .previous{
-  margin-right: 10%;
+  margin:0;
+  margin-right:-8px;
 }
-.next{
-  margin-left: 5%;
+
+/* NEXT BUTTON */
+.next, .next2{
+  width: 0;
+ height: 0;
+ background-color: transparent;
+ border-top: 8px solid transparent;
+ border-bottom: 8px solid transparent;
+ border-left: 12px solid #16398D;
+ border-right: none;
+ cursor: pointer;
+}
+.next2{
+  margin:0;
+    margin-left:-8px;
 }
 
 /* miles animation and style */
