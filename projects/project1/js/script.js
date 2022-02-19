@@ -71,6 +71,20 @@ function setup() {
   //colorpicker for audiovisualizer
   colorPicker = createColorPicker("#ed225d");
   colorPicker.position(windowWidth / 1.2, windowHeight / 10);
+
+  //ANNYANG
+  // Is annyang available?
+  if (annyang) {
+
+    // Create the guessing command
+    let commands = {
+      'next': next,
+      'back': previous
+    };
+    // Setup annyang and start
+    annyang.addCommands(commands);
+    annyang.start();
+  }
 }
 //returns lenght of an object
 function objLength(obj) {
