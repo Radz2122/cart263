@@ -178,21 +178,21 @@ function draw() {
 
 }
 
-function displaySongName(x){
+function displaySongName(xName){
   let songArrayLength=objLength(songDesc);
     for (var i = 0; i < songArrayLength; i++) {
       let songName=songDesc[i].songName;
-      // console.log(songName);
-      if(currentSong.url===songDesc[i].songLink){
-        let songDesc= document.getElementById('songDesc');
-        songDesc.innerHTML=songName;
+      let artistName=songDesc[i].artist;
+      let songLink=songDesc[i].link;
+      if(xName.url===songDesc[i].songLink){
+        let songNameText= document.getElementById('songNameID');
+        songNameText.innerHTML="Song Title: "+songName;
+        let songArtistText=document.getElementById('artistNameID');
+        songArtistText.innerHTML="By: "+artistName;
+        let linkSong=document.getElementById('linkToSongID');
+        linkSong.href=songLink;
       }
     }
-  // if(currentSong.url===songDesc[0].songLink){
-  //   let songDesc= document.getElementsByTagName('songDesc');
-  //   songDesc.innerHTML=songDesc[0].songName;
-  // }
-  // console.log(x.url);
 }
 
 //SOUND
