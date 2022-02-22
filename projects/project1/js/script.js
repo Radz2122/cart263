@@ -68,9 +68,6 @@ function setup() {
   fft2 = new p5.FFT(0.9, 256);
   w=windowWidth/256;
 
-  //colorpicker for audiovisualizer
-  colorPicker = createColorPicker("#16398D");
-  colorPicker.position(windowWidth / 1.05, windowHeight /20);
   //ANNYANG
   // Is annyang available?
   if (annyang) {
@@ -113,6 +110,10 @@ function draw() {
 }
 function simulation(){
     image(bckgImg, 0, 0, windowWidth, windowHeight);
+
+      //colorpicker for audiovisualizer
+      colorPicker = createColorPicker("#16398D");
+      colorPicker.position(windowWidth / 1.05, windowHeight /20);
     //SOUND
     displaySongName(currentSong);
     currentSong.setVolume(slider.value());
@@ -255,5 +256,8 @@ function title() {
   pop();
 
   //hide elements done in css
-  let miles2=document.getElementById("milesID").classList.add("noDisplay");
+  let miles=document.getElementById("milesID").classList.add("noDisplay");
+  let hud=document.getElementById("hudButtons").classList.add("noDisplay");
+  let songs=document.getElementById("songDesc").classList.add("noDisplay");
+
 }
