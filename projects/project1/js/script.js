@@ -7,6 +7,8 @@ author, and this description to match your project!
 */
 
 "use strict";
+//starts off the game with the title
+let state = `title`;
 // Constants for image loading
 const BCKGRD_IMG = `assets/images/backgroundImg.png`;
 let bckgImg;
@@ -102,75 +104,81 @@ function sayDone(elt) {
 Description of draw()
 */
 function draw() {
-  image(bckgImg, 0, 0, windowWidth, windowHeight);
 
-  //SOUND
-  displaySongName(currentSong);
-  currentSong.setVolume(slider.value());
-  slider.position(windowWidth /2.15, windowHeight /1.15);
-
-  //audiovisualizer
-  translate(windowWidth / 2, windowHeight / 2);
-  let wave = fft.waveform();
-  let spectrum = fft.analyze();
-  let spectrum2 = fft2.analyze();
-
-  strokeWeight(3);
-  // beginShape();
-  for (var i = 0; i < spectrum.length; i++) {
-    // let index= floor(map(i,0,180,0,wave.length-1));
-    let angle = map(i, 0, spectrum.length, 0, 360);
-    let r = map(spectrum[i], 9, 50, 30, 150);
-    let x = r * sin(angle);
-    let y = r * cos(angle);
-    stroke(i, 255, 255);
-    line(0, 0, x, y);
+  if (state === `title`) {
+    title();
+  } else if (state === `simulation`) {
+    simulation();
   }
-  //lines on top
-  for (let u = 0; u < spectrum2.length; u++) {
-    let amp= spectrum2[u];
-    let y= map(amp,0,256,windowHeight,0);
-    line(u*w,-height,u*w,-y);
-  }
-  for (let u = 0; u < spectrum2.length; u++) {
-    let amp= spectrum2[u];
-    let y= map(amp,0,256,windowHeight,0);
-    line(-u*w,-height,-u*w,-y);
-  }
-  //lines top end
-  for (var i = 0; i < spectrum.length; i++) {
-    let angle = map(i, 0, spectrum.length, 0, 360);
-    let r = map(spectrum[i], 9, 200, 10, 250);
-    let x = r * -sin(angle);
-    let y = r * -cos(angle);
-    // rectMode(CENTER);
-    noStroke();
-    rotate(angle);
-    fill(colorPicker.color(0, 0));
-    // fill('rgba(0,255,0, 0.25)');
-    rect(0, i, 5, y);
-  }
-
-  // endShape();
-  push();
-  noFill();
-  stroke(255);
-  strokeWeight(1);
-  for (let t = -1; t <= 1; t += 2) {
-    beginShape();
-    for (var i = 0; i < 180; i++) {
-      let index = floor(map(i, 0, 180, 0, wave.length - 1));
-      let r = map(wave[index], -1, 1, 150, 350);
-      let x = r * -sin(i) * t;
-      let y = r * cos(i);
-      vertex(x, y);
-    }
-    endShape();
-  }
-
-  pop();
 }
+function simulation(){
+    image(bckgImg, 0, 0, windowWidth, windowHeight);
+    //SOUND
+    displaySongName(currentSong);
+    currentSong.setVolume(slider.value());
+    slider.position(windowWidth /2.15, windowHeight /1.15);
 
+    //audiovisualizer
+    translate(windowWidth / 2, windowHeight / 2);
+    let wave = fft.waveform();
+    let spectrum = fft.analyze();
+    let spectrum2 = fft2.analyze();
+
+    strokeWeight(3);
+    // beginShape();
+    for (var i = 0; i < spectrum.length; i++) {
+      // let index= floor(map(i,0,180,0,wave.length-1));
+      let angle = map(i, 0, spectrum.length, 0, 360);
+      let r = map(spectrum[i], 9, 50, 30, 150);
+      let x = r * sin(angle);
+      let y = r * cos(angle);
+      stroke(i, 255, 255);
+      line(0, 0, x, y);
+    }
+    //lines on top
+    for (let u = 0; u < spectrum2.length; u++) {
+      let amp= spectrum2[u];
+      let y= map(amp,0,256,windowHeight,0);
+      line(u*w,-height,u*w,-y);
+    }
+    for (let u = 0; u < spectrum2.length; u++) {
+      let amp= spectrum2[u];
+      let y= map(amp,0,256,windowHeight,0);
+      line(-u*w,-height,-u*w,-y);
+    }
+    //lines top end
+    for (var i = 0; i < spectrum.length; i++) {
+      let angle = map(i, 0, spectrum.length, 0, 360);
+      let r = map(spectrum[i], 9, 200, 10, 250);
+      let x = r * -sin(angle);
+      let y = r * -cos(angle);
+      // rectMode(CENTER);
+      noStroke();
+      rotate(angle);
+      fill(colorPicker.color(0, 0));
+      // fill('rgba(0,255,0, 0.25)');
+      rect(0, i, 5, y);
+    }
+
+    // endShape();
+    push();
+    noFill();
+    stroke(255);
+    strokeWeight(1);
+    for (let t = -1; t <= 1; t += 2) {
+      beginShape();
+      for (var i = 0; i < 180; i++) {
+        let index = floor(map(i, 0, 180, 0, wave.length - 1));
+        let r = map(wave[index], -1, 1, 150, 350);
+        let x = r * -sin(i) * t;
+        let y = r * cos(i);
+        vertex(x, y);
+      }
+      endShape();
+    }
+
+    pop();
+}
 //display the CURRENT song name, artist, and links to the song on YouTube
 //gets info from JSON file
 function displaySongName(xName) {
@@ -231,4 +239,21 @@ function next() {
   currentSong.play();
   playPauseButton.classList.add("pause");
   playPauseButton.classList.remove("play");
+}
+/**
+creates the title at the start
+*/
+function title() {
+  push();
+  textSize(84);
+  textStyle(BOLD);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text(`Welcome`, width / 2, height / 2);
+  textSize(64);
+  text(`Left click to start`, width / 2, height / 2 + 150);
+  pop();
+
+  //hide elements done in css
+  let miles2=document.getElementById("milesID").classList.add("noDisplay");
 }

@@ -142,3 +142,9 @@ body > input[type=range]:nth-child(6){
 a:active, a:visited, a:focus {
     text-decoration:none;
 }
+.noDisplay{
+  display: none;
+}
+.toDisplay{
+  display: flex;
+}
