@@ -268,6 +268,10 @@ function title() {
   let hud=document.getElementById("hudButtons").classList.add("noDisplay");
   let songs=document.getElementById("songDesc").classList.add("noDisplay");
 
+  let tip=document.getElementById("tipVoice").classList.add("noDisplay");
+  let songLink=document.getElementById("linkToSongID").classList.add("noDisplay");
+
+
 }
 function changeBG(){
 
