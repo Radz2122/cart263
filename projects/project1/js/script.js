@@ -31,6 +31,7 @@ let fft2;
 let colorPicker;
 let w;
 
+let vid;
 /**
 Description of preload
 */
@@ -44,7 +45,7 @@ Description of setup
 */
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
+  background(0);
   let songArrayLength = objLength(songDesc);
   for (var i = 0; i < songArrayLength; i++) {
     let songUrl = songDesc[i].songLink;
@@ -54,14 +55,6 @@ function setup() {
   }
   //give the current song its index in the array
   currentSong = songs[songIndex];
-
-  //SOUND
-  //call a funciton when the music is done playing
-  // currentSong.onended(sayDone);
-  slider = createSlider(0, 1, 0.5, 0.01);
-
-  //general slider styling
-  slider.style("border-radius", "5px");
 
   angleMode(DEGREES);
   fft = new p5.FFT(0.9, 64);
@@ -81,6 +74,11 @@ function setup() {
     annyang.addCommands(commands);
     annyang.start();
   }
+
+  //VIDEO
+  vid = createVideo(['assets/videos/milesLeap.mp4']);
+  vid.position(0,0);
+  vid.size(windowWidth,windowHeight);
 }
 //returns lenght of an object
 function objLength(obj) {
@@ -116,6 +114,13 @@ function simulation(){
       colorPicker.position(windowWidth / 1.05, windowHeight /20);
     //SOUND
     displaySongName(currentSong);
+    //SOUND
+    //call a funciton when the music is done playing
+    // currentSong.onended(sayDone);
+    slider = createSlider(0, 1, 0.5, 0.01);
+
+    //general slider styling
+    slider.style("border-radius", "5px");
     currentSong.setVolume(slider.value());
     slider.position(windowWidth /2.15, windowHeight /1.15);
 
@@ -254,10 +259,16 @@ function title() {
   textSize(64);
   text(`Left click to start`, width / 2, height / 2 + 150);
   pop();
-
+  //create a button to strat the simulation
+  let button = createButton('click me');
+  button.position(0, 0);
+  button.mousePressed(changeBG);
   //hide elements done in css
   let miles=document.getElementById("milesID").classList.add("noDisplay");
   let hud=document.getElementById("hudButtons").classList.add("noDisplay");
   let songs=document.getElementById("songDesc").classList.add("noDisplay");
+
+}
+function changeBG(){
 
 }
