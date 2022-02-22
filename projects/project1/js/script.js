@@ -79,6 +79,7 @@ function setup() {
   vid = createVideo(['assets/videos/milesLeap.mp4']);
   vid.position(0,0);
   vid.size(windowWidth,windowHeight);
+  vid.onended(sayDone);
 }
 //returns lenght of an object
 function objLength(obj) {
@@ -94,6 +95,7 @@ function objLength(obj) {
 //SOUND
 function sayDone(elt) {
   console.log("done");
+  state = `simulation`;
 }
 /**
 Description of draw()
@@ -260,19 +262,19 @@ function title() {
   text(`Left click to start`, width / 2, height / 2 + 150);
   pop();
   //create a button to strat the simulation
-  let button = createButton('click me');
-  button.position(0, 0);
+  let button = createButton('Take a Leap >>>');
+  button.addClass("startButton");
+  button.position(windowWidth/2, windowHeight/1.2);
   button.mousePressed(changeBG);
   //hide elements done in css
   let miles=document.getElementById("milesID").classList.add("noDisplay");
   let hud=document.getElementById("hudButtons").classList.add("noDisplay");
   let songs=document.getElementById("songDesc").classList.add("noDisplay");
-
   let tip=document.getElementById("tipVoice").classList.add("noDisplay");
   let songLink=document.getElementById("linkToSongID").classList.add("noDisplay");
 
 
 }
 function changeBG(){
-
+vid.play();
 }
