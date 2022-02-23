@@ -48,6 +48,7 @@ Description of setup
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(0);
+
   let songArrayLength = objLength(songDesc);
   for (var i = 0; i < songArrayLength; i++) {
     let songUrl = songDesc[i].songLink;
@@ -76,7 +77,12 @@ function setup() {
     annyang.addCommands(commands);
     annyang.start();
   }
+  slider = createSlider(0, 1, 0.5, 0.01);
 
+  //general slider styling
+  slider.style("border-radius", "5px");
+
+  slider.position(windowWidth /2.15, windowHeight /1.15);
   //VIDEO
   vid = createVideo(['assets/videos/milesLeap.mp4']);
   vid.position(0,0);
@@ -98,6 +104,10 @@ function objLength(obj) {
 function sayDone(elt) {
   console.log("done");
   vid.addClass('transition');
+  currentSong.play();
+  currentSong.jump(130);
+  playPauseButton.classList.add("pause");
+  playPauseButton.classList.remove("play");
   state = `simulation`;
 }
 /**
@@ -115,6 +125,7 @@ function draw() {
 function simulation(){
 
     image(bckgImg, 0, 0, windowWidth, windowHeight);
+
     let miles=document.getElementById("milesID").classList.add("toDisplay");
     let hud=document.getElementById("hudButtons").classList.add("toDisplay");
     let songs=document.getElementById("songDesc").classList.add("toDisplay");
@@ -128,12 +139,7 @@ function simulation(){
     //SOUND
     //call a funciton when the music is done playing
     // currentSong.onended(sayDone);
-    slider = createSlider(0, 1, 0.5, 0.01);
-
-    //general slider styling
-    slider.style("border-radius", "5px");
-    currentSong.setVolume(slider.value());
-    slider.position(windowWidth /2.15, windowHeight /1.15);
+currentSong.setVolume(slider.value());
 
     //audiovisualizer
     translate(windowWidth / 2, windowHeight / 2);

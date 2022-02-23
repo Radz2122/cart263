@@ -1,16 +1,17 @@
 [
     {
-      "songLink":"assets/sounds/wayUp.mp3",
-      "songName":"Way Up",
-      "artist":"Jaden Smith",
-      "link":"https://www.youtube.com/watch?v=x2QFRU7_mwc"
-    },
-    {
       "songLink":"assets/sounds/whatsUpDanger.mp3",
       "songName":"What's Up Danger",
       "artist":"Blackway & Black Caviar",
       "link":"https://www.youtube.com/watch?v=Y88LVU7MAe4&list=PLOWDZJe5wh3j2HkdsxNe7yDeZrow5XRsD"
     },
+    {
+      "songLink":"assets/sounds/wayUp.mp3",
+      "songName":"Way Up",
+      "artist":"Jaden Smith",
+      "link":"https://www.youtube.com/watch?v=x2QFRU7_mwc"
+    },
+
     {
       "songLink":"assets/sounds/elevate.mp3",
       "songName":"Elevate",
