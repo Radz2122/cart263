@@ -32,6 +32,8 @@ let colorPicker;
 let w;
 
 let vid;
+
+// let buttonStart;
 /**
 Description of preload
 */
@@ -46,6 +48,7 @@ Description of setup
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(0);
+  createButton();
   let songArrayLength = objLength(songDesc);
   for (var i = 0; i < songArrayLength; i++) {
     let songUrl = songDesc[i].songLink;
@@ -95,6 +98,13 @@ function objLength(obj) {
 //SOUND
 function sayDone(elt) {
   console.log("done");
+  vid.addClass('transition');
+  // buttonStart.hide();
+
+
+
+  // buttonStart.removeClass('startButton');
+  // buttonStart.addClass('noDisplay');
   state = `simulation`;
 }
 /**
@@ -103,12 +113,14 @@ Description of draw()
 function draw() {
 
   if (state === `title`) {
+
     title();
   } else if (state === `simulation`) {
     simulation();
   }
 }
 function simulation(){
+
     image(bckgImg, 0, 0, windowWidth, windowHeight);
 
       //colorpicker for audiovisualizer
@@ -260,12 +272,8 @@ function title() {
   text(`Welcome`, width / 2, height / 2);
   textSize(64);
   text(`Left click to start`, width / 2, height / 2 + 150);
+
   pop();
-  //create a button to strat the simulation
-  let button = createButton('Take a Leap >>>');
-  button.addClass("startButton");
-  button.position(windowWidth/2, windowHeight/1.2);
-  button.mousePressed(changeBG);
   //hide elements done in css
   let miles=document.getElementById("milesID").classList.add("noDisplay");
   let hud=document.getElementById("hudButtons").classList.add("noDisplay");
@@ -273,8 +281,21 @@ function title() {
   let tip=document.getElementById("tipVoice").classList.add("noDisplay");
   let songLink=document.getElementById("linkToSongID").classList.add("noDisplay");
 
+}
+function createButton(){
+  console.log("called");
+  //create a button to strat the simulation
+   let buttonStart = createButton('Take a Leap >>>');
+  buttonStart.addClass("startButton");
+  buttonStart.position(windowWidth/2, windowHeight/1.1);
+  buttonStart.mousePressed(function(){
+      buttonStart.hide();
+    state = `simulation`;
+    console.log("hi");
 
+  });
 }
 function changeBG(){
 vid.play();
+
 }

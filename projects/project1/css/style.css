@@ -160,3 +160,10 @@ a:active, a:visited, a:focus {
   padding:10px 15px;
   cursor: pointer;
 }
+
+/* transition effect on video */
+.transition{
+  visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity 1s linear, scale 1s;
+}
