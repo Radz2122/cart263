@@ -20,6 +20,8 @@ let bckgImg;
 //SOUND
 //array containing all the songs
 let songs = [];
+//store the song state, if a song is playing or not
+let isPlaying;
 //contains the slider for the volume
 let slider;
 //contains the current song being played
@@ -32,6 +34,9 @@ let songDesc;
 // AUDIOVISUALIZER
 let fft;
 let fft2;
+let wave;
+let spectrum;
+let spectrum2;
 //stores the audiovizualizers color
 let colorPicker;
 //to add space between the bands
@@ -97,7 +102,7 @@ function setup() {
   }
 
   //VIDEO
-  //load video and set its dimensions and position
+  // load video and set its dimensions and position
   vid = createVideo(["assets/videos/milesLeap.mp4"]);
   vid.position(0, 0);
   vid.size(windowWidth, windowHeight);
@@ -116,7 +121,10 @@ function draw() {
   }
 }
 
-//COMMENT HERE
+//Displays the background and HTML elements
+//Displays the currently playing song's information
+//Sets the Volume
+//Sets the audiovisualizer variables and calls the functions creating them
 function simulation() {
   //set the backgorund img
   image(bckgImg, 0, 0, windowWidth, windowHeight);
@@ -130,57 +138,98 @@ function simulation() {
   colorPicker.style('display','block');
 
   //SOUND
-  displaySongName(currentSong);
+  displaySongInfo(currentSong);
   //sets the volume sliders value
   currentSong.setVolume(slider.value());
 
-  //audiovisualizer
+  //audiovisualizer elements
   translate(windowWidth / 2, windowHeight / 2);
-  let wave = fft.waveform();
-  let spectrum = fft.analyze();
-  let spectrum2 = fft2.analyze();
+  wave = fft.waveform();
+  spectrum = fft.analyze();
+  spectrum2 = fft2.analyze();
+  //call audiovisualizer functions that create them
+  if(isPlaying){
+    createTopAudioV();
+    createMidLineAudioV();
+    createMidRectAudioV();
+    createMidCircleAudioV();
+  }
 
+}
+
+//AUDIOVISUALIZERS CREATE FUNCTIONS
+//REFERENCES:
+//https://www.youtube.com/watch?v=2O3nm0Nvbi4
+//https://www.youtube.com/watch?v=uk96O7N1Yo0
+
+//audiovis from top
+function createTopAudioV(){
   strokeWeight(3);
-  // beginShape();
+  for (let u = 0; u < spectrum2.length; u++) {
+    let amp = spectrum2[u];
+    //map amplitude of sound to windowHeight
+    let y = map(amp, 0, 256, windowHeight, 0);
+    stroke(u, 255, 255);
+    //w to put distance between lines
+    line(u * w, -height, u * w, -y);
+  }
+  //duplicate and reverse
+  for (let u = 0; u < spectrum2.length; u++) {
+    let amp = spectrum2[u];
+    //map amplitude of sound to windowHeight
+    let y = map(amp, 0, 256, windowHeight, 0);
+    stroke(u, 255, 255);
+    //w to put distance between lines
+    line(-u * w, -height, -u * w, -y);
+  }
+}
+//audiovis from center, LINES
+//used a similar process as the lines form the top
+//instead of mapping the window, mapped the radius
+function createMidLineAudioV(){
+  strokeWeight(3);
   for (var i = 0; i < spectrum.length; i++) {
-    // let index= floor(map(i,0,180,0,wave.length-1));
     let angle = map(i, 0, spectrum.length, 0, 360);
-    let r = map(spectrum[i], 9, 50, 30, 150);
+    let r = map(spectrum[i], 9, 70, 30, 90);
     let x = r * sin(angle);
     let y = r * cos(angle);
     stroke(i, 255, 255);
     line(0, 0, x, y);
   }
-  //lines on top
-  for (let u = 0; u < spectrum2.length; u++) {
-    let amp = spectrum2[u];
-    let y = map(amp, 0, 256, windowHeight, 0);
-    line(u * w, -height, u * w, -y);
+  //duplicate to create symmetry
+  for (var i = 0; i < spectrum.length; i++) {
+    let angle = map(i, 0, spectrum.length, 0, 360);
+    let r = map(spectrum[i], 9, 70, 30, 90);
+    //reverse to flip
+    let x = r * -sin(angle);
+    let y = r * cos(angle);
+    stroke(i, 255, 255);
+    line(0, 0, x, y);
   }
-  for (let u = 0; u < spectrum2.length; u++) {
-    let amp = spectrum2[u];
-    let y = map(amp, 0, 256, windowHeight, 0);
-    line(-u * w, -height, -u * w, -y);
-  }
-  //lines top end
+}
+//audiovis from center, RECTANGLES
+//used a similar process as the lines form the center
+//instead of lines , rectangles were used to change their fill with the colorPicker
+function createMidRectAudioV(){
   for (var i = 0; i < spectrum.length; i++) {
     let angle = map(i, 0, spectrum.length, 0, 360);
     let r = map(spectrum[i], 9, 200, 10, 250);
     let x = r * -sin(angle);
     let y = r * -cos(angle);
-    // rectMode(CENTER);
     noStroke();
     rotate(angle);
     fill(colorPicker.color(0, 0));
-    // fill('rgba(0,255,0, 0.25)');
-    rect(0, i, 5, y);
+    rect(0, i, 6, y);
   }
-
-  // endShape();
-  push();
+}
+//audiovis from center, CIRCLE
+//creates the white circle
+function createMidCircleAudioV(){
+  //set values for overall look
   noFill();
   stroke(255);
   strokeWeight(1);
+  //loop twice to create both sides of circle
   for (let t = -1; t <= 1; t += 2) {
     beginShape();
     for (var i = 0; i < 180; i++) {
@@ -192,40 +241,14 @@ function simulation() {
     }
     endShape();
   }
-
-  pop();
 }
-
-//returns lenght of an object
-function objLength(obj) {
-  var i = 0;
-  for (var x in obj) {
-    if (obj.hasOwnProperty(x)) {
-      i++;
-    }
-  }
-  return i;
-}
-
-//changes the state after the video is over
-function ended() {
-  //fade on video
-  vid.addClass("transition");
-  //continue song form the video to the simulation
-  currentSong.play();
-  currentSong.jump(130);
-  //change the visual of the button to the "playing" look
-  playPauseButton.classList.add("pause");
-  playPauseButton.classList.remove("play");
-  //change the state
-  state = `simulation`;
-}
+//AUDIOVISUALIZERS END
 
 //SOUND FUNCTIONS
 
 //display the CURRENT song name, artist, and links to the song on YouTube
 //gets the info from JSON file
-function displaySongName(xName) {
+function displaySongInfo(xSong) {
   //get the lenght of the object
   let songArrayLength = objLength(songDesc);
   for (var i = 0; i < songArrayLength; i++) {
@@ -234,7 +257,7 @@ function displaySongName(xName) {
     let artistName = songDesc[i].artist;
     let songLink = songDesc[i].link;
     //display the information of the current song thats playing
-    if (xName.url === songDesc[i].songLink) {
+    if (xSong.url === songDesc[i].songLink) {
       let songNameText = document.getElementById("songNameID");
       songNameText.innerHTML = "Song Title: " + songName;
       let songArtistText = document.getElementById("artistNameID");
@@ -254,17 +277,20 @@ function playPause() {
     //changes classes to change the look of the play/pause button
     playPauseButton.classList.add("pause");
     playPauseButton.classList.remove("play");
+    isPlaying=true;
   } else {
     currentSong.pause();
     //changes classes to change the look of the play/pause button
     playPauseButton.classList.add("play");
     playPauseButton.classList.remove("pause");
+    setTimeout(setPause,500);
   }
 }
 
 //Puts on the previous songs
 function previous() {
   currentSong.stop();
+  setTimeout(setPause,500);
   if (songIndex === 0) {
     songIndex = songs.length - 1;
   } else {
@@ -273,6 +299,8 @@ function previous() {
   currentSong = songs[songIndex];
   //play the next song
   currentSong.play();
+  //to create the audiovisualizers
+  isPlaying=true;
   //changes classes to change the look of the play/pause button
   playPauseButton.classList.add("pause");
   playPauseButton.classList.remove("play");
@@ -289,12 +317,47 @@ function next() {
   currentSong = songs[songIndex];
   //play the next song
   currentSong.play();
+  //to create the audiovisualizers
+  isPlaying=true;
   //changes classes to change the lookk of the play/pause button
   playPauseButton.classList.add("pause");
   playPauseButton.classList.remove("play");
 }
+//resets isPlaying to false after a delay to let the lines retract and then make them disappear
+//when a song is paused
+function setPause(){
+  isPlaying=false;
+}
 //SOUND FUNCTIONS END
 
+//OTHERS
+
+//returns lenght of an object
+function objLength(obj) {
+  var i = 0;
+  for (var x in obj) {
+    if (obj.hasOwnProperty(x)) {
+      i++;
+    }
+  }
+  return i;
+}
+
+//changes the state after the video is over
+function ended() {
+  //fade on video
+  vid.addClass("transition");
+  //continue song form the video to the simulation
+  currentSong.play();
+  //to create the audiovisualizers
+  isPlaying=true;
+  currentSong.jump(130);
+  //change the visual of the button to the "playing" look
+  playPauseButton.classList.add("pause");
+  playPauseButton.classList.remove("play");
+  //change the state
+  state = `simulation`;
+}
 //hides the hmtl elements from the simulation
 function title() {
   let miles = document.getElementById("milesID").classList.add("noDisplay");
@@ -307,6 +370,7 @@ function title() {
 //called when the button take a leap is pressed
 function startClicked() {
   vid.play();
+  //removes button when pressed
   let startbutton = document.getElementById("startButton");
   startbutton.remove();
 }
