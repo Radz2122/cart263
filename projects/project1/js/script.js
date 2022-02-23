@@ -48,26 +48,40 @@ function preload() {
 }
 
 /**
-Description of setup
+Setups the background. loads the songs and the video, creates a the volume slider
+and initializes ANNYANG
 */
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(0);
 
+  //SOUND
+  //load the songs
+  //load the songs form the JSON file
   let songArrayLength = objLength(songDesc);
   for (var i = 0; i < songArrayLength; i++) {
     let songUrl = songDesc[i].songLink;
-    console.log(songUrl);
     let loadSong = loadSound(songUrl);
+    //put the song sin an array
     songs.push(loadSong);
   }
   //give the current song its index in the array
   currentSong = songs[songIndex];
-
+  //for the audiovisualizer
   angleMode(DEGREES);
+  //get the song frequencies
   fft = new p5.FFT(0.9, 64);
   fft2 = new p5.FFT(0.9, 256);
   w = windowWidth / 256;
+  //Volume slider
+  slider = createSlider(0, 1, 0.5, 0.01);
+  slider.style("border-radius", "5px");
+  slider.position(windowWidth / 2.15, windowHeight / 1.15);
+  //colorpicker for audiovisualizer
+  colorPicker = createColorPicker("#16398D");
+  colorPicker.position(windowWidth / 1.05, windowHeight / 20);
+  //hide it while the vid is playing
+  colorPicker.style('display','none');
 
   //ANNYANG
   // Is annyang available?
@@ -81,41 +95,18 @@ function setup() {
     annyang.addCommands(commands);
     annyang.start();
   }
-  slider = createSlider(0, 1, 0.5, 0.01);
 
-  //general slider styling
-  slider.style("border-radius", "5px");
-
-  slider.position(windowWidth / 2.15, windowHeight / 1.15);
   //VIDEO
+  //load video and set its dimensions and position
   vid = createVideo(["assets/videos/milesLeap.mp4"]);
   vid.position(0, 0);
   vid.size(windowWidth, windowHeight);
-  vid.onended(sayDone);
-}
-//returns lenght of an object
-function objLength(obj) {
-  var i = 0;
-  for (var x in obj) {
-    if (obj.hasOwnProperty(x)) {
-      i++;
-    }
-  }
-  return i;
+  //call a funciton when the video intro is done playing
+  vid.onended(ended);
 }
 
-//SOUND
-function sayDone(elt) {
-  console.log("done");
-  vid.addClass("transition");
-  currentSong.play();
-  currentSong.jump(130);
-  playPauseButton.classList.add("pause");
-  playPauseButton.classList.remove("play");
-  state = `simulation`;
-}
 /**
-Description of draw()
+Calls the functions needed for each state
 */
 function draw() {
   if (state === `title`) {
@@ -124,24 +115,23 @@ function draw() {
     simulation();
   }
 }
-function simulation() {
-  image(bckgImg, 0, 0, windowWidth, windowHeight);
 
+//COMMENT HERE
+function simulation() {
+  //set the backgorund img
+  image(bckgImg, 0, 0, windowWidth, windowHeight);
+  //display the hmtl elements
   let miles = document.getElementById("milesID").classList.add("toDisplay");
   let hud = document.getElementById("hudButtons").classList.add("toDisplay");
   let songs = document.getElementById("songDesc").classList.add("toDisplay");
   let tip = document.getElementById("tipVoice").classList.add("toDisplay");
-  let songLink = document
-    .getElementById("linkToSongID")
-    .classList.add("toDisplay");
-  //colorpicker for audiovisualizer
-  colorPicker = createColorPicker("#16398D");
-  colorPicker.position(windowWidth / 1.05, windowHeight / 20);
+  let songLink = document.getElementById("linkToSongID").classList.add("toDisplay");
+  //show colorpicker
+  colorPicker.style('display','block');
+
   //SOUND
   displaySongName(currentSong);
-  //SOUND
-  //call a funciton when the music is done playing
-  // currentSong.onended(sayDone);
+  //sets the volume sliders value
   currentSong.setVolume(slider.value());
 
   //audiovisualizer
@@ -206,22 +196,51 @@ function simulation() {
   pop();
 }
 
+//returns lenght of an object
+function objLength(obj) {
+  var i = 0;
+  for (var x in obj) {
+    if (obj.hasOwnProperty(x)) {
+      i++;
+    }
+  }
+  return i;
+}
+
+//changes the state after the video is over
+function ended() {
+  //fade on video
+  vid.addClass("transition");
+  //continue song form the video to the simulation
+  currentSong.play();
+  currentSong.jump(130);
+  //change the visual of the button to the "playing" look
+  playPauseButton.classList.add("pause");
+  playPauseButton.classList.remove("play");
+  //change the state
+  state = `simulation`;
+}
+
 //SOUND FUNCTIONS
 
 //display the CURRENT song name, artist, and links to the song on YouTube
-//gets info from JSON file
+//gets the info from JSON file
 function displaySongName(xName) {
+  //get the lenght of the object
   let songArrayLength = objLength(songDesc);
   for (var i = 0; i < songArrayLength; i++) {
+    //get each corresponding piece of information of the current playing song from the JSON file
     let songName = songDesc[i].songName;
     let artistName = songDesc[i].artist;
     let songLink = songDesc[i].link;
+    //display the information of the current song thats playing
     if (xName.url === songDesc[i].songLink) {
       let songNameText = document.getElementById("songNameID");
       songNameText.innerHTML = "Song Title: " + songName;
       let songArtistText = document.getElementById("artistNameID");
       songArtistText.innerHTML = "By: " + artistName;
       let linkSong = document.getElementById("linkToSongID");
+      //add the link of the song form Youtube
       linkSong.href = songLink;
     }
   }
@@ -232,10 +251,12 @@ function playPause() {
   let playPauseButton = document.getElementById("playPauseButton");
   if (!currentSong.isPlaying()) {
     currentSong.play();
+    //changes classes to change the look of the play/pause button
     playPauseButton.classList.add("pause");
     playPauseButton.classList.remove("play");
   } else {
     currentSong.pause();
+    //changes classes to change the look of the play/pause button
     playPauseButton.classList.add("play");
     playPauseButton.classList.remove("pause");
   }
@@ -250,7 +271,9 @@ function previous() {
     songIndex -= 1;
   }
   currentSong = songs[songIndex];
+  //play the next song
   currentSong.play();
+  //changes classes to change the look of the play/pause button
   playPauseButton.classList.add("pause");
   playPauseButton.classList.remove("play");
 }
@@ -264,34 +287,24 @@ function next() {
     songIndex += 1;
   }
   currentSong = songs[songIndex];
+  //play the next song
   currentSong.play();
+  //changes classes to change the lookk of the play/pause button
   playPauseButton.classList.add("pause");
   playPauseButton.classList.remove("play");
 }
-
 //SOUND FUNCTIONS END
-/**
-creates the title at the start
-*/
+
+//hides the hmtl elements from the simulation
 function title() {
-  push();
-  textSize(84);
-  textStyle(BOLD);
-  fill(0);
-  textAlign(CENTER, CENTER);
-  text(`Welcome`, width / 2, height / 2);
-  textSize(64);
-  text(`Left click to start`, width / 2, height / 2 + 150);
-  pop();
-  //hide elements done in css
   let miles = document.getElementById("milesID").classList.add("noDisplay");
   let hud = document.getElementById("hudButtons").classList.add("noDisplay");
   let songs = document.getElementById("songDesc").classList.add("noDisplay");
   let tip = document.getElementById("tipVoice").classList.add("noDisplay");
-  let songLink = document
-    .getElementById("linkToSongID")
-    .classList.add("noDisplay");
+  let songLink = document.getElementById("linkToSongID").classList.add("noDisplay");
 }
+
+//called when the button take a leap is pressed
 function startClicked() {
   vid.play();
   let startbutton = document.getElementById("startButton");
