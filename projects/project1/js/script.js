@@ -2,15 +2,19 @@
 Project 1: A Night at the Movies
 Radhika Patel
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+Starts off with a video, introducing the scene illustrated in the simulation.
+Allows users to play/pause songs, skip them, go back , (with the buttons or their voice), adjust their volume.
+Displays information on each songs.
+Creates audiovisualizers moving to the beat of each songs.
+Creates colorpicker to change the audiovisualizer color.
 */
 
 "use strict";
 //starts off the game with the title
 let state = `title`;
-// Constants for image loading
+// Constant for image loading
 const BCKGRD_IMG = `assets/images/backgroundImg.png`;
+//var to store img
 let bckgImg;
 
 //SOUND
@@ -22,6 +26,7 @@ let slider;
 let currentSong;
 //to start from the first song
 let songIndex = 0;
+//store info on songs
 let songDesc;
 
 // AUDIOVISUALIZER
@@ -29,13 +34,13 @@ let fft;
 let fft2;
 //stores the audiovizualizers color
 let colorPicker;
+//to add space between the bands
 let w;
-
+//store the video at the begining
 let vid;
 
-
 /**
-Description of preload
+Loads background image and the songs info
 */
 function preload() {
   bckgImg = loadImage(BCKGRD_IMG);
@@ -62,16 +67,15 @@ function setup() {
   angleMode(DEGREES);
   fft = new p5.FFT(0.9, 64);
   fft2 = new p5.FFT(0.9, 256);
-  w=windowWidth/256;
+  w = windowWidth / 256;
 
   //ANNYANG
   // Is annyang available?
   if (annyang) {
-
     // Create the guessing command
     let commands = {
-      'next': next,
-      'back': previous
+      next: next,
+      back: previous,
     };
     // Setup annyang and start
     annyang.addCommands(commands);
@@ -82,11 +86,11 @@ function setup() {
   //general slider styling
   slider.style("border-radius", "5px");
 
-  slider.position(windowWidth /2.15, windowHeight /1.15);
+  slider.position(windowWidth / 2.15, windowHeight / 1.15);
   //VIDEO
-  vid = createVideo(['assets/videos/milesLeap.mp4']);
-  vid.position(0,0);
-  vid.size(windowWidth,windowHeight);
+  vid = createVideo(["assets/videos/milesLeap.mp4"]);
+  vid.position(0, 0);
+  vid.size(windowWidth, windowHeight);
   vid.onended(sayDone);
 }
 //returns lenght of an object
@@ -103,7 +107,7 @@ function objLength(obj) {
 //SOUND
 function sayDone(elt) {
   console.log("done");
-  vid.addClass('transition');
+  vid.addClass("transition");
   currentSong.play();
   currentSong.jump(130);
   playPauseButton.classList.add("pause");
@@ -114,94 +118,96 @@ function sayDone(elt) {
 Description of draw()
 */
 function draw() {
-
   if (state === `title`) {
-
     title();
   } else if (state === `simulation`) {
     simulation();
   }
 }
-function simulation(){
+function simulation() {
+  image(bckgImg, 0, 0, windowWidth, windowHeight);
 
-    image(bckgImg, 0, 0, windowWidth, windowHeight);
+  let miles = document.getElementById("milesID").classList.add("toDisplay");
+  let hud = document.getElementById("hudButtons").classList.add("toDisplay");
+  let songs = document.getElementById("songDesc").classList.add("toDisplay");
+  let tip = document.getElementById("tipVoice").classList.add("toDisplay");
+  let songLink = document
+    .getElementById("linkToSongID")
+    .classList.add("toDisplay");
+  //colorpicker for audiovisualizer
+  colorPicker = createColorPicker("#16398D");
+  colorPicker.position(windowWidth / 1.05, windowHeight / 20);
+  //SOUND
+  displaySongName(currentSong);
+  //SOUND
+  //call a funciton when the music is done playing
+  // currentSong.onended(sayDone);
+  currentSong.setVolume(slider.value());
 
-    let miles=document.getElementById("milesID").classList.add("toDisplay");
-    let hud=document.getElementById("hudButtons").classList.add("toDisplay");
-    let songs=document.getElementById("songDesc").classList.add("toDisplay");
-    let tip=document.getElementById("tipVoice").classList.add("toDisplay");
-    let songLink=document.getElementById("linkToSongID").classList.add("toDisplay");
-      //colorpicker for audiovisualizer
-      colorPicker = createColorPicker("#16398D");
-      colorPicker.position(windowWidth / 1.05, windowHeight /20);
-    //SOUND
-    displaySongName(currentSong);
-    //SOUND
-    //call a funciton when the music is done playing
-    // currentSong.onended(sayDone);
-currentSong.setVolume(slider.value());
+  //audiovisualizer
+  translate(windowWidth / 2, windowHeight / 2);
+  let wave = fft.waveform();
+  let spectrum = fft.analyze();
+  let spectrum2 = fft2.analyze();
 
-    //audiovisualizer
-    translate(windowWidth / 2, windowHeight / 2);
-    let wave = fft.waveform();
-    let spectrum = fft.analyze();
-    let spectrum2 = fft2.analyze();
+  strokeWeight(3);
+  // beginShape();
+  for (var i = 0; i < spectrum.length; i++) {
+    // let index= floor(map(i,0,180,0,wave.length-1));
+    let angle = map(i, 0, spectrum.length, 0, 360);
+    let r = map(spectrum[i], 9, 50, 30, 150);
+    let x = r * sin(angle);
+    let y = r * cos(angle);
+    stroke(i, 255, 255);
+    line(0, 0, x, y);
+  }
+  //lines on top
+  for (let u = 0; u < spectrum2.length; u++) {
+    let amp = spectrum2[u];
+    let y = map(amp, 0, 256, windowHeight, 0);
+    line(u * w, -height, u * w, -y);
+  }
+  for (let u = 0; u < spectrum2.length; u++) {
+    let amp = spectrum2[u];
+    let y = map(amp, 0, 256, windowHeight, 0);
+    line(-u * w, -height, -u * w, -y);
+  }
+  //lines top end
+  for (var i = 0; i < spectrum.length; i++) {
+    let angle = map(i, 0, spectrum.length, 0, 360);
+    let r = map(spectrum[i], 9, 200, 10, 250);
+    let x = r * -sin(angle);
+    let y = r * -cos(angle);
+    // rectMode(CENTER);
+    noStroke();
+    rotate(angle);
+    fill(colorPicker.color(0, 0));
+    // fill('rgba(0,255,0, 0.25)');
+    rect(0, i, 5, y);
+  }
 
-    strokeWeight(3);
-    // beginShape();
-    for (var i = 0; i < spectrum.length; i++) {
-      // let index= floor(map(i,0,180,0,wave.length-1));
-      let angle = map(i, 0, spectrum.length, 0, 360);
-      let r = map(spectrum[i], 9, 50, 30, 150);
-      let x = r * sin(angle);
-      let y = r * cos(angle);
-      stroke(i, 255, 255);
-      line(0, 0, x, y);
+  // endShape();
+  push();
+  noFill();
+  stroke(255);
+  strokeWeight(1);
+  for (let t = -1; t <= 1; t += 2) {
+    beginShape();
+    for (var i = 0; i < 180; i++) {
+      let index = floor(map(i, 0, 180, 0, wave.length - 1));
+      let r = map(wave[index], -1, 1, 150, 350);
+      let x = r * -sin(i) * t;
+      let y = r * cos(i);
+      vertex(x, y);
     }
-    //lines on top
-    for (let u = 0; u < spectrum2.length; u++) {
-      let amp= spectrum2[u];
-      let y= map(amp,0,256,windowHeight,0);
-      line(u*w,-height,u*w,-y);
-    }
-    for (let u = 0; u < spectrum2.length; u++) {
-      let amp= spectrum2[u];
-      let y= map(amp,0,256,windowHeight,0);
-      line(-u*w,-height,-u*w,-y);
-    }
-    //lines top end
-    for (var i = 0; i < spectrum.length; i++) {
-      let angle = map(i, 0, spectrum.length, 0, 360);
-      let r = map(spectrum[i], 9, 200, 10, 250);
-      let x = r * -sin(angle);
-      let y = r * -cos(angle);
-      // rectMode(CENTER);
-      noStroke();
-      rotate(angle);
-      fill(colorPicker.color(0, 0));
-      // fill('rgba(0,255,0, 0.25)');
-      rect(0, i, 5, y);
-    }
+    endShape();
+  }
 
-    // endShape();
-    push();
-    noFill();
-    stroke(255);
-    strokeWeight(1);
-    for (let t = -1; t <= 1; t += 2) {
-      beginShape();
-      for (var i = 0; i < 180; i++) {
-        let index = floor(map(i, 0, 180, 0, wave.length - 1));
-        let r = map(wave[index], -1, 1, 150, 350);
-        let x = r * -sin(i) * t;
-        let y = r * cos(i);
-        vertex(x, y);
-      }
-      endShape();
-    }
-
-    pop();
+  pop();
 }
+
+//SOUND FUNCTIONS
+
 //display the CURRENT song name, artist, and links to the song on YouTube
 //gets info from JSON file
 function displaySongName(xName) {
@@ -221,7 +227,6 @@ function displaySongName(xName) {
   }
 }
 
-//SOUND
 //Plays or pauses the music
 function playPause() {
   let playPauseButton = document.getElementById("playPauseButton");
@@ -263,6 +268,8 @@ function next() {
   playPauseButton.classList.add("pause");
   playPauseButton.classList.remove("play");
 }
+
+//SOUND FUNCTIONS END
 /**
 creates the title at the start
 */
@@ -277,15 +284,16 @@ function title() {
   text(`Left click to start`, width / 2, height / 2 + 150);
   pop();
   //hide elements done in css
-  let miles=document.getElementById("milesID").classList.add("noDisplay");
-  let hud=document.getElementById("hudButtons").classList.add("noDisplay");
-  let songs=document.getElementById("songDesc").classList.add("noDisplay");
-  let tip=document.getElementById("tipVoice").classList.add("noDisplay");
-  let songLink=document.getElementById("linkToSongID").classList.add("noDisplay");
-
+  let miles = document.getElementById("milesID").classList.add("noDisplay");
+  let hud = document.getElementById("hudButtons").classList.add("noDisplay");
+  let songs = document.getElementById("songDesc").classList.add("noDisplay");
+  let tip = document.getElementById("tipVoice").classList.add("noDisplay");
+  let songLink = document
+    .getElementById("linkToSongID")
+    .classList.add("noDisplay");
 }
-function startClicked(){
+function startClicked() {
   vid.play();
-    let startbutton=document.getElementById("startButton");
-    startbutton.remove();
+  let startbutton = document.getElementById("startButton");
+  startbutton.remove();
 }
