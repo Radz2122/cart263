@@ -33,7 +33,7 @@ let w;
 
 let vid;
 
-// let buttonStart;
+
 /**
 Description of preload
 */
@@ -48,7 +48,6 @@ Description of setup
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(0);
-  createButton();
   let songArrayLength = objLength(songDesc);
   for (var i = 0; i < songArrayLength; i++) {
     let songUrl = songDesc[i].songLink;
@@ -99,12 +98,6 @@ function objLength(obj) {
 function sayDone(elt) {
   console.log("done");
   vid.addClass('transition');
-  // buttonStart.hide();
-
-
-
-  // buttonStart.removeClass('startButton');
-  // buttonStart.addClass('noDisplay');
   state = `simulation`;
 }
 /**
@@ -122,7 +115,11 @@ function draw() {
 function simulation(){
 
     image(bckgImg, 0, 0, windowWidth, windowHeight);
-
+    let miles=document.getElementById("milesID").classList.add("toDisplay");
+    let hud=document.getElementById("hudButtons").classList.add("toDisplay");
+    let songs=document.getElementById("songDesc").classList.add("toDisplay");
+    let tip=document.getElementById("tipVoice").classList.add("toDisplay");
+    let songLink=document.getElementById("linkToSongID").classList.add("toDisplay");
       //colorpicker for audiovisualizer
       colorPicker = createColorPicker("#16398D");
       colorPicker.position(windowWidth / 1.05, windowHeight /20);
@@ -272,7 +269,6 @@ function title() {
   text(`Welcome`, width / 2, height / 2);
   textSize(64);
   text(`Left click to start`, width / 2, height / 2 + 150);
-
   pop();
   //hide elements done in css
   let miles=document.getElementById("milesID").classList.add("noDisplay");
@@ -282,20 +278,8 @@ function title() {
   let songLink=document.getElementById("linkToSongID").classList.add("noDisplay");
 
 }
-function createButton(){
-  console.log("called");
-  //create a button to strat the simulation
-   let buttonStart = createButton('Take a Leap >>>');
-  buttonStart.addClass("startButton");
-  buttonStart.position(windowWidth/2, windowHeight/1.1);
-  buttonStart.mousePressed(function(){
-      buttonStart.hide();
-    state = `simulation`;
-    console.log("hi");
-
-  });
-}
-function changeBG(){
-vid.play();
-
+function startClicked(){
+  vid.play();
+    let startbutton=document.getElementById("startButton");
+    startbutton.remove();
 }
