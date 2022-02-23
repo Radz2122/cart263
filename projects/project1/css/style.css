@@ -18,157 +18,168 @@ body {
   align-content: center;
   height: 100vh; /* Body is the height of the viewport */
   overflow: hidden; /* Hide anything that goes off the window size */
-  font-family: 'Kufam';
+  font-family: "Kufam";
 }
-button:active,button:visited,button:focus{
+button:active,
+button:visited,
+button:focus {
   text-decoration: none;
 }
-.buttonsHUD{
-    position: absolute;
+/* BUTTONS CONTROLLING SONGS */
+.buttonsHUD {
+  position: absolute;
   display: flex;
-  z-index:200;
+  z-index: 200;
   flex-direction: row;
-  align-items:center;
+  align-items: center;
   justify-self: center;
   margin-top: 80vh;
-
 }
 
 /* REF for butotn styling: https://css-tricks.com/making-pure-css-playpause-button/ */
 /* Default play button */
-.play{
-  margin:0;
+.play {
+  margin: 0;
   width: 0;
- height: 0;
- background-color: transparent;
- border-top: 10px solid transparent;
- border-bottom: 10px solid transparent;
- border-left: 20px solid #16398D;
- border-right: none;
- cursor: pointer;
-
+  height: 0;
+  background-color: transparent;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 20px solid #16398d;
+  border-right: none;
+  cursor: pointer;
 }
 
 /* pause button */
-.pause{
-   margin:0;
-   background: transparent;
-   border-style: double;
-   border-width: 0px 50px 0px 50px;
-   border-width: 0px 0px 0px 20px;
-    border-color: #16398D;
-    cursor: pointer;
+.pause {
+  margin: 0;
+  background: transparent;
+  border-style: double;
+  border-width: 0px 50px 0px 50px;
+  border-width: 0px 0px 0px 20px;
+  border-color: #16398d;
+  cursor: pointer;
 }
 
 /* Slider-thumb css*/
-body > input[type=range]:nth-child(7){
-  appearance:none;
+body > input[type="range"]:nth-child(7) {
+  appearance: none;
   width: 140px;
   height: 15px;
-  background: #16398D;
+  background: #16398d;
   cursor: pointer;
   border-radius: 50%;
 }
 
 /* PREVIOUS BUTTON */
-.previous, .previous2{
+.previous,
+.previous2 {
   margin-right: 10%;
   width: 0;
- height: 0;
- background-color: transparent;
- border-top: 8px solid transparent;
- border-bottom: 8px solid transparent;
- border-right: 12px solid #16398D;
- border-left: none;
- cursor: pointer;
+  height: 0;
+  background-color: transparent;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 12px solid #16398d;
+  border-left: none;
+  cursor: pointer;
 }
-.previous{
-  margin:0;
-  margin-right:-8px;
+.previous {
+  margin: 0;
+  margin-right: -8px;
 }
 
 /* NEXT BUTTON */
-.next, .next2{
+.next,
+.next2 {
   width: 0;
- height: 0;
- background-color: transparent;
- border-top: 8px solid transparent;
- border-bottom: 8px solid transparent;
- border-left: 12px solid #16398D;
- border-right: none;
- cursor: pointer;
+  height: 0;
+  background-color: transparent;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 12px solid #16398d;
+  border-right: none;
+  cursor: pointer;
 }
-.next2{
-  margin:0;
-    margin-left:-8px;
+.next2 {
+  margin: 0;
+  margin-left: -8px;
 }
+/* END SONG BUTTONS */
 
 /* miles animation and style */
-.miles{
+.miles {
   position: absolute;
   display: flex;
   align-self: center;
-  justify-self:center;
-  margin-bottom:-30px;
+  justify-self: center;
+  margin-bottom: -30px;
   margin-left: -35px;
   animation: float 3s ease-in-out infinite;
 }
 @keyframes float {
-	0% {
-		transform: translatey(0px);
-	}
-	50% {
-		transform: translatey(20px);
-	}
-	100% {
-		transform: translatey(0px);
-	}
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(20px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
 }
 
 /* SONG INFO DISPLAY */
-#songDesc{
+#songDesc {
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   /* justify-content: center; */
-  margin:50px 0 0 50px;
+  margin: 50px 0 0 50px;
 }
-.songName, .artistName, .link, .tip{
+.songName,
+.artistName,
+.link,
+.tip {
   font-size: 1.5em;
   color: white;
 }
-.tip, .link{
+.tip,
+.link {
   font-size: 1em;
 }
-a:active, a:visited, a:focus {
-    text-decoration:none;
+a:active,
+a:visited,
+a:focus {
+  text-decoration: none;
 }
-.noDisplay{
-  opacity:0;
+.noDisplay {
+  opacity: 0;
 }
-.toDisplay{
-  opacity:1;
+.toDisplay {
+  opacity: 1;
 }
+/* SONG INFO DISPLAY END */
 
 /*button on startiing screen */
-.startButton{
+.startButton {
   position: absolute;
   display: flex;
-  z-index:100;
-  color:white;
+  z-index: 100;
+  color: white;
   font-size: 1.2em;
-  font-family: 'Kufam';
+  font-family: "Kufam";
   background-color: transparent;
-  border:3px solid white;
-  padding:5px 10px;
+  border: 3px solid white;
+  padding: 5px 10px;
   cursor: pointer;
   margin-left: 50vw;
   margin-top: 90vh;
 }
 /* transition effect on video */
-.transition{
+.transition {
   visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s 1s, opacity 1s linear, scale 1s;
+  opacity: 0;
+  transition: visibility 0s 1s, opacity 1s linear, scale 1s;
 }
