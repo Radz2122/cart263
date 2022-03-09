@@ -35,11 +35,15 @@ function setup() {
 
 /**
 When a secret is clicked we remove its revealed class and add the redacted class
-thus blacking it out
+thus blacking it out with a fade effect
 */
 function redact() {
-  $(this).removeClass(`revealed`);
-  $(this).addClass(`redacted`);
+  $(this).animate({
+    "opacity":0
+  },2000, function(){
+    $(this).removeClass(`revealed`);
+    $(this).addClass(`redacted`);
+  });
 }
 
 /**
@@ -52,14 +56,18 @@ function revelation() {
 }
 
 /**
-With random chance it unblanks the current secret by removing the
+With random chance it unblanks the current secret with a fade effect by removing the
 redacted class and adding the revealed class. Because this function is called
 by each(), "this" refers to the current element that each has selected.
 */
 function attemptReveal() {
   let r = Math.random();
   if (r < REVEAL_PROBABILITY) {
-    $(this).removeClass(`redacted`);
-    $(this).addClass(`revealed`);
+    $(this).animate({
+      "opacity":1
+    },1000, function(){
+      $(this).removeClass(`redacted`);
+      $(this).addClass(`revealed`);
+    });
   }
 }

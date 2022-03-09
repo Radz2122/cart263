@@ -11,7 +11,7 @@ body {
   font-family: Lucida Console;
   width: 800px;
   margin-left: 30vw;
-  margin-top: 15vh;
+  margin-top: 5vh;
 }
 
 /* Redacted elements need to be blanked out */
@@ -40,4 +40,10 @@ section{
 /*for the title of the document */
 h2{
   color: red;
+}
+/* for the paw img */
+.pawImg{
+  width: 80px;
+  height: 80px;
+  transform: rotate(30deg);
 }
