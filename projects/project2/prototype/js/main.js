@@ -19,7 +19,7 @@ let config = {
     default: 'arcade',
   },
   //  array of the different scenes
-  scene: [Play]
+  scene: [Boot,Play]
 };
 
 //create the game using this configuration
