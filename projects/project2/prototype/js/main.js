@@ -1,14 +1,13 @@
 /**
-Title of Project
-Author Name
+Project 2: Prototype
+Radhika Patel
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+Project 2 prototype, creating the game scenes
 */
 
 "use strict";
 
-//dimensions of the game
+//dimensions of the game, mobile version
 let width=640;
 let height=960;
 
@@ -33,7 +32,6 @@ let config = {
     activePointers:1
   }
 };
-
 
 //create the game using this configuration
 let game = new Phaser.Game(config);
