@@ -6,7 +6,7 @@ Project 2 prototype, creating the game scenes
 */
 
 "use strict";
-
+// window.addEventListener("load", function () {
 //dimensions of the game, mobile version
 let width=640;
 let height=960;
@@ -35,3 +35,12 @@ let config = {
 
 //create the game using this configuration
 let game = new Phaser.Game(config);
+
+//object to configure and store propretis of the game
+window.game.main={
+  score:0,//current score
+  bestScore:0,//bets score form last game
+  NAME_LOCAL_STORAGE:"playerScore"// to save it in the local storage
+}
+
+// }, false);
