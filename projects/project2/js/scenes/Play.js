@@ -98,7 +98,12 @@ class Play extends Phaser.Scene {
   //function containing all the animations the player cannot touch, chosen randomly
   //the animations are stored in their array noTapAnimations
   animateNoTapCircle(){
-    
+    this.noTapAnimations=Phaser.Math.Between(0, 2);
+
+    //create switch case to play animation chosen randomly
+    switch(this.noTapAnimations){
+      
+    }
   }
 
   //create a bar that will go down with time to represent the time left to the player
