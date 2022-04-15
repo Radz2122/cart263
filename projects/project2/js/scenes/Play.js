@@ -13,7 +13,7 @@ class Play extends Phaser.Scene {
     //circle on top that displays the animation to NOT Tap
     this.noTapCircle;
     //contains aniamtion of the circle the player should not touch
-    this.noTapAnimation;
+    this.noTapAnimations;
     //animation that is currently playing
     this.currentAnimation;
     //required score to pass to the next nextLvl
@@ -42,6 +42,8 @@ class Play extends Phaser.Scene {
     this.createCircles();
     //calls function to create the circle that displays the aniamtion to NOT tap
     this.createNoTapCircle();
+    //calls funciton to animate the circle that shows the aniamtion to not tap
+    this.animateNoTapCircle();
     //calls function to create bar for time limit
     this.createTimeBar();
     //calls funciton that will lower the time of the bar
@@ -91,6 +93,12 @@ class Play extends Phaser.Scene {
     this.gameGrid.placeIndexCell(noTapCircleCell, this.noTapCircle);
     //add border
     this.noTapCircle.setStrokeStyle(this.gameGrid.colWidth / 10, 0xeeeeee);
+  }
+
+  //function containing all the animations the player cannot touch, chosen randomly
+  //the animations are stored in their array noTapAnimations
+  animateNoTapCircle(){
+    
   }
 
   //create a bar that will go down with time to represent the time left to the player
