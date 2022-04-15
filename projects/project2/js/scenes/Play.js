@@ -102,7 +102,19 @@ class Play extends Phaser.Scene {
 
     //create switch case to play animation chosen randomly
     switch(this.noTapAnimations){
-      
+      case 0:
+        this.tweens.add({
+          targets: this.noTapCircle,
+          scaleX: 1.25,
+          scaleY: 1.25,
+          yoyo: true,
+          loop: 7,
+          ease: 'Sine.easeInOut',
+          duration: 1000,
+        });
+        this.noTapAnimations=0;
+        break
+        
     }
   }
 
