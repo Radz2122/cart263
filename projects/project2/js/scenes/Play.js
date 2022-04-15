@@ -12,8 +12,18 @@ class Play extends Phaser.Scene {
     this.gameGrid = null;
     //circle on top that displays the animation to NOT Tap
     this.noTapCircle;
+    //contains aniamtion of the circle the player should not touch
+    this.noTapAnimation;
+    //animation that is currently playing
+    this.currentAnimation;
     //required score to pass to the next nextLvl
     this.requiredScorePass = 2;
+    //the current level the player is on
+    this.currentLevel;
+    //text showing current current level
+    this.currentLvlTxt;
+    //text showing current level score
+    this.currentScoreTxt;
   }
 
   //to instantiate a scene
