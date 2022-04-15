@@ -125,6 +125,17 @@ class Play extends Phaser.Scene {
         });
         this.noTapAnimations = 1;
         break
+      case 2:
+            this.tweens.add({
+                targets: this.noTapCircle,
+                x: this.noTapCircle.x - this.gameGrid.colWidth * 0.5,
+                yoyo: true,
+                loop: 7,
+                ease: 'Sine.easeInOut',
+                duration: 1000,
+            });
+            this.noTapAnimations = 2;
+            break
 
     }
   }
