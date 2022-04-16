@@ -177,6 +177,7 @@ class Play extends Phaser.Scene {
             callbackScope: this
         });
   }
+  //plays a random animation ona  random circle to tap and removes it after a delay (the player has to click it before its animation stops)
   playAnimation(){
     // tween durations
     this.durationMin = 500;
@@ -278,7 +279,8 @@ class Play extends Phaser.Scene {
     });
   }
 
-  //checks if the player passed the lvl
+  //checks if the player passed the lvl (verifies if they have enough points)
+  //depending on their score, they get a certain amount of coins too
   nextLvl() {
     //for now just for testing
     if (this.score > this.requiredScorePass) {
@@ -287,6 +289,8 @@ class Play extends Phaser.Scene {
       console.log("lose");
     }
   }
+
+
   //detect click on circles
   tappedCircle(pointer, target) {
     //if the player clicks outside a circle, do ntg
@@ -294,7 +298,7 @@ class Play extends Phaser.Scene {
       return;
       console.log(target.currentAnimation === this.randomNoTapAnim);
     }
-// console.log(target.currentAnimation === this.randomNoTapAnim);
+
     //when a circle is touched, animate and give a point it if its not the animation that is to not be touched
     //also make sure the circle touched is the one that just had an animation, it's a reflex game!
     if (target.currentAnimation !== this.currentNoTapAnim && target.currentAnimation!==-1) {
