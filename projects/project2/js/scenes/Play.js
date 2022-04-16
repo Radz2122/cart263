@@ -32,6 +32,9 @@ class Play extends Phaser.Scene {
     this.circlesToTap = [];
     //resets score on restart
     this.score = 0;
+    //delay between circle animations
+    this.delayMin=2000;
+    this.delayMax=3000;
   }
   //set up all the elements in the current scene
   create() {
@@ -48,7 +51,8 @@ class Play extends Phaser.Scene {
     this.createTimeBar();
     //calls funciton that will lower the time of the bar
     this.reduceBar();
-
+    //calls funciton to animate one of the 9 circles with a delay
+    this.animateRandomCircle();
     //verify the players clicks
     this.input.on("gameobjectdown", this.tappedCircle, this);
   }
@@ -72,6 +76,8 @@ class Play extends Phaser.Scene {
       this.gameGrid.placeIndexCell(cells[i], circle);
       //add it into circles array
       this.circlesToTap.push(circle);
+      //the circle default state
+      circle.currentAnimation=-1;
       //make it interactive so the player can click them
       circle.setInteractive({ useHandCursor: true });
       //to detect if they were tapped
@@ -128,7 +134,7 @@ class Play extends Phaser.Scene {
       case 2:
             this.tweens.add({
                 targets: this.noTapCircle,
-                x: this.noTapCircle.x - this.gameGrid.colWidth * 0.5,
+                x: this.noTapCircle.x - this.gameGrid.colWidth * 0.4,
                 yoyo: true,
                 loop: 7,
                 ease: 'Sine.easeInOut',
@@ -138,6 +144,83 @@ class Play extends Phaser.Scene {
             break
 
     }
+  }
+//call animations randomly and applies them on one of the 9 circles wiht a random delay
+  animateRandomCircle(){
+    this.randomDelay = Math.floor(Math.random() * (this.delayMax - this.delayMin)) + this.delayMin;
+        // console.log(this.randomDelay)
+        //call the animations
+        this.currentAnimation = this.time.addEvent({
+            delay: this.randomDelay,
+            loop: true,
+            callback: this.playAnimation,
+            callbackScope: this
+        });
+  }
+  playAnimation(){
+    // tween durations
+    this.durationMin = 500;
+    this.durationMax = 1000;
+    this.randomDuration = Phaser.Math.Between(this.durationMin, this.durationMax);
+
+    //select a random tween
+    this.randomTween = Phaser.Math.Between(0, 2);
+
+    //select a random circle to animate
+    this.randomCircleAnimate = Phaser.Utils.Array.GetRandom(this.circlesToTap);
+
+    //redifine the x movemenet for the third tween
+    this.randomCircleAnimateX = (this.randomCircleAnimate.x - this.gameGrid.colWidth * 0.4);
+
+    //play tween only if circle is not currently animated
+    if(this.randomCircleAnimate.currentAnimation ===-1){
+        //play tween depending on the number gotten
+        switch (this.randomTween) {
+        case 0:
+            this.tweens.add({
+                targets: this.randomCircleAnimate,
+                scaleX: 1.25,
+                scaleY: 1.25,
+                yoyo: true,
+                repeat: 0,
+                ease: 'Sine.easeInOut',
+                onComplete: () => this.removeAnimation(this.randomCircleAnimate),
+                duration: this.randomDuration,
+            });
+            //assign the current value of the animation to the currentAnimaiton value to avoid circles overlapping their aniamtions
+            this.randomCircleAnimate.currentAnimation = this.randomTween;
+            break
+        case 1:
+            this.tweens.add({
+                targets: this.randomCircleAnimate,
+                alpha: 0,
+                yoyo: true,
+                repeat: 0,
+                ease: 'Sine.easeInOut',
+                onComplete: () => this.removeAnimation(this.randomCircleAnimate),
+                duration: this.randomDuration,
+            });
+            this.randomCircleAnimate.currentAnimation = this.randomTween;
+            break
+
+        case 2:
+            this.tweens.add({
+                targets: this.randomCircleAnimate,
+                x: this.randomCircleAnimateX,
+                yoyo: true,
+                repeat: 0,
+                ease: 'Sine.easeInOut',
+                onComplete: () => this.removeAnimation(this.randomCircleAnimate),
+                duration: this.randomDuration,
+            });
+            this.randomCircleAnimate.currentAnimation = this.randomTween;
+            break
+    }
+    }
+  }
+//remove the animation from the circle, so reset it to be able to play the next one
+  removeAnimation(targetCircle){
+    targetCircle.currentAnimation=-1;
   }
 
   //create a bar that will go down with time to represent the time left to the player
