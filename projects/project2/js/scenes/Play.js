@@ -19,7 +19,7 @@ class Play extends Phaser.Scene {
     //animation that is currently playing
     this.currentAnimation;
     //required score to pass to the next nextLvl
-    this.requiredScorePass = 2;
+    this.requiredScorePass = 0;
     //the current level the player is on
     this.currentLevel;
     //text showing current current level
@@ -37,6 +37,10 @@ class Play extends Phaser.Scene {
     //delay between circle animations
     this.delayMin=2000;
     this.delayMax=3000;
+    //required score to pass to the next nextLvl, initialise at 4
+    this.requiredScorePass = 1;//CHANGE for ttest only
+    //the current level the player is on. strat at 1
+    this.currentLevel=1;
   }
   //set up all the elements in the current scene
   create() {
@@ -241,7 +245,6 @@ class Play extends Phaser.Scene {
   }
 //remove the animation from the circle, so reset it to be able to play the next one
   removeAnimation(targetCircle){
-    console.log(targetCircle.currentAnimation);
     targetCircle.currentAnimation=-1;
   }
 
@@ -275,19 +278,8 @@ class Play extends Phaser.Scene {
       scaleX: 0,
       ease: "Linear",
       onComplete: () => this.nextLvl(),
-      duration: 3000, // for testing purposes, it will be longer
+      duration: 5000, // for testing purposes, it will be longer CHANGE
     });
-  }
-
-  //checks if the player passed the lvl (verifies if they have enough points)
-  //depending on their score, they get a certain amount of coins too
-  nextLvl() {
-    //for now just for testing
-    if (this.score > this.requiredScorePass) {
-      console.log("win");
-    } else {
-      console.log("lose");
-    }
   }
 
 
@@ -316,4 +308,41 @@ class Play extends Phaser.Scene {
       this.currentScoreTxt.text="Score:"+ game.finalGame.score;
     }
   }
+
+
+    //checks if the player passed the lvl (verifies if they have enough points)
+    //the minimum rquired to ass to the next level is 4
+    //if they touch even one wrong circle they lose and have to restart
+    //depending on their score, they get a certain amount of coins too
+    nextLvl() {
+      //for now just for testing
+      if (game.finalGame.score >=this.requiredScorePass) {
+        console.log(game.finalGame.score);
+        //go to next level
+        this.currentLevel++;
+        //reset the time and time bar
+        this.timeBar.scaleX=1;
+        //restart it
+        this.reduceBar();
+        //redefine a new animation to not tap
+        this.animateNoTapCircle();
+        //change delay between each circle animation, make it shorter the further the player advances
+        //it will ge tmore difficult, the player will have to be faster
+        if(this.delayMax>1000){
+          this.delayMax-=200;
+        }
+        if(this.delayMin>600){
+          this.delayMin-=200;
+        }
+
+        //reset the random delay
+        this.randomDelay = Math.floor(Math.random() * (this.delayMax - this.delayMin)) + this.delayMin;
+        //change delay in the animations delays
+        this.currentAnimation.delay=this.randomDelay;
+        console.log("win");
+      } else {
+        console.log("lose");
+      }
+    }
+
 }//end phaser scene
