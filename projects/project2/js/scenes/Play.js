@@ -57,11 +57,29 @@ class Play extends Phaser.Scene {
     this.animateRandomCircle();
     //verify the players clicks
     this.input.on("gameobjectdown", this.tappedCircle, this);
+    //places the in-game texts
+    this.placeTexts();
   }
 
   update() {}
 
-  //THE CIRCLES LOOKS ARE TEMPORARY, they will be bubbles later!
+//creates and places the in-game texts
+  placeTexts(){
+    //set the text size with the ratio function to change its size depending on the phone size/screen size
+    let ratioX= game.config.width /640;
+    let textSize=Math.round(30 * ratioX);
+    //style the text
+    let styleText = {
+          font: `${textSize}px Arial`,
+          color: "#ffffff",
+          align: "center"
+    }
+    //set coordinates to place the score text
+    let yPosScore=this.gameGrid.cellHeight*3.2;
+    let xPosScore=this.gameGrid.colWidth/2;
+    //place score text, top left
+    this.currentScoreTxt = this.add.text(xPosScore,yPosScore, "Score:"+game.finalGame.score, styleText);
+  }
 
   //creates the circles the player will have to Tap
   //places circles into the grid
@@ -290,7 +308,8 @@ class Play extends Phaser.Scene {
       });
       //add 1 to score
       game.finalGame.score++;
-      console.log("the score is "+game.finalGame.score);
+      //update text in game
+      this.currentScoreTxt.text="Score:"+ game.finalGame.score;
     }
   }
 }//end phaser scene
