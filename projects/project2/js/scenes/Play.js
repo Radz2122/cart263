@@ -13,7 +13,9 @@ class Play extends Phaser.Scene {
     //circle on top that displays the animation to NOT Tap
     this.noTapCircle;
     //contains aniamtion of the circle the player should not touch
-    this.noTapAnimations;
+    this.randomNoTapAnim;
+    //contains animation player cannot currently touch
+    this.currentNoTapAnim;
     //animation that is currently playing
     this.currentAnimation;
     //required score to pass to the next nextLvl
@@ -31,7 +33,7 @@ class Play extends Phaser.Scene {
     //initialize array
     this.circlesToTap = [];
     //resets score on restart
-    this.score = 0;
+    game.finalGame.score=0;
     //delay between circle animations
     this.delayMin=2000;
     this.delayMax=3000;
@@ -102,12 +104,12 @@ class Play extends Phaser.Scene {
   }
 
   //function containing all the animations the player cannot touch, chosen randomly
-  //the animations are stored in their array noTapAnimations
+  //the animations are stored in their array randomNoTapAnim
   animateNoTapCircle(){
-    this.noTapAnimations=Phaser.Math.Between(0, 2);
+    this.randomNoTapAnim=Phaser.Math.Between(0, 2);
 
     //create switch case to play animation chosen randomly
-    switch(this.noTapAnimations){
+    switch(this.randomNoTapAnim){
       case 0:
         this.tweens.add({
           targets: this.noTapCircle,
@@ -118,7 +120,7 @@ class Play extends Phaser.Scene {
           ease: 'Sine.easeInOut',
           duration: 1000,
         });
-        this.noTapAnimations=0;
+        this.currentNoTapAnim=0;
         break
       case 1:
         this.tweens.add({
@@ -129,7 +131,7 @@ class Play extends Phaser.Scene {
             ease: 'Sine.easeInOut',
             duration: 1000,
         });
-        this.noTapAnimations = 1;
+        this.currentNoTapAnim = 1;
         break
       case 2:
             this.tweens.add({
@@ -140,7 +142,7 @@ class Play extends Phaser.Scene {
                 ease: 'Sine.easeInOut',
                 duration: 1000,
             });
-            this.noTapAnimations = 2;
+            this.currentNoTapAnim = 2;
             break
 
     }
@@ -187,7 +189,7 @@ class Play extends Phaser.Scene {
                 onComplete: () => this.removeAnimation(this.randomCircleAnimate),
                 duration: this.randomDuration,
             });
-            //assign the current value of the animation to the currentAnimaiton value to avoid circles overlapping their aniamtions
+            //assign the current value of the animation to the currentAnimation value to avoid circles overlapping their aniamtions
             this.randomCircleAnimate.currentAnimation = this.randomTween;
             break
         case 1:
@@ -220,6 +222,7 @@ class Play extends Phaser.Scene {
   }
 //remove the animation from the circle, so reset it to be able to play the next one
   removeAnimation(targetCircle){
+    console.log(targetCircle.currentAnimation);
     targetCircle.currentAnimation=-1;
   }
 
@@ -271,10 +274,12 @@ class Play extends Phaser.Scene {
     //if the player clicks outside a circle, do ntg
     if (target.name != "circle") {
       return;
+      console.log(target.currentAnimation === this.randomNoTapAnim);
     }
-
-    //when a circle is touched, animate it
-    if (target.name === "circle") {
+// console.log(target.currentAnimation === this.randomNoTapAnim);
+    //when a circle is touched, animate and give a point it if its not the animation that is to not be touched
+    //also make sure the circle touched is the one that just had an animation, it's a reflex game!
+    if (target.currentAnimation !== this.currentNoTapAnim && target.currentAnimation!==-1) {
       this.tweens.add({
         targets: target,
         yoyo: true,
@@ -284,8 +289,8 @@ class Play extends Phaser.Scene {
         duration: 200,
       });
       //add 1 to score
-      this.score++;
-      console.log(this.score);
+      game.finalGame.score++;
+      console.log("the score is "+game.finalGame.score);
     }
   }
-}
+}//end phaser scene
