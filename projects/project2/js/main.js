@@ -40,6 +40,7 @@ window.game = new Phaser.Game(config);
 window.game.finalGame={
   score:0,//current score
   bestScore:0,//bets score form last game
+  duration:15000,//duration of each round
   NAME_LOCAL_STORAGE:"playerScore"// to save it in the local storage
 }
 

@@ -138,33 +138,34 @@ class Play extends Phaser.Scene {
           scaleX: 1.25,
           scaleY: 1.25,
           yoyo: true,
-          loop: 7,
+          // loop: game.finalGame.duration/500,
+          repeat:0,
           ease: 'Sine.easeInOut',
           duration: 1000,
         });
-        this.currentNoTapAnim=0;
+        this.currentNoTapAnim=this.randomNoTapAnim;
         break
       case 1:
         this.tweens.add({
             targets: this.noTapCircle,
             alpha: 0.3,
             yoyo: true,
-            loop: 7,
+            repeat:0,
             ease: 'Sine.easeInOut',
             duration: 1000,
         });
-        this.currentNoTapAnim = 1;
+        this.currentNoTapAnim = this.randomNoTapAnim;
         break
       case 2:
             this.tweens.add({
                 targets: this.noTapCircle,
                 x: this.noTapCircle.x - this.gameGrid.colWidth * 0.4,
                 yoyo: true,
-                loop: 7,
+                repeat:0,
                 ease: 'Sine.easeInOut',
                 duration: 1000,
             });
-            this.currentNoTapAnim = 2;
+            this.currentNoTapAnim = this.randomNoTapAnim;
             break
 
     }
@@ -247,7 +248,11 @@ class Play extends Phaser.Scene {
   removeAnimation(targetCircle){
     targetCircle.currentAnimation=-1;
   }
-
+  removeAnimation2(targetCircle){
+    targetCircle.currentNoTapAnim=-1;
+    // targetCircle.tween.stop();
+// targetCircle.currentNoTapAnim.stop();
+  }
   //create a bar that will go down with time to represent the time left to the player
   createTimeBar() {
     //Create the bars, the one in front that will move and its background color
@@ -278,12 +283,12 @@ class Play extends Phaser.Scene {
       scaleX: 0,
       ease: "Linear",
       onComplete: () => this.nextLvl(),
-      duration: 5000, // for testing purposes, it will be longer CHANGE
+      duration: game.finalGame.duration, // for testing purposes, it will be longer CHANGE
     });
   }
 
 
-  //detect click on circles
+  //detect clic on circles
   tappedCircle(pointer, target) {
     //if the player clicks outside a circle, do ntg
     if (target.name != "circle") {
@@ -315,19 +320,30 @@ class Play extends Phaser.Scene {
     //if they touch even one wrong circle they lose and have to restart
     //depending on their score, they get a certain amount of coins too
     nextLvl() {
+      console.log("random "+this.randomNoTapAnim);
+      console.log("current "+this.currentNoTapAnim);
       //for now just for testing
+      // console.log(game.finalGame.score);
       if (game.finalGame.score >=this.requiredScorePass) {
-        console.log(game.finalGame.score);
+        if(game.finalGame.score>=game.finalGame.bestScore){
+          game.finalGame.bestScore=game.finalGame.score;
+        }
+        // console.log("best "+game.finalGame.bestScore);
+        //reset current score
+        game.finalGame.score=0;
+        //update text in game
+        this.currentScoreTxt.text="Score:"+ game.finalGame.score;
         //go to next level
         this.currentLevel++;
+        //redefine a new animation to not tap
+// this.scene.restart();
+          this.animateNoTapCircle();
         //reset the time and time bar
         this.timeBar.scaleX=1;
         //restart it
         this.reduceBar();
-        //redefine a new animation to not tap
-        this.animateNoTapCircle();
         //change delay between each circle animation, make it shorter the further the player advances
-        //it will ge tmore difficult, the player will have to be faster
+        //it will get more difficult, the player will have to be faster
         if(this.delayMax>1000){
           this.delayMax-=200;
         }
@@ -339,7 +355,6 @@ class Play extends Phaser.Scene {
         this.randomDelay = Math.floor(Math.random() * (this.delayMax - this.delayMin)) + this.delayMin;
         //change delay in the animations delays
         this.currentAnimation.delay=this.randomDelay;
-        console.log("win");
       } else {
         console.log("lose");
       }
