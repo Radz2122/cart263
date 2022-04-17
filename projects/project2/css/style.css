@@ -35,5 +35,18 @@ By default that's nothing.
   width: 100%;
   height: 100%;
   object-fit: contain;
+  animation: float 2s ease-in-out infinite;
+}
+/* aniamtion fro diver sprite */
+@keyframes float {
+	0% {
+		transform: translatey(0px);
+	}
+	50% {
+		transform: translatey(-5px);
+	}
+	100% {
+		transform: translatey(0px);
+	}
 }
 /* dialog end */
