@@ -41,6 +41,7 @@ window.game.finalGame={
   score:0,//current score
   bestScore:0,//bets score form last game
   duration:15000,//duration of each round
+  coins:0,//amount of money a player has
   NAME_LOCAL_STORAGE:"playerScore"// to save it in the local storage
 }
 

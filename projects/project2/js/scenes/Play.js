@@ -248,11 +248,7 @@ class Play extends Phaser.Scene {
   removeAnimation(targetCircle){
     targetCircle.currentAnimation=-1;
   }
-  removeAnimation2(targetCircle){
-    targetCircle.currentNoTapAnim=-1;
-    // targetCircle.tween.stop();
-// targetCircle.currentNoTapAnim.stop();
-  }
+
   //create a bar that will go down with time to represent the time left to the player
   createTimeBar() {
     //Create the bars, the one in front that will move and its background color
@@ -345,10 +341,10 @@ class Play extends Phaser.Scene {
         //change delay between each circle animation, make it shorter the further the player advances
         //it will get more difficult, the player will have to be faster
         if(this.delayMax>1000){
-          this.delayMax-=200;
+          this.delayMax-=150;
         }
         if(this.delayMin>600){
-          this.delayMin-=200;
+          this.delayMin-=150;
         }
 
         //reset the random delay
