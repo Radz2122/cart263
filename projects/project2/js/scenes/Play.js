@@ -91,6 +91,10 @@ class Play extends Phaser.Scene {
     let xPosScore=this.gameGrid.colWidth/2;
     //place score text, top left
     this.currentScoreTxt = this.add.text(xPosScore,yPosScore, "Score:"+game.finalGame.score, styleText);
+    //set coodinated to place current level text
+    let yPosLvl=this.gameGrid.cellHeight*10.5;
+    let xPosLvl=this.gameGrid.colWidth*3;
+    this.currentLvlTxt=this.add.text(xPosLvl,yPosLvl, "Level: "+this.currentLevel, styleText);
   }
 
   //inserts Poseidon's image
@@ -312,8 +316,8 @@ class Play extends Phaser.Scene {
       this.tweens.add({
         targets: target,
         yoyo: true,
-        scaleX: 0.8,
-        scaleY: 0.8,
+        scaleX: 0.35,
+        scaleY: 0.35,
         repeat: 0,
         duration: 200,
       });
@@ -323,7 +327,6 @@ class Play extends Phaser.Scene {
       this.currentScoreTxt.text="Score:"+ game.finalGame.score;
     }
   }
-
 
     //checks if the player passed the lvl (verifies if they have enough points)
     //the minimum rquired to ass to the next level is 4
@@ -345,6 +348,7 @@ class Play extends Phaser.Scene {
         this.currentScoreTxt.text="Score:"+ game.finalGame.score;
         //go to next level
         this.currentLevel++;
+        this.currentLvlTxt.text="Level "+this.currentLevel;
         //redefine a new animation to not tap
 // this.scene.restart();
           this.animateNoTapCircle();
