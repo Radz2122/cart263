@@ -43,7 +43,10 @@ class Play extends Phaser.Scene {
     this.currentLevel=1;
   }
   preload(){
+    //load bubble image
     this.load.image('bubble', 'assets/images/bubble.png');
+    //load posiedon image
+    this.load.image('poseidon', 'assets/images/poseidon.png');
   }
   //set up all the elements in the current scene
   create() {
@@ -58,6 +61,8 @@ class Play extends Phaser.Scene {
     this.animateNoTapCircle();
     //calls function to create bar for time limit
     this.createTimeBar();
+    //insert poseidon image
+    this.createPoseidon();
     //calls funciton that will lower the time of the bar
     this.reduceBar();
     //calls funciton to animate one of the 9 circles with a delay
@@ -88,6 +93,16 @@ class Play extends Phaser.Scene {
     this.currentScoreTxt = this.add.text(xPosScore,yPosScore, "Score:"+game.finalGame.score, styleText);
   }
 
+  //inserts Poseidon's image
+  createPoseidon(){
+    this.poseidon= this.add.image(0, this.gameGrid.colWidth /2, 'poseidon');
+    this.poseidon.setScale(0.35);
+    this.gameGrid.placeIndexCell(24, this.poseidon);
+    //add line udner poseidon
+    //multply by 7 because there are 7 columns in the Grid
+    this.underline =this.add.line(0,330, this.gameGrid.colWidth*7,0, 0, 0,  0xffff00).setOrigin(0);//CHANGE LINE COLOR
+    this.underline.setLineWidth(5);//MIGHT CHANGE LINE WIDTH
+  }
   //creates the circles the player will have to Tap
   //places circles into the grid
   createCircles() {
