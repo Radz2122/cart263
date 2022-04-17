@@ -47,8 +47,9 @@ class Play extends Phaser.Scene {
     this.load.image('bubble', 'assets/images/bubble.png');
     //load posiedon image
     this.load.image('poseidon', 'assets/images/poseidon.png');
-
-    //testing
+    //load menu image
+     this.load.image('menu','assets/images/menu.png');
+    //load the jquery element
       this.load.html("dialog", "jqueryui.html");
   }
   //set up all the elements in the current scene
@@ -74,6 +75,8 @@ class Play extends Phaser.Scene {
     this.input.on("gameobjectdown", this.tappedCircle, this);
     //places the in-game texts
     this.placeTexts();
+    //creates menu
+    this.createMenu();
   }
 
   update() {}
@@ -109,6 +112,16 @@ class Play extends Phaser.Scene {
     //multply by 7 because there are 7 columns in the Grid
     this.underline =this.add.line(0,330, this.gameGrid.colWidth*7,0, 0, 0,  0xffff00).setOrigin(0);//CHANGE LINE COLOR
     this.underline.setLineWidth(5);//MIGHT CHANGE LINE WIDTH
+  }
+  //create menu on top right and open new scnee for it
+  createMenu(){
+    this.menuIcon= this.add.image(0, this.gameGrid.colWidth /2, 'menu').setInteractive();
+    this.menuIcon.setScale(0.4);
+    this.gameGrid.placeIndexCell(6, this.menuIcon);
+    this.menuIcon.on('pointerdown', function (pointer) {
+console.log("lcickmenu");
+    });
+
   }
   //creates the circles the player will have to Tap
   //places circles into the grid
