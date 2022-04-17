@@ -339,18 +339,16 @@ class Play extends Phaser.Scene {
 this.currentAnimation.paused=!this.currentAnimation.paused;
         // a DOM elements is added pretty much like a sprite
           this.add.dom(game.config.width / 2, game.config.height / 2).createFromCache("dialog");
-
-          // game size / actual canvas size ratio
           //use a spopup between lvevel TEST add source if USE
-          let ratio = new Phaser.Math.Vector2(game.config.width / $("#thegame canvas").width(), game.config.height / $("#thegame canvas").height());
           $( "#dialog" ).dialog({
         resizable: false,
-        height: "auto",
-        width: 300,
+        height: game.config.height/4,
+        width: game.config.width /2,
         modal: true,
+        closeText: "x"
       });
 
-      //when the playere closes the dialog box, they mov eon to the next lvl
+      //when the player closes the dialog box, they move on to the next lvl
       $( "#dialog" ).on( "dialogclose", ()=> this.nextLvl() );
 
 

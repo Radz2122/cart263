@@ -4,3 +4,36 @@ Here is a description of any special CSS used.
 By default that's nothing.
 
 **********************************************/
+
+/* dialog box between levels styling */
+#dialog {
+  color: #2653d8;
+  font-size: 1.2em;
+  padding: 10px 15px 5px 15px;
+  background-color: #9bebff;
+  border: 3px solid white;
+  display: flex;
+}
+/* close button styling */
+.ui-dialog-titlebar-close {
+  color: #2653d8;
+  font-size: 1.2em;
+  background-color: transparent;
+  position: absolute;
+  margin-top: 5px;
+  display: block;
+  right: 0;
+  margin-right: 5px;
+}
+.ui-dialog-titlebar-close,
+.ui-dialog-titlebar-close:focus {
+  outline: none;
+  border: none;
+}
+/* style for the diver img in the dialog */
+#diver {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/* dialog end */
