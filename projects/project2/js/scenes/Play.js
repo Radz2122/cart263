@@ -79,7 +79,22 @@ class Play extends Phaser.Scene {
       this.add.dom(game.config.width / 2, game.config.height / 2).createFromCache("dialog");
 
       // game size / actual canvas size ratio
+      //use a spopup between lvevel TEST add source if USE
       let ratio = new Phaser.Math.Vector2(game.config.width / $("#thegame canvas").width(), game.config.height / $("#thegame canvas").height());
+      $( "#dialog" ).dialog({
+    resizable: false,
+    height: "auto",
+    width: 400,
+    modal: true,
+    buttons: {
+      "Delete all items": function() {
+        $( this ).dialog( "close" );
+      },
+      Cancel: function() {
+        $( this ).dialog( "close" );
+      }
+    }
+  });
   }
 
   update() {}
