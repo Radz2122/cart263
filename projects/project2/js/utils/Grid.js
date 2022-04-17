@@ -2,7 +2,7 @@
  Grid class to align items in my game
  Since phone dimensions vary, I wanted to find a way to scale everything without having to constanty change the dimensions
  of my elements
- * INSPIRED BY Wiliam Clarkson / Scaling Games in Phaser 3 with an Alignment Grid:
+ * Wiliam Clarkson / Scaling Games in Phaser 3 with an Alignment Grid:
  * https://phasergames.com/scaling-games-in-phaser-3/?mc_cid=75e8215130&mc_eid=00f650991f
  */
 

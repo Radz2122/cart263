@@ -19,9 +19,13 @@ let config = {
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
+    parent: "thegame",
     width: width,
     height: height,
   },
+  dom: {
+          createContainer: true
+        },
   physics: {
     default: 'arcade',
   },

@@ -47,12 +47,15 @@ class Play extends Phaser.Scene {
     this.load.image('bubble', 'assets/images/bubble.png');
     //load posiedon image
     this.load.image('poseidon', 'assets/images/poseidon.png');
+
+    //testing
+      this.load.html("dialog", "jqueryui.html");
   }
   //set up all the elements in the current scene
   create() {
     //create a grid to place elements and display it for debugging
     this.gameGrid = new Grid(this, 7, 12, "0xffffff", 2);
-    this.gameGrid.displayGrid();
+    // this.gameGrid.displayGrid();
     //call function to create circles
     this.createCircles();
     //calls function to create the circle that displays the aniamtion to NOT tap
@@ -71,6 +74,12 @@ class Play extends Phaser.Scene {
     this.input.on("gameobjectdown", this.tappedCircle, this);
     //places the in-game texts
     this.placeTexts();
+
+    // a DOM elements is added pretty much like a sprite
+      this.add.dom(game.config.width / 2, game.config.height / 2).createFromCache("dialog");
+
+      // game size / actual canvas size ratio
+      let ratio = new Phaser.Math.Vector2(game.config.width / $("#thegame canvas").width(), game.config.height / $("#thegame canvas").height());
   }
 
   update() {}
