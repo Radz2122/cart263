@@ -98,7 +98,7 @@ class Play extends Phaser.Scene {
     this.poseidon= this.add.image(0, this.gameGrid.colWidth /2, 'poseidon');
     this.poseidon.setScale(0.35);
     this.gameGrid.placeIndexCell(24, this.poseidon);
-    //add line udner poseidon
+    //add line under poseidon
     //multply by 7 because there are 7 columns in the Grid
     this.underline =this.add.line(0,330, this.gameGrid.colWidth*7,0, 0, 0,  0xffff00).setOrigin(0);//CHANGE LINE COLOR
     this.underline.setLineWidth(5);//MIGHT CHANGE LINE WIDTH
@@ -269,7 +269,7 @@ class Play extends Phaser.Scene {
     let barBackg = this.add.graphics();
     this.timeBar = this.add.graphics();
     //time bar styles
-    this.timeBar.fillStyle(0xeef2f3, 1);
+    this.timeBar.fillStyle(0x2653d8, 1);
     this.timeBar.fillRect(
       0,
       game.config.height - this.gameGrid.cellHeight / 2,
@@ -277,7 +277,7 @@ class Play extends Phaser.Scene {
       this.gameGrid.cellHeight / 2
     );
     //bar bckgrd style
-    barBackg.fillStyle(0x34495e, 1);
+    barBackg.fillStyle(0xffffff, 1);
     barBackg.fillRect(
       0,
       game.config.height - this.gameGrid.cellHeight / 2,
