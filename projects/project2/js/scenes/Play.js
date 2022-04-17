@@ -74,27 +74,6 @@ class Play extends Phaser.Scene {
     this.input.on("gameobjectdown", this.tappedCircle, this);
     //places the in-game texts
     this.placeTexts();
-
-    // a DOM elements is added pretty much like a sprite
-      this.add.dom(game.config.width / 2, game.config.height / 2).createFromCache("dialog");
-
-      // game size / actual canvas size ratio
-      //use a spopup between lvevel TEST add source if USE
-      let ratio = new Phaser.Math.Vector2(game.config.width / $("#thegame canvas").width(), game.config.height / $("#thegame canvas").height());
-      $( "#dialog" ).dialog({
-    resizable: false,
-    height: "auto",
-    width: 400,
-    modal: true,
-    buttons: {
-      "Delete all items": function() {
-        $( this ).dialog( "close" );
-      },
-      Cancel: function() {
-        $( this ).dialog( "close" );
-      }
-    }
-  });
   }
 
   update() {}
@@ -219,6 +198,7 @@ class Play extends Phaser.Scene {
         //call the animations
         this.currentAnimation = this.time.addEvent({
             delay: this.randomDelay,
+            paused:false,
             loop: true,
             callback: this.playAnimation,
             callbackScope: this
@@ -320,7 +300,7 @@ class Play extends Phaser.Scene {
       targets: this.timeBar,
       scaleX: 0,
       ease: "Linear",
-      onComplete: () => this.nextLvl(),
+      onComplete: () => this.displayDialogNextLvl(),
       duration: game.finalGame.duration, // for testing purposes, it will be longer CHANGE
     });
   }
@@ -352,11 +332,37 @@ class Play extends Phaser.Scene {
     }
   }
 
+  //displays a dialog box in jquery that notifies the player that they passed the level
+  //if they did not get thje minimom amount of required points, they lose and are brought to the
+  //end screen
+  displayDialogNextLvl(){
+this.currentAnimation.paused=!this.currentAnimation.paused;
+        // a DOM elements is added pretty much like a sprite
+          this.add.dom(game.config.width / 2, game.config.height / 2).createFromCache("dialog");
+
+          // game size / actual canvas size ratio
+          //use a spopup between lvevel TEST add source if USE
+          let ratio = new Phaser.Math.Vector2(game.config.width / $("#thegame canvas").width(), game.config.height / $("#thegame canvas").height());
+          $( "#dialog" ).dialog({
+        resizable: false,
+        height: "auto",
+        width: 300,
+        modal: true,
+      });
+
+      //when the playere closes the dialog box, they mov eon to the next lvl
+      $( "#dialog" ).on( "dialogclose", ()=> this.nextLvl() );
+
+
+  }
+
     //checks if the player passed the lvl (verifies if they have enough points)
     //the minimum rquired to ass to the next level is 4
     //if they touch even one wrong circle they lose and have to restart
     //depending on their score, they get a certain amount of coins too
     nextLvl() {
+      console.log("urin");
+
       console.log("random "+this.randomNoTapAnim);
       console.log("current "+this.currentNoTapAnim);
       //for now just for testing
@@ -376,10 +382,12 @@ class Play extends Phaser.Scene {
         //redefine a new animation to not tap
 // this.scene.restart();
           this.animateNoTapCircle();
+          this.currentAnimation.paused=!this.currentAnimation.paused;
         //reset the time and time bar
         this.timeBar.scaleX=1;
         //restart it
         this.reduceBar();
+
         //change delay between each circle animation, make it shorter the further the player advances
         //it will get more difficult, the player will have to be faster
         if(this.delayMax>1000){
