@@ -42,6 +42,9 @@ class Play extends Phaser.Scene {
     //the current level the player is on. strat at 1
     this.currentLevel=1;
   }
+  preload(){
+    this.load.image('bubble', 'assets/images/bubble.png');
+  }
   //set up all the elements in the current scene
   create() {
     //create a grid to place elements and display it for debugging
@@ -93,9 +96,11 @@ class Play extends Phaser.Scene {
       cells = [36, 38, 40, 50, 52, 54, 64, 66, 68]; //cells chosen to contain a circle
     for (let i = 0; i < this.amountCircles; i++) {
       //add circle in grid, adjusting to its col width
-      circle = this.add.circle(0, 0, this.gameGrid.colWidth / 2, 0x34495e);
+      // circle = this.add.circle(0, 0, this.gameGrid.colWidth / 2, 0x34495e);
+       circle= this.add.image(0, this.gameGrid.colWidth / 2, 'bubble');
+       circle.setScale(0.25);
       //adding a border
-      circle.setStrokeStyle(this.gameGrid.colWidth / 15, 0xffffff);
+      // circle.setStrokeStyle(this.gameGrid.colWidth / 15, 0xffffff);
       //place in cell
       this.gameGrid.placeIndexCell(cells[i], circle);
       //add it into circles array
@@ -113,16 +118,10 @@ class Play extends Phaser.Scene {
   createNoTapCircle() {
     let noTapCircleCell = 19;
     //create the circle
-    this.noTapCircle = this.add.circle(
-      0,
-      0,
-      this.gameGrid.colWidth / 1.5,
-      0xe54d42
-    );
+    this.noTapCircle= this.add.image(0, this.gameGrid.colWidth /1.5, 'bubble');
+    this.noTapCircle.setScale(0.4);
     //place it in its cell
     this.gameGrid.placeIndexCell(noTapCircleCell, this.noTapCircle);
-    //add border
-    this.noTapCircle.setStrokeStyle(this.gameGrid.colWidth / 10, 0xeeeeee);
   }
 
   //function containing all the animations the player cannot touch, chosen randomly
@@ -135,8 +134,8 @@ class Play extends Phaser.Scene {
       case 0:
         this.tweens.add({
           targets: this.noTapCircle,
-          scaleX: 1.25,
-          scaleY: 1.25,
+          scaleX: 0.5,
+          scaleY: 0.5,
           yoyo: true,
           // loop: game.finalGame.duration/500,
           repeat:0,
@@ -205,8 +204,8 @@ class Play extends Phaser.Scene {
         case 0:
             this.tweens.add({
                 targets: this.randomCircleAnimate,
-                scaleX: 1.25,
-                scaleY: 1.25,
+                scaleX: 0.35,
+                scaleY: 0.35,
                 yoyo: true,
                 repeat: 0,
                 ease: 'Sine.easeInOut',
