@@ -17,7 +17,7 @@ class Boot extends Phaser.Scene {
     this.loadingText = this.add.text(100, 100, loadingString, loadingTextStyle);
 
     //Switch to the scene with the key of "play"
-    this.scene.start(`instructions`);
+    this.scene.start(`lose`);
   }
 
   update() {}
