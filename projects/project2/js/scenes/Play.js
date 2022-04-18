@@ -118,8 +118,24 @@ class Play extends Phaser.Scene {
     this.menuIcon= this.add.image(0, this.gameGrid.colWidth /2, 'menu').setInteractive();
     this.menuIcon.setScale(0.4);
     this.gameGrid.placeIndexCell(6, this.menuIcon);
-    this.menuIcon.on('pointerdown', function (pointer) {
+    this.menuIcon.on('pointerdown', ()=> {
 console.log("lcickmenu");
+// if (!this.scene.isActive('PauseMenu'))
+ this.scene.launch('pausemenu');
+//            {
+this.scene.pause();
+
+
+               // this.scene.pause('SceneMain')
+
+           // }
+
+           //
+           // else
+           // {
+           //     this.scene.setVisible(true, 'PauseMenu');
+           //
+           // }
     });
 
   }

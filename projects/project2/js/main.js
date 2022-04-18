@@ -30,7 +30,7 @@ let config = {
     default: 'arcade',
   },
   //  array of the different scenes
-  scene: [Boot,Play],
+  scene: [Boot,Play,PauseMenu],
     //since it will be a mobile game, limit the amount of pointers
   input:{
     activePointers:1
@@ -44,7 +44,7 @@ window.game = new Phaser.Game(config);
 window.game.finalGame={
   score:0,//current score
   bestScore:0,//bets score form last game
-  duration:1000,//duration of each round
+  duration:10000,//duration of each round
   coins:0,//amount of money a player has
   NAME_LOCAL_STORAGE:"playerScore"// to save it in the local storage
 }
