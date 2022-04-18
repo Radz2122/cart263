@@ -30,7 +30,7 @@ let config = {
     default: 'arcade',
   },
   //  array of the different scenes
-  scene: [Boot,Play,PauseMenu,CheckProgress],
+  scene: [Boot,Play,PauseMenu,CheckProgress,Instructions],
     //since it will be a mobile game, limit the amount of pointers
   input:{
     activePointers:1
@@ -43,7 +43,7 @@ window.game = new Phaser.Game(config);
 //object to configure and store propretis of the game
 window.game.finalGame={
   score:0,//current score
-  bestScore:0,//bets score form last game
+  bestScore:0,//bets score form last game, total nb bubble popped 
   duration:10000,//duration of each round
   coins:0,//amount of money a player has
   currentLvl:1,//levle the player is currrently on
