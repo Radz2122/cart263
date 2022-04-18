@@ -30,7 +30,7 @@ let config = {
     default: 'arcade',
   },
   //  array of the different scenes
-  scene: [Boot,Play,PauseMenu],
+  scene: [Boot,Play,PauseMenu,CheckProgress],
     //since it will be a mobile game, limit the amount of pointers
   input:{
     activePointers:1
@@ -46,6 +46,7 @@ window.game.finalGame={
   bestScore:0,//bets score form last game
   duration:10000,//duration of each round
   coins:0,//amount of money a player has
+  currentLvl:1,//levle the player is currrently on
   NAME_LOCAL_STORAGE:"playerScore"// to save it in the local storage
 }
 

@@ -20,8 +20,6 @@ class Play extends Phaser.Scene {
     this.currentAnimation;
     //required score to pass to the next nextLvl
     this.requiredScorePass = 0;
-    //the current level the player is on
-    this.currentLevel;
     //text showing current current level
     this.currentLvlTxt;
     //text showing current level score
@@ -40,7 +38,7 @@ class Play extends Phaser.Scene {
     //required score to pass to the next nextLvl, initialise at 4
     this.requiredScorePass = 1;//CHANGE for ttest only
     //the current level the player is on. strat at 1
-    this.currentLevel=1;
+    game.finalGame.currentLvl=1;
   }
   preload(){
     //load bubble image
@@ -100,7 +98,7 @@ class Play extends Phaser.Scene {
     //set coodinated to place current level text
     let yPosLvl=this.gameGrid.cellHeight*10.5;
     let xPosLvl=this.gameGrid.colWidth*3;
-    this.currentLvlTxt=this.add.text(xPosLvl,yPosLvl, "Level: "+this.currentLevel, styleText);
+    this.currentLvlTxt=this.add.text(xPosLvl,yPosLvl, "Level: "+game.finalGame.currentLvl, styleText);
   }
 
   //inserts Poseidon's image
@@ -119,23 +117,8 @@ class Play extends Phaser.Scene {
     this.menuIcon.setScale(0.4);
     this.gameGrid.placeIndexCell(6, this.menuIcon);
     this.menuIcon.on('pointerdown', ()=> {
-console.log("lcickmenu");
-// if (!this.scene.isActive('PauseMenu'))
- this.scene.launch('pausemenu');
-//            {
-this.scene.pause();
-
-
-               // this.scene.pause('SceneMain')
-
-           // }
-
-           //
-           // else
-           // {
-           //     this.scene.setVisible(true, 'PauseMenu');
-           //
-           // }
+     this.scene.launch('pausemenu');
+    this.scene.pause();
     });
 
   }
@@ -404,8 +387,8 @@ this.currentAnimation.paused=!this.currentAnimation.paused;
         //update text in game
         this.currentScoreTxt.text="Score:"+ game.finalGame.score;
         //go to next level
-        this.currentLevel++;
-        this.currentLvlTxt.text="Level "+this.currentLevel;
+        game.finalGame.currentLvl++;
+        this.currentLvlTxt.text="Level "+game.finalGame.currentLvl;
         //redefine a new animation to not tap
 // this.scene.restart();
           this.animateNoTapCircle();
