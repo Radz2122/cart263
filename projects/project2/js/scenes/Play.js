@@ -1,10 +1,16 @@
-//FOR NOW: try to tap the most circles you can before time runs out!
+/***********************
+Play scene
+Radhika Patel
+Where the player gets to play the game.
+Contains all the rules, scene transitions, bubble animations, menu access, score count/storage and level managment.
+Sometimes the term circle is used, it refers to the bubbles.
+***********************/
 class Play extends Phaser.Scene {
   constructor() {
     super({
       key: `play`,
     });
-    //amount of circles to tap
+    //amount of circles to tap on screen
     this.amountCircles = 9;
     //array containing all the circles to tap
     this.circlesToTap = [];
@@ -12,7 +18,7 @@ class Play extends Phaser.Scene {
     this.gameGrid = null;
     //circle on top that displays the animation to NOT Tap
     this.noTapCircle;
-    //contains aniamtion of the circle the player should not touch
+    //contains animation of the circle the player should not touch
     this.randomNoTapAnim;
     //contains animation player cannot currently touch
     this.currentNoTapAnim;
@@ -25,22 +31,24 @@ class Play extends Phaser.Scene {
     //text showing current level score
     this.currentScoreTxt;
     //get score storage
-    game.finalGame.bestScore = localStorage.getItem(game.finalGame.NAME_LOCAL_STORAGE) === null ? 0 : localStorage.getItem(game.finalGame.NAME_LOCAL_STORAGE);
-
+    game.finalGame.bestScore =
+      localStorage.getItem(game.finalGame.NAME_LOCAL_STORAGE) === null
+        ? 0
+        : localStorage.getItem(game.finalGame.NAME_LOCAL_STORAGE);
   }
 
-  //to instantiate a scene
+  //to initialize variables in the scene
   init() {
-    //initialize array
+    //initialize array of bubbles
     this.circlesToTap = [];
     //resets score on restart
     game.finalGame.score = 0;
-    //delay between circle animations
+    //delay between bubble animations, the more the player advances, the shorter it becomes.
     this.delayMin = 2000;
     this.delayMax = 3000;
-    //required score to pass to the next nextLvl, initialise at 4
+    //required score to pass to the next nextLvl, initialize at 4
     this.requiredScorePass = 4;
-    //the current level the player is on. strat at 1
+    //the current level the player is on, start at 1
     game.finalGame.currentLvl = 1;
   }
   //loads the dialog box in jquery
@@ -48,20 +56,27 @@ class Play extends Phaser.Scene {
     //load the jquery element
     this.load.html("dialog", "jqueryui.html");
   }
-  //set up all the elements in the current scene
+
+  //creates the elemnts/game objects for this scene
   create() {
     //create a grid to place elements and display it for debugging
     this.gameGrid = new Grid(this, 7, 12, "0xffffff", 2);
     //background
-    this.rectangleOverlay=this.add.rectangle(game.config.width/2, game.config.height/2, this.gameGrid.colWidth*7, this.gameGrid.cellHeight*12, 0x9bebff);
+    this.rectangleOverlay = this.add.rectangle(
+      game.config.width / 2,
+      game.config.height / 2,
+      this.gameGrid.colWidth * 7,
+      this.gameGrid.cellHeight * 12,
+      0x9bebff
+    );
     //sound fx
-this.clickSound = this.sound.add('click');
-this.clickSoundBubble = this.sound.add('bubble');
-    //call function to create circles
+    this.clickSound = this.sound.add("click");
+    this.clickSoundBubble = this.sound.add("bubble");
+    //call function to create circles/bubbles
     this.createCircles();
-    //calls function to create the circle that displays the aniamtion to NOT tap
+    //calls function to create the circle/bubble that displays the aniamtion to NOT tap
     this.createNoTapCircle();
-    //calls funciton to animate the circle that shows the aniamtion to not tap
+    //calls funciton to animate the circle/bubble that shows the animation to not tap
     this.animateNoTapCircle();
     //calls function to create bar for time limit
     this.createTimeBar();
@@ -79,17 +94,13 @@ this.clickSoundBubble = this.sound.add('bubble');
     this.createMenu();
   }
 
-  update() {}
-
   //creates and places the in-game texts
   placeTexts() {
-    //set the text size with the ratio function to change its size depending on the phone size/screen size
-    let ratioX = game.config.width / 640;
     //style the text
     let styleText = {
       font: `${4}em Fuzzy Bubbles`,
       color: "#2653d8",
-      align: "center"
+      align: "center",
     };
     //set coordinates to place the score text
     let yPosScore = this.gameGrid.cellHeight;
@@ -101,7 +112,7 @@ this.clickSoundBubble = this.sound.add('bubble');
       "Score:" + game.finalGame.score,
       styleText
     );
-    //set coodinated to place current level text
+    //set coodinates to place current level text
     let yPosLvl = this.gameGrid.cellHeight * 10.5;
     let xPosLvl = this.gameGrid.colWidth * 3;
     this.currentLvlTxt = this.add.text(
@@ -119,36 +130,36 @@ this.clickSoundBubble = this.sound.add('bubble');
     this.gameGrid.placeIndexCell(24, this.poseidon);
     //add line under poseidon
     //multply by 7 because there are 7 columns in the Grid
-    this.underline = this.add
-      .line(0, 330, this.gameGrid.colWidth * 7, 0, 0, 0, 0xffffff)
-      .setOrigin(0);
+    this.underline = this.add.line(0, 330, this.gameGrid.colWidth * 7, 0, 0, 0, 0xffffff).setOrigin(0);
     this.underline.setLineWidth(3);
   }
-  //create menu on top right and open new scnee for it
+
+  //create menu on top right and open new scene for it
   createMenu() {
     this.menuIcon = this.add
       .image(0, this.gameGrid.colWidth / 2, "menu")
       .setInteractive();
     this.menuIcon.setScale(0.4);
     this.gameGrid.placeIndexCell(6, this.menuIcon);
+    //evt when clicked
     this.menuIcon.on("pointerdown", () => {
+      //sound fx
       this.clickSound.play();
-
       this.scene.launch("pausemenu");
       this.scene.pause();
     });
   }
-  //creates the circles the player will have to Tap
-  //places circles into the grid
+
+  //creates the circles/bubbles the player will have to Tap
+  //places circles/bubbles into the grid
   createCircles() {
     //Create circles
     let circle,
-      cells = [36, 38, 40, 50, 52, 54, 64, 66, 68]; //cells chosen to contain a circle
+      cells = [36, 38, 40, 50, 52, 54, 64, 66, 68]; //cells chosen to contain a circle/bubble
     for (let i = 0; i < this.amountCircles; i++) {
-      //add circle in grid, adjusting to its col width
+      //add circle/bubble in grid, adjusting to its col width
       circle = this.add.image(0, this.gameGrid.colWidth / 2, "bubble");
       circle.setScale(0.25);
-      //adding a border
       //place in cell
       this.gameGrid.placeIndexCell(cells[i], circle);
       //add it into circles array
@@ -162,15 +173,11 @@ this.clickSoundBubble = this.sound.add('bubble');
     }
   }
 
-  //Create cricle indicating the aniamtion to NOT tap
+  //Create circle/bubble indicating the aniamtion to NOT tap
   createNoTapCircle() {
     let noTapCircleCell = 19;
     //create the circle
-    this.noTapCircle = this.add.image(
-      0,
-      this.gameGrid.colWidth / 1.5,
-      "bubble"
-    );
+    this.noTapCircle = this.add.image(0,this.gameGrid.colWidth / 1.5,"bubble");
     this.noTapCircle.setScale(0.4);
     //place it in its cell
     this.gameGrid.placeIndexCell(noTapCircleCell, this.noTapCircle);
@@ -179,8 +186,8 @@ this.clickSoundBubble = this.sound.add('bubble');
   //function containing all the animations the player cannot touch, chosen randomly
   //the animations are stored in their array randomNoTapAnim
   animateNoTapCircle() {
+    //get random aniamtion
     this.randomNoTapAnim = Phaser.Math.Between(0, 2);
-
     //create switch case to play animation chosen randomly
     switch (this.randomNoTapAnim) {
       case 0:
@@ -189,7 +196,6 @@ this.clickSoundBubble = this.sound.add('bubble');
           scaleX: 0.5,
           scaleY: 0.5,
           yoyo: true,
-          // loop: game.finalGame.duration/500,
           repeat: 0,
           ease: "Sine.easeInOut",
           duration: 1000,
@@ -220,12 +226,10 @@ this.clickSoundBubble = this.sound.add('bubble');
         break;
     }
   }
+
   //call animations randomly and applies them on one of the 9 circles wiht a random delay
   animateRandomCircle() {
-    this.randomDelay =
-      Math.floor(Math.random() * (this.delayMax - this.delayMin)) +
-      this.delayMin;
-    // console.log(this.randomDelay)
+    this.randomDelay =Math.floor(Math.random() * (this.delayMax - this.delayMin)) +this.delayMin;
     //call the animations
     this.currentAnimation = this.time.addEvent({
       delay: this.randomDelay,
@@ -235,7 +239,8 @@ this.clickSoundBubble = this.sound.add('bubble');
       callbackScope: this,
     });
   }
-  //plays a random animation ona  random circle to tap and removes it after a delay (the player has to click it before its animation stops)
+
+  //plays a random animation on a random circle/bubble to tap and removes it after a delay (the player has to click it before its animation stops)
   playAnimation() {
     // tween durations
     this.durationMin = 500;
@@ -244,17 +249,12 @@ this.clickSoundBubble = this.sound.add('bubble');
       this.durationMin,
       this.durationMax
     );
-
     //select a random tween
     this.randomTween = Phaser.Math.Between(0, 2);
-
     //select a random circle to animate
     this.randomCircleAnimate = Phaser.Utils.Array.GetRandom(this.circlesToTap);
-
     //redifine the x movemenet for the third tween
-    this.randomCircleAnimateX =
-      this.randomCircleAnimate.x - this.gameGrid.colWidth * 0.4;
-
+    this.randomCircleAnimateX =this.randomCircleAnimate.x - this.gameGrid.colWidth * 0.4;
     //play tween only if circle is not currently animated
     if (this.randomCircleAnimate.currentAnimation === -1) {
       //play tween depending on the number gotten
@@ -301,12 +301,13 @@ this.clickSoundBubble = this.sound.add('bubble');
       }
     }
   }
-  //remove the animation from the circle, so reset it to be able to play the next one
+
+  //function removing the animation from the circle/bubble, so reset it to be able to play the next one
   removeAnimation(targetCircle) {
     targetCircle.currentAnimation = -1;
   }
 
-  //create a bar that will go down with time to represent the time left to the player
+  //function creating a bar that will go down with time to represent the time left to the player
   createTimeBar() {
     //Create the bars, the one in front that will move and its background color
     let barBackg = this.add.graphics();
@@ -336,27 +337,24 @@ this.clickSoundBubble = this.sound.add('bubble');
       scaleX: 0,
       ease: "Linear",
       onComplete: () => this.endLevelVerify(),
-      duration: game.finalGame.duration, // for testing purposes, it will be longer CHANGE
+      duration: game.finalGame.duration,
     });
   }
 
-  //detect clic on circles
+  //detects clicks on circles
   tappedCircle(pointer, target) {
     //if the player clicks outside a circle, do ntg
     if (target.name != "circle") {
       return;
-      console.log(target.currentAnimation === this.randomNoTapAnim);
     }
 
-    //when a circle is touched, animate and give a point it if its not the animation that is to not be touched
+    //when a circle is touched, animate and give a point if its not the animation that is to not be touched
     //also make sure the circle touched is the one that just had an animation, it's a reflex game!
     if (
       target.currentAnimation !== this.currentNoTapAnim &&
       target.currentAnimation !== -1
-    )
-
-     {
-        this.clickSoundBubble.play();
+    ) {
+      this.clickSoundBubble.play();
       this.tweens.add({
         targets: target,
         yoyo: true,
@@ -370,6 +368,7 @@ this.clickSoundBubble = this.sound.add('bubble');
       //update text in game
       this.currentScoreTxt.text = "Score:" + game.finalGame.score;
     } else {
+      //lose
       this.scene.stop();
       this.scene.start("lose");
     }
@@ -378,16 +377,17 @@ this.clickSoundBubble = this.sound.add('bubble');
   //displays a dialog box in jquery that notifies the player that they passed the level
   //if they did not get the minimom amount of required points, they lose and are brought to the
   //end screen
-  //if they got th required points and are at the final level (6) they win and are brought to the win screen
+  //if they got the required points and are at the final level (6) they win and are brought to the win screen
   //in all cases, if they beat their previous score of most bubbles popped in a lvl, it is registered in localStorage
   endLevelVerify() {
-    if (game.finalGame.score >= this.requiredScorePass && game.finalGame.currentLvl!==6) {
+    if (
+      game.finalGame.score >= this.requiredScorePass &&
+      game.finalGame.currentLvl !== 6
+    ) {
       this.currentAnimation.paused = !this.currentAnimation.paused;
-      // a DOM elements is added pretty much like a sprite
-      this.add
-        .dom(game.config.width / 2, game.config.height / 2)
-        .createFromCache("dialog");
-      //use a spopup between lvevel TEST add source if USE
+      // a DOM element added
+      this.add.dom(game.config.width / 2, game.config.height / 2).createFromCache("dialog");
+      //use as popup between lvls
       $("#dialog").dialog({
         resizable: false,
         height: game.config.height / 4,
@@ -395,28 +395,30 @@ this.clickSoundBubble = this.sound.add('bubble');
         modal: true,
         closeText: "x",
       });
-
       //when the player closes the dialog box, they move on to the next lvl
       $("#dialog").on("dialogclose", () => this.nextLvl());
     }
     //if the player is on the 6th level and they pop 4 or more bubbles, they win
-    else if(game.finalGame.score >= this.requiredScorePass && game.finalGame.currentLvl===6){
+    else if (
+      game.finalGame.score >= this.requiredScorePass &&
+      game.finalGame.currentLvl === 6
+    ) {
       this.win();
       this.setScore();
     }
     //the player loses if they did not pop enough bubbles
     else {
       this.lose();
-    this.setScore();
+      this.setScore();
     }
   }
 
   //checks if the player passed the lvl (verifies if they have enough points)
   //the minimum rquired to ass to the next level is 4
   //if they touch even one wrong circle they lose and have to restart
-  //depending on their score, they get a certain amount of coins too
   nextLvl() {
     if (game.finalGame.score >= this.requiredScorePass) {
+      //sets score in localStorage
       this.setScore();
       //reset current score
       game.finalGame.score = 0;
@@ -424,9 +426,11 @@ this.clickSoundBubble = this.sound.add('bubble');
       this.currentScoreTxt.text = "Score:" + game.finalGame.score;
       //go to next level
       game.finalGame.currentLvl++;
+      //update text in game
       this.currentLvlTxt.text = "Level " + game.finalGame.currentLvl;
       //redefine a new animation to not tap
       this.animateNoTapCircle();
+      //pause/unpause game
       this.currentAnimation.paused = !this.currentAnimation.paused;
       //reset the time and time bar
       this.timeBar.scaleX = 1;
@@ -441,15 +445,10 @@ this.clickSoundBubble = this.sound.add('bubble');
       if (this.delayMin > 600) {
         this.delayMin -= 150;
       }
-
       //reset the random delay
-      this.randomDelay =
-        Math.floor(Math.random() * (this.delayMax - this.delayMin)) +
-        this.delayMin;
+      this.randomDelay =Math.floor(Math.random() * (this.delayMax - this.delayMin)) +this.delayMin;
       //change delay in the animations delays
       this.currentAnimation.delay = this.randomDelay;
-    } else {
-      console.log("lose");
     }
   }
   //function to open losing screen
@@ -458,15 +457,18 @@ this.clickSoundBubble = this.sound.add('bubble');
     this.scene.start("lose");
   }
   //function opening the winning screen
-  win(){
+  win() {
     this.scene.stop();
     this.scene.start("win");
   }
   //sets the players best score in localStorage
-  setScore(){
+  setScore() {
     if (game.finalGame.score >= game.finalGame.bestScore) {
       game.finalGame.bestScore = game.finalGame.score;
-      localStorage.setItem(game.finalGame.NAME_LOCAL_STORAGE, game.finalGame.bestScore);
+      localStorage.setItem(
+        game.finalGame.NAME_LOCAL_STORAGE,
+        game.finalGame.bestScore
+      );
     }
   }
 } //end phaser scene

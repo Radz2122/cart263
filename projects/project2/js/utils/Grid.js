@@ -1,4 +1,6 @@
 /**
+Grid
+Radhika Patel
  Grid class to align items in my game
  Since phone dimensions vary, I wanted to find a way to scale everything without having to constanty change the dimensions
  of my elements
@@ -118,6 +120,4 @@ class Grid {
       }
     }
   }
-
-
 }
