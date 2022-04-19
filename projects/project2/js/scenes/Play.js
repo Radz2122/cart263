@@ -376,7 +376,7 @@ class Play extends Phaser.Scene {
   //if they did not get thje minimom amount of required points, they lose and are brought to the
   //end screen
   displayDialogNextLvl() {
-    if (game.finalGame.score >= this.requiredScorePass) {
+    if (game.finalGame.score >= this.requiredScorePass && game.finalGame.currentLvl!==6) {
       this.currentAnimation.paused = !this.currentAnimation.paused;
       // a DOM elements is added pretty much like a sprite
       this.add
@@ -393,7 +393,15 @@ class Play extends Phaser.Scene {
 
       //when the player closes the dialog box, they move on to the next lvl
       $("#dialog").on("dialogclose", () => this.nextLvl());
-    } else {
+    }
+    else if(game.finalGame.score >= this.requiredScorePass && game.finalGame.currentLvl===6){
+      this.win();
+      if (game.finalGame.score >= game.finalGame.bestScore) {
+        game.finalGame.bestScore = game.finalGame.score;
+        localStorage.setItem(game.finalGame.NAME_LOCAL_STORAGE, game.finalGame.bestScore);
+      }
+    }
+    else {
       this.lose();
       if (game.finalGame.score >= game.finalGame.bestScore) {
         game.finalGame.bestScore = game.finalGame.score;
@@ -450,5 +458,10 @@ class Play extends Phaser.Scene {
   lose() {
     this.scene.stop();
     this.scene.start("lose");
+  }
+  //function opening the winning screen
+  win(){
+    this.scene.stop();
+    this.scene.start("win");
   }
 } //end phaser scene
