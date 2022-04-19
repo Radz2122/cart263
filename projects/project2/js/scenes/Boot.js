@@ -4,7 +4,17 @@ class Boot extends Phaser.Scene {
       key: `boot`,
     });
   }
-
+  //preloads all the images needed in the game
+  preload(){
+    //load posiedon image
+    this.load.image('poseidon', 'assets/images/poseidon.png');
+    //load bubble image
+    this.load.image("bubble", "assets/images/bubble.png");
+    //load menu image
+    this.load.image("menu", "assets/images/menu.png");
+    //load diver image
+     this.load.image('diver','assets/images/diver.png');
+  }
   create() {
     //Adding a loading message to the scene on creation
     let loadingTextStyle = {

@@ -39,6 +39,19 @@ let config = {
 
 //create the game using this configuration
 window.game = new Phaser.Game(config);
+//add a new font form google fonts
+let webFontConfig = {
+        active: function () {
+            console.log("Fonts were loaded");
+        },
+        //fonts wanted
+        google: {
+            families: ["Fuzzy Bubbles"]
+        }
+    };
+
+    //load the fonts
+    WebFont.load(webFontConfig);
 
 //object to configure and store propretis of the game
 window.game.finalGame={

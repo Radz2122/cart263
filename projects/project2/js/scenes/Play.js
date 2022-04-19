@@ -43,7 +43,7 @@ class Play extends Phaser.Scene {
     //the current level the player is on. strat at 1
     game.finalGame.currentLvl = 1;
   }
-  //loads the dialog box in jqueryui
+  //loads the dialog box in jquery
   preload() {
     //load the jquery element
     this.load.html("dialog", "jqueryui.html");
