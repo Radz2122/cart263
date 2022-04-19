@@ -52,6 +52,7 @@ class Win extends Phaser.Scene {
   //goes back to the pause menu
   back(){
     this.scene.stop();
+    this.scene.start('mainmenu');
   }
   update(){}
 

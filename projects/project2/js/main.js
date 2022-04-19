@@ -30,7 +30,7 @@ let config = {
     default: 'arcade',
   },
   //  array of the different scenes
-  scene: [Boot,Play,PauseMenu,CheckProgress,Instructions,Lose,Win],
+  scene: [Boot,MainMenu,Play,PauseMenu,CheckProgress,Instructions,Lose,Win],
     //since it will be a mobile game, limit the amount of pointers
   input:{
     activePointers:1

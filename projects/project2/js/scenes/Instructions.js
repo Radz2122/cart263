@@ -31,7 +31,7 @@ class Instructions extends Phaser.Scene {
     //add line under poseidon
     //multply by 7 because there are 7 columns in the Grid
     this.underline =this.add.line(0,250, this.gameGrid.colWidth*7,0, 0, 0,  0xffffff).setOrigin(0);//CHANGE LINE COLOR
-    this.underline.setLineWidth(3);//MIGHT CHANGE LINE WIDTH
+    this.underline.setLineWidth(3);
     //add bubble img
     this.bubble= this.add.image(0, this.gameGrid.colWidth /1.5, 'bubble');
     this.bubble.setScale(0.3);
@@ -64,10 +64,10 @@ class Instructions extends Phaser.Scene {
   update(){}
 
 
-  //goes back to the main menu CHANGE
+  //goes back to the main menu
   back(){
     this.scene.stop();
-    // this.scene.launch('pausemenu');
+    this.scene.launch('mainmenu');
   }
 
 }
