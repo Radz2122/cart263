@@ -1,7 +1,7 @@
-class Lose extends Phaser.Scene {
+class Win extends Phaser.Scene {
   constructor() {
     super({
-      key: `lose`,
+      key: `win`,
     });
     this.rows=12;
     this.cols=7;
@@ -15,13 +15,11 @@ class Lose extends Phaser.Scene {
     this.gameGrid = new Grid(this, this.cols, this.rows, "0xffffff", 2);
     //create an overlay to forbid the player form interacting with background
     this.rectangleOverlay=this.add.rectangle(game.config.width/2, game.config.height/2, this.gameGrid.colWidth*7, this.gameGrid.cellHeight*12, 0x9BEBFF);
-    this.title= this.add.text(this.gameGrid.colWidth*3.5, this.gameGrid.cellHeight, 'You Lost :(',{color: '#2653d8', fontSize:'5em'});
+    this.title= this.add.text(this.gameGrid.colWidth*3.5, this.gameGrid.cellHeight, 'You Made it Out! :)',{color: '#2653d8', fontSize:'5em'});
     this.title.setOrigin(0.5,0.5);
     //diver
-    this.diver= this.add.image(this.gameGrid.colWidth*3.5, this.gameGrid.cellHeight*11, 'diver');
+    this.diver= this.add.image(this.gameGrid.colWidth*3.5, this.gameGrid.cellHeight*3, 'diver');
     this.diver.setScale(0.4);
-    this.diver.rotation=90;
-    //diver animation
     this.tweens.add({
       targets: this.diver,
       y:this.diver.y-this.gameGrid.cellHeight * 0.3,
@@ -36,9 +34,9 @@ class Lose extends Phaser.Scene {
           color: "#ffffff",
           align: "center"
     }
-      this.currentScoreTxt = this.add.text(this.gameGrid.colWidth*3.5,this.gameGrid.cellHeight*5, "Score:"+game.finalGame.score, styleText);
-      this.currentLvlTxt = this.add.text(this.gameGrid.colWidth*3.5,this.gameGrid.cellHeight*4, "Level Reached:"+game.finalGame.currentLvl, styleText);
-      this.currentBestScore = this.add.text(this.gameGrid.colWidth*3.5,this.gameGrid.cellHeight*6, "Best score:"+game.finalGame.bestScore, styleText);
+      this.currentScoreTxt = this.add.text(this.gameGrid.colWidth*3.5,this.gameGrid.cellHeight*6, "Score:"+game.finalGame.score, styleText);
+      this.currentLvlTxt = this.add.text(this.gameGrid.colWidth*3.5,this.gameGrid.cellHeight*5, "Level Reached:"+game.finalGame.currentLvl, styleText);
+      this.currentBestScore = this.add.text(this.gameGrid.colWidth*3.5,this.gameGrid.cellHeight*7, "Best score:"+game.finalGame.bestScore, styleText);
       this.currentScoreTxt.setOrigin(0.5,0.5);
       this.currentBestScore.setOrigin(0.5,0.5);
       this.currentLvlTxt.setOrigin(0.5,0.5);

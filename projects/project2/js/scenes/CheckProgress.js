@@ -23,8 +23,16 @@ class CheckProgress extends Phaser.Scene {
       this.startPos-=50;
         this.diver= this.add.image(this.gameGrid.colWidth*5, this.gameGrid.cellHeight*(this.rows-i*1.7)-this.startPos, 'diver');
         this.diver.setScale(0.3);
-    }
 
+    }
+    this.tweens.add({
+      targets: this.diver,
+      y:this.diver.y-this.gameGrid.cellHeight * 0.2,
+      yoyo: true,
+      loop:-1,
+      ease: 'Sine.easeInOut',
+      duration: 1000,
+    });
     //lines to seperate levels
     this.spaceBetweenLines=50;
     //loop to ccreate the lines and texts
