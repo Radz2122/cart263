@@ -10,6 +10,8 @@ class PauseMenu extends Phaser.Scene {
   create(){
     //get the grid to adjust the menu size to the screen size
     this.gameGrid = new Grid(this, 7, 12, "0xffffff", 2);
+    //sound
+    this.clickSound = this.sound.add('click');
     //create an overlay to forbid the player form interacting with background
     this.rectangleOverlay=this.add.rectangle(game.config.width/2, game.config.height/2, this.gameGrid.colWidth*7, this.gameGrid.cellHeight*12, 0x4c7df3,0.9);
     //create button to continue where player left off
@@ -36,17 +38,23 @@ class PauseMenu extends Phaser.Scene {
   update(){}
   //resumes the game
   resume(){
+    this.clickSound.play();
+
 this.scene.resume('play');
     this.scene.stop();
   }
   //allows the player to check their progress
   checkProgress(){
+    this.clickSound.play();
+
     this.scene.stop();
     this.scene.launch('checkprogress');
   }
   //loads main menu scne
   restart(){
     this.scene.stop();
+    this.clickSound.play();
+    
     this.scene.stop('play');
     this.scene.start('mainmenu');
   }

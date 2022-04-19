@@ -53,6 +53,7 @@ let webFontConfig = {
     //load the fonts
     WebFont.load(webFontConfig);
 
+
 //object to configure and store propretis of the game
 window.game.finalGame={
   score:0,//current score

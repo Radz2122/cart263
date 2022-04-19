@@ -10,6 +10,8 @@ class Instructions extends Phaser.Scene {
   create(){
     //get the grid to adjust the menu size to the screen size
     this.gameGrid = new Grid(this, 7, 12, "0xffffff", 2);
+    //sound
+      this.clickSound = this.sound.add('click');
     //create an overlay to forbid the player form interacting with background
     this.rectangleOverlay=this.add.rectangle(game.config.width/2, game.config.height/2, this.gameGrid.colWidth*7, this.gameGrid.cellHeight*12, 0x9BEBFF,0.9);
     //title
@@ -62,6 +64,7 @@ class Instructions extends Phaser.Scene {
 
   //goes back to the main menu
   back(){
+    this.clickSound.play();
     this.scene.stop();
     this.scene.launch('mainmenu');
   }

@@ -6,6 +6,8 @@ class MainMenu extends Phaser.Scene {
   }
 
   create(){
+    //sound fx
+this.clickSound = this.sound.add('click');
     //get the grid to adjust the menu size to the screen size
     this.gameGrid = new Grid(this, 7, 12, "0xffffff", 2);
     this.rectangleOverlay=this.add.rectangle(game.config.width/2, game.config.height/2, this.gameGrid.colWidth*7, this.gameGrid.cellHeight*12, 0x4c7df3);
@@ -65,11 +67,13 @@ class MainMenu extends Phaser.Scene {
   update(){}
   //start the game
   start(){
+    this.clickSound.play();
 this.scene.start('play');
     this.scene.stop();
   }
   //allows the player to check their progress
   instructions(){
+    this.clickSound.play();
     this.scene.stop();
     this.scene.launch('instructions');
 

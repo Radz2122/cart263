@@ -12,6 +12,8 @@ class Lose extends Phaser.Scene {
   create(){
     //get the grid to adjust the menu size to the screen size
     this.gameGrid = new Grid(this, this.cols, this.rows, "0xffffff", 2);
+    //sound
+    this.clickSound = this.sound.add('click');
     //create an overlay to forbid the player form interacting with background
     let styleTextTitle = {
       font: `${5}em Fuzzy Bubbles`,
@@ -57,6 +59,7 @@ class Lose extends Phaser.Scene {
   }
   //goes back to the pause menu
   back(){
+    this.clickSound.play();
     this.scene.stop();
     this.scene.start('mainmenu');
   }

@@ -4,6 +4,7 @@ class Boot extends Phaser.Scene {
       key: `boot`,
     });
   }
+
   //preloads all the images needed in the game
   preload(){
     //load posiedon image
@@ -14,8 +15,20 @@ class Boot extends Phaser.Scene {
     this.load.image("menu", "assets/images/menu.png");
     //load diver image
      this.load.image('diver','assets/images/diver.png');
+     //sounds
+       this.load.audio('theme','assets/sounds/panickyPaddlesDK.mp3');
+        this.load.audio('click','assets/sounds/click.mp3');
+         this.load.audio('bubble','assets/sounds/bubble.mp3');
   }
   create() {
+    //background music
+    this.music = this.sound.add('theme');
+      this.music.play({
+        loop: true,
+        volume:0.5,
+    });
+
+
     //Adding a loading message to the scene on creation
     let loadingTextStyle = {
       fontFamily: "sans-serif",
