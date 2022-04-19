@@ -5,6 +5,8 @@ class Lose extends Phaser.Scene {
     });
     this.rows=12;
     this.cols=7;
+    game.finalGame.bestScore = localStorage.getItem(game.finalGame.NAME_LOCAL_STORAGE) === null ? 0 : localStorage.getItem(game.finalGame.NAME_LOCAL_STORAGE);
+
   }
   preload(){
     //load diver image
