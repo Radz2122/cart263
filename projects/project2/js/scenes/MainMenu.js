@@ -4,9 +4,18 @@ class MainMenu extends Phaser.Scene {
       key: `mainmenu`,
     });
   }
+  //preloads all the images needed in the game
   preload(){
     //load posiedon image
     this.load.image('poseidon', 'assets/images/poseidon.png');
+    //load bubble image
+    this.load.image("bubble", "assets/images/bubble.png");
+    //load posiedon image
+    // this.load.image("poseidon", "assets/images/poseidon.png");
+    //load menu image
+    this.load.image("menu", "assets/images/menu.png");
+    //load diver image
+     this.load.image('diver','assets/images/diver.png');
   }
   create(){
     //get the grid to adjust the menu size to the screen size

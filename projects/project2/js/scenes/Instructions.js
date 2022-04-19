@@ -6,12 +6,6 @@ class Instructions extends Phaser.Scene {
 
   }
 
-  preload(){
-    //load posiedon image
-    this.load.image('poseidon', 'assets/images/poseidon.png');
-    //load bubble image
-    this.load.image('bubble', 'assets/images/bubble.png');
-  }
   // TO DO:- quit(=return to main menu) -where am i buttons-maybe instructions maaybe SHOp
   create(){
     //get the grid to adjust the menu size to the screen size

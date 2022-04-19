@@ -8,10 +8,7 @@ class Lose extends Phaser.Scene {
     game.finalGame.bestScore = localStorage.getItem(game.finalGame.NAME_LOCAL_STORAGE) === null ? 0 : localStorage.getItem(game.finalGame.NAME_LOCAL_STORAGE);
 
   }
-  preload(){
-    //load diver image
-     this.load.image('diver','assets/images/diver.png');
-  }
+
   create(){
     //get the grid to adjust the menu size to the screen size
     this.gameGrid = new Grid(this, this.cols, this.rows, "0xffffff", 2);

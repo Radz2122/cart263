@@ -43,13 +43,8 @@ class Play extends Phaser.Scene {
     //the current level the player is on. strat at 1
     game.finalGame.currentLvl = 1;
   }
+  //loads the dialog box in jqueryui
   preload() {
-    //load bubble image
-    this.load.image("bubble", "assets/images/bubble.png");
-    //load posiedon image
-    this.load.image("poseidon", "assets/images/poseidon.png");
-    //load menu image
-    this.load.image("menu", "assets/images/menu.png");
     //load the jquery element
     this.load.html("dialog", "jqueryui.html");
   }
@@ -335,7 +330,7 @@ class Play extends Phaser.Scene {
       targets: this.timeBar,
       scaleX: 0,
       ease: "Linear",
-      onComplete: () => this.displayDialogNextLvl(),
+      onComplete: () => this.endLevelVerify(),
       duration: game.finalGame.duration, // for testing purposes, it will be longer CHANGE
     });
   }
@@ -373,9 +368,11 @@ class Play extends Phaser.Scene {
   }
 
   //displays a dialog box in jquery that notifies the player that they passed the level
-  //if they did not get thje minimom amount of required points, they lose and are brought to the
+  //if they did not get the minimom amount of required points, they lose and are brought to the
   //end screen
-  displayDialogNextLvl() {
+  //if they got th required points and are at the final level (6) they win and are brought to the win screen
+  //in all cases, if they beat their previous score of most bubbles popped in a lvl, it is registered in localStorage
+  endLevelVerify() {
     if (game.finalGame.score >= this.requiredScorePass && game.finalGame.currentLvl!==6) {
       this.currentAnimation.paused = !this.currentAnimation.paused;
       // a DOM elements is added pretty much like a sprite
@@ -394,19 +391,15 @@ class Play extends Phaser.Scene {
       //when the player closes the dialog box, they move on to the next lvl
       $("#dialog").on("dialogclose", () => this.nextLvl());
     }
+    //if the player is on the 6th level and they pop 4 or more bubbles, they win
     else if(game.finalGame.score >= this.requiredScorePass && game.finalGame.currentLvl===6){
       this.win();
-      if (game.finalGame.score >= game.finalGame.bestScore) {
-        game.finalGame.bestScore = game.finalGame.score;
-        localStorage.setItem(game.finalGame.NAME_LOCAL_STORAGE, game.finalGame.bestScore);
-      }
+      this.setScore();
     }
+    //the player loses if they did not pop enough bubbles
     else {
       this.lose();
-      if (game.finalGame.score >= game.finalGame.bestScore) {
-        game.finalGame.bestScore = game.finalGame.score;
-        localStorage.setItem(game.finalGame.NAME_LOCAL_STORAGE, game.finalGame.bestScore);
-      }
+    this.setScore();
     }
   }
 
@@ -416,10 +409,7 @@ class Play extends Phaser.Scene {
   //depending on their score, they get a certain amount of coins too
   nextLvl() {
     if (game.finalGame.score >= this.requiredScorePass) {
-      if (game.finalGame.score >= game.finalGame.bestScore) {
-        game.finalGame.bestScore = game.finalGame.score;
-        localStorage.setItem(game.finalGame.NAME_LOCAL_STORAGE, game.finalGame.bestScore);
-      }
+      this.setScore();
       //reset current score
       game.finalGame.score = 0;
       //update text in game
@@ -463,5 +453,12 @@ class Play extends Phaser.Scene {
   win(){
     this.scene.stop();
     this.scene.start("win");
+  }
+  //sets the players best score in localStorage
+  setScore(){
+    if (game.finalGame.score >= game.finalGame.bestScore) {
+      game.finalGame.bestScore = game.finalGame.score;
+      localStorage.setItem(game.finalGame.NAME_LOCAL_STORAGE, game.finalGame.bestScore);
+    }
   }
 } //end phaser scene
