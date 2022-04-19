@@ -12,7 +12,16 @@ class CheckProgress extends Phaser.Scene {
     this.gameGrid = new Grid(this, this.cols, this.rows, "0xffffff", 2);
     //create an overlay to forbid the player form interacting with background
     this.rectangleOverlay=this.add.rectangle(game.config.width/2, game.config.height/2, this.gameGrid.colWidth*7, this.gameGrid.cellHeight*12, 0x4c7df3);
-
+    let styleTextHighlight = {
+      font: `${3}em Fuzzy Bubbles`,
+      color: "#2653d8",
+      align: "center"
+    };
+    let styleTextNormal = {
+      font: `${3}em Fuzzy Bubbles`,
+      color: "#ffffff",
+      align: "center"
+    };
     //diver
     this.startPos=0;
     for (let i = game.finalGame.currentLvl; i <=game.finalGame.currentLvl; i++) {
@@ -37,10 +46,10 @@ class CheckProgress extends Phaser.Scene {
       this.spaceBetweenLines+=130;
       //highlight the level the player is at in another color from the rest
       if (i===game.finalGame.currentLvl){
-        this.textLevel= this.add.text(this.gameGrid.colWidth*1.5, this.spaceBetweenLines+20, 'Level '+[i],{color: '#2653d8'});
+        this.textLevel= this.add.text(this.gameGrid.colWidth*1.5, this.spaceBetweenLines+20, 'Level '+[i],styleTextHighlight);
       }
       else{
-        this.textLevel= this.add.text(this.gameGrid.colWidth*1.5, this.spaceBetweenLines+20, 'Level '+[i],{color: '#ffffff'});
+        this.textLevel= this.add.text(this.gameGrid.colWidth*1.5, this.spaceBetweenLines+20, 'Level '+[i],styleTextNormal);
       }
       //add the lines to seperate the levels
       this.line=this.add.line(0,this.spaceBetweenLines, this.gameGrid.colWidth*8,0, 0, 0,  0xffffff);
@@ -48,9 +57,14 @@ class CheckProgress extends Phaser.Scene {
 
     }
     //text to indicate surface/win
-    this.textSurface= this.add.text(this.gameGrid.colWidth*3, this.gameGrid.cellHeight, 'Surface',{color: '#ffffff'});
+    this.textSurface= this.add.text(this.gameGrid.colWidth*3, this.gameGrid.cellHeight, 'Surface',styleTextNormal);
     //add back button to go back to menu
-    this.backButton= this.add.text(this.gameGrid.colWidth*6, this.gameGrid.cellHeight-50, 'Back',{color: '#ffffff'});
+    let styleTextBack = {
+      font: `${2}em Fuzzy Bubbles`,
+      color: "#ffffff",
+      align: "center"
+    };
+    this.backButton= this.add.text(this.gameGrid.colWidth*6, this.gameGrid.cellHeight-50, 'Back',styleTextBack);
     this.backButton.setInteractive().on('pointerdown', () => this.back());
 
   }

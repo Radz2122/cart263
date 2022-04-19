@@ -13,11 +13,13 @@ class Instructions extends Phaser.Scene {
     //create an overlay to forbid the player form interacting with background
     this.rectangleOverlay=this.add.rectangle(game.config.width/2, game.config.height/2, this.gameGrid.colWidth*7, this.gameGrid.cellHeight*12, 0x9BEBFF,0.9);
     //title
-    this.title= this.add.text(this.gameGrid.colWidth*3.5, this.gameGrid.cellHeight, 'Instructions',{color: '#2653d8', fontSize:'5em'});
+    let styleTextTitle = {
+          font: `${5}em Fuzzy Bubbles`,
+          color: "#2653d8",
+          align: "center",
+    }
+    this.title= this.add.text(this.gameGrid.colWidth*3.5, this.gameGrid.cellHeight, 'Instructions',styleTextTitle);
     this.title.setOrigin(0.5,0.5);
-    //to return to main menu
-    this.backButton= this.add.text(this.gameGrid.colWidth*6, this.gameGrid.cellHeight-50, 'Back',{color: '#2653d8',fontSize:'2em'});
-    this.backButton.setInteractive().on('pointerdown', () => this.back());
     //poseidon img insert
     this.poseidon= this.add.image(0, 0, 'poseidon');
     this.poseidon.setScale(0.35);
@@ -31,22 +33,22 @@ class Instructions extends Phaser.Scene {
     this.bubble.setScale(0.3);
     this.gameGrid.placeIndexCell(33, this.bubble);
     //instruciton 1 on bubble pop
-    this.bubbleInst= this.add.text(0,0, 'Poseidon displayed nine bubbles full of oxygen in front of you! These bubbles each get a random animation at a random time. Poseidon also has another bubble beside him that is animated ONCE at the start of the level. He says to tap any bubble in front of you that has a DIFFERENT animation from the one beside him.',{
-      color: '#2653d8',
-      fontSize:'2em',
-      wordWrap: {
-                width: this.gameGrid.colWidth*4
-            },
-    });
+    let styleText = {
+          font: `${2}em Fuzzy Bubbles`,
+          color: "#2653d8",
+          align: "left",
+          wordWrap: {
+                    width: this.gameGrid.colWidth*3.9
+                }
+    }
+    //to return to main menu
+    this.backButton= this.add.text(this.gameGrid.colWidth*6, this.gameGrid.cellHeight-50, 'Back',styleText);
+    this.backButton.setInteractive().on('pointerdown', () => this.back());
+    //texts epxlanations
+    this.bubbleInst= this.add.text(0,0, 'Poseidon displayed nine bubbles full of oxygen in front of you! These bubbles each get a random animation at a random time. Poseidon also has another bubble beside him that is animated ONCE at the start of the level. He says to tap any bubble in front of you that has a DIFFERENT animation from the one beside him.',styleText);
     this.gameGrid.placeIndexCell(21,this.bubbleInst);
     //instruciton for the bar
-    this.barInst= this.add.text(0,0, 'If you get 4 of them right, your oxygen tank, which is on display at the bottom, is filled and you can move up one level. However, if you tap a bubble that has the same animation as the big one, you get poisoned air and die...',{
-      color: '#2653d8',
-      fontSize:'2em',
-      wordWrap: {
-                width: this.gameGrid.colWidth*4
-            },
-    });
+    this.barInst= this.add.text(0,0, 'If you get 4 of them right, your oxygen tank, which is on display at the bottom, is filled and you can move up one level. However, if you tap a bubble that has the same animation as the big one, you get poisoned air and die...',styleText);
     this.gameGrid.placeIndexCell(49,this.barInst);
     //rectangl eot show bar
     this.timeBar = this.add.graphics();

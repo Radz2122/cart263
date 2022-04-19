@@ -52,6 +52,8 @@ class Play extends Phaser.Scene {
   create() {
     //create a grid to place elements and display it for debugging
     this.gameGrid = new Grid(this, 7, 12, "0xffffff", 2);
+    //background
+    this.rectangleOverlay=this.add.rectangle(game.config.width/2, game.config.height/2, this.gameGrid.colWidth*7, this.gameGrid.cellHeight*12, 0x9bebff);
     // this.gameGrid.displayGrid();
     //call function to create circles
     this.createCircles();
@@ -81,15 +83,14 @@ class Play extends Phaser.Scene {
   placeTexts() {
     //set the text size with the ratio function to change its size depending on the phone size/screen size
     let ratioX = game.config.width / 640;
-    let textSize = Math.round(30 * ratioX);
     //style the text
     let styleText = {
-      font: `${textSize}px Arial`,
-      color: "#ffffff",
-      align: "center",
+      font: `${4}em Fuzzy Bubbles`,
+      color: "#2653d8",
+      align: "center"
     };
     //set coordinates to place the score text
-    let yPosScore = this.gameGrid.cellHeight * 3.2;
+    let yPosScore = this.gameGrid.cellHeight;
     let xPosScore = this.gameGrid.colWidth / 2;
     //place score text, top left
     this.currentScoreTxt = this.add.text(
