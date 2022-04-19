@@ -58,7 +58,7 @@ let webFontConfig = {
 window.game.finalGame={
   score:0,//current score
   bestScore:0,//bets score form last game, total nb bubble popped
-  duration:100000,//duration of each round
+  duration:20000,//duration of each round
   coins:0,//amount of money a player has
   currentLvl:1,//levle the player is currrently on
   NAME_LOCAL_STORAGE:"playerScore"// to save it in the local storage

@@ -54,7 +54,7 @@ this.scene.resume('play');
   restart(){
     this.scene.stop();
     this.clickSound.play();
-    
+
     this.scene.stop('play');
     this.scene.start('mainmenu');
   }

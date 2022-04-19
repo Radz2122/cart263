@@ -73,7 +73,7 @@ class CheckProgress extends Phaser.Scene {
   //goes back to the pause menu
   back(){
     this.clickSound.play();
-    
+
     this.scene.stop();
     this.scene.launch('pausemenu');
   }

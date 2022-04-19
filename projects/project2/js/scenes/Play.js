@@ -56,6 +56,7 @@ class Play extends Phaser.Scene {
     this.rectangleOverlay=this.add.rectangle(game.config.width/2, game.config.height/2, this.gameGrid.colWidth*7, this.gameGrid.cellHeight*12, 0x9bebff);
     //sound fx
 this.clickSound = this.sound.add('click');
+this.clickSoundBubble = this.sound.add('bubble');
     //call function to create circles
     this.createCircles();
     //calls function to create the circle that displays the aniamtion to NOT tap
@@ -132,7 +133,7 @@ this.clickSound = this.sound.add('click');
     this.gameGrid.placeIndexCell(6, this.menuIcon);
     this.menuIcon.on("pointerdown", () => {
       this.clickSound.play();
-      
+
       this.scene.launch("pausemenu");
       this.scene.pause();
     });
@@ -352,7 +353,10 @@ this.clickSound = this.sound.add('click');
     if (
       target.currentAnimation !== this.currentNoTapAnim &&
       target.currentAnimation !== -1
-    ) {
+    )
+
+     {
+        this.clickSoundBubble.play();
       this.tweens.add({
         targets: target,
         yoyo: true,
