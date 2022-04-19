@@ -19,7 +19,7 @@ class Play extends Phaser.Scene {
     //animation that is currently playing
     this.currentAnimation;
     //required score to pass to the next nextLvl
-    this.requiredScorePass = 0;
+    this.requiredScorePass;
     //text showing current current level
     this.currentLvlTxt;
     //text showing current level score
@@ -36,7 +36,7 @@ class Play extends Phaser.Scene {
     this.delayMin=2000;
     this.delayMax=3000;
     //required score to pass to the next nextLvl, initialise at 4
-    this.requiredScorePass = 1;//CHANGE for ttest only
+    this.requiredScorePass = 4;
     //the current level the player is on. strat at 1
     game.finalGame.currentLvl=1;
   }
@@ -342,27 +342,35 @@ class Play extends Phaser.Scene {
       //update text in game
       this.currentScoreTxt.text="Score:"+ game.finalGame.score;
     }
+    else{
+      this.scene.stop();
+      this.scene.start('lose');
+    }
   }
 
   //displays a dialog box in jquery that notifies the player that they passed the level
   //if they did not get thje minimom amount of required points, they lose and are brought to the
   //end screen
   displayDialogNextLvl(){
-this.currentAnimation.paused=!this.currentAnimation.paused;
-        // a DOM elements is added pretty much like a sprite
-          this.add.dom(game.config.width / 2, game.config.height / 2).createFromCache("dialog");
-          //use a spopup between lvevel TEST add source if USE
-          $( "#dialog" ).dialog({
-        resizable: false,
-        height: game.config.height/4,
-        width: game.config.width /2,
-        modal: true,
-        closeText: "x"
-      });
+    if(game.finalGame.score>=this.requiredScorePass){
+      this.currentAnimation.paused=!this.currentAnimation.paused;
+              // a DOM elements is added pretty much like a sprite
+                this.add.dom(game.config.width / 2, game.config.height / 2).createFromCache("dialog");
+                //use a spopup between lvevel TEST add source if USE
+                $( "#dialog" ).dialog({
+              resizable: false,
+              height: game.config.height/4,
+              width: game.config.width /2,
+              modal: true,
+              closeText: "x"
+            });
 
-      //when the player closes the dialog box, they move on to the next lvl
-      $( "#dialog" ).on( "dialogclose", ()=> this.nextLvl() );
-
+            //when the player closes the dialog box, they move on to the next lvl
+            $( "#dialog" ).on( "dialogclose", ()=> this.nextLvl() );
+    }
+    else{
+      this.lose();
+    }
 
   }
 
@@ -415,5 +423,9 @@ this.currentAnimation.paused=!this.currentAnimation.paused;
         console.log("lose");
       }
     }
-
+    //function to open losing screen
+    lose(){
+      this.scene.stop();
+      this.scene.start('lose');
+    }
 }//end phaser scene
