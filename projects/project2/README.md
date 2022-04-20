@@ -1,5 +1,5 @@
 Poseidon's Game by: Radhika Patel
-Statement:
+Artist Statement:
 My goal with this project was to create a fun little mobile game with Phaser that one could play multiple times. I wanted it to be simple but still entertaining. The interface is also easy to understand and the player gets to access the information they need to play quickly. In terms of visuals, I think I did a good job since I drew the sprites used in the game. They look exactly like I wanted them to. Furthermore, the usage of the grid really helped me place all my elements in the game properly and exactly where I wanted them to go. They can also adjust to different phone sizes.
 
 I decided to leave out the shop and coins system since I did not have enough time however, I'm satisfied with everything else that I included. Since I removed part of my initial idea, I decided to explore a few additional things while I was programming such as including jQuery UI in Phaser3 and including a font from Google fonts in Phaser3. I researched and learned a lot on Phaser3 thanks to this project.
